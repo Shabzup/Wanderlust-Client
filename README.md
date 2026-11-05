@@ -1,6 +1,6 @@
 # WanderlustClient
 
-An independently written Fabric client for Minecraft **26.2**, by **Shabzup**. This is a standalone mod, not a Meteor addon or source fork. It contains **225 module entries**; see [MODULE-AUDIT.md](MODULE-AUDIT.md) for functional verification progress and [MODULES.md](MODULES.md) for the module inventory. Menu presence does not establish that a module has passed gameplay tests.
+An independently written Fabric client for Minecraft **26.2**, by **Shabzup**. This is a standalone mod, not an addon or source fork. It contains **225 module entries**; see [MODULE-AUDIT.md](MODULE-AUDIT.md) for functional verification progress and [MODULES.md](MODULES.md) for the module inventory. Menu presence does not establish that a module has passed gameplay tests.
 
 ## Install
 
