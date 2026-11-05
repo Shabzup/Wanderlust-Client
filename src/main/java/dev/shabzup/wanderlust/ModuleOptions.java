@@ -7,6 +7,10 @@ final class ModuleOptions {
     static void register() {
         Settings.numeric("ui", "ui.opacity", "Background opacity (%)", 20, 0, 100, 1);
         Settings.numeric("ui", "ui.scale", "Module list size (%)", 70, 40, 100, 1);
+        Settings.choice("ui", "ui.density", "Row spacing", "Comfortable", "Compact", "Comfortable", "Spacious");
+        Settings.toggle("ui", "ui.auto-fit", "Fit lists to available space", true);
+        Settings.toggle("ui", "ui.motion", "Smooth animations", true);
+        Settings.toggle("ui", "ui.depth", "Decorative 3D motion", true);
         Settings.string("xray", "xray.blocks", "Block IDs (comma separated)", "minecraft:coal_ore,minecraft:deepslate_coal_ore,minecraft:iron_ore,minecraft:deepslate_iron_ore,minecraft:copper_ore,minecraft:deepslate_copper_ore,minecraft:gold_ore,minecraft:deepslate_gold_ore,minecraft:redstone_ore,minecraft:deepslate_redstone_ore,minecraft:lapis_ore,minecraft:deepslate_lapis_ore,minecraft:emerald_ore,minecraft:deepslate_emerald_ore,minecraft:diamond_ore,minecraft:deepslate_diamond_ore,minecraft:nether_gold_ore,minecraft:nether_quartz_ore,minecraft:ancient_debris");
         Settings.numeric("kill-aura", "aura-delay", "Attack delay (ticks)", 3, 1, 20, 1);
         Settings.toggle("kill-aura", "aura-through-walls", "Allow targets through walls", false);

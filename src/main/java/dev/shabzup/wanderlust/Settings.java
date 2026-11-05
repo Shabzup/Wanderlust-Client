@@ -19,6 +19,7 @@ final class Settings {
     private static final Properties values = new Properties();
     private static final Map<String, Double> numbers = new HashMap<>();
     private static final Set<String> active = java.util.concurrent.ConcurrentHashMap.newKeySet();
+    static long moduleRevision;
     private static final Set<String> transientKeys = new HashSet<>();
     private static final Path path = FabricLoader.getInstance().getConfigDir().resolve("wanderlust.properties");
 
@@ -78,6 +79,7 @@ final class Settings {
             if (Boolean.parseBoolean(values.getProperty("enabled." + feature.id))) active.add(feature.id);
         }
         ClientFeedback.invalidate();
+        moduleRevision++;
     }
 
     static boolean on(String id) { return active.contains(id); }
@@ -90,6 +92,7 @@ final class Settings {
     static void setEnabled(Feature feature, boolean enabled) {
         boolean changed = enabled ? active.add(feature.id) : active.remove(feature.id);
         if (!changed) return;
+        moduleRevision++;
         values.setProperty("enabled." + feature.id, Boolean.toString(enabled));
         save();
         ClientFeedback.changed(feature, enabled);

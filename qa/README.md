@@ -9,6 +9,7 @@ The current launcher requires Windows, Python 3, Java/Javac 25, and an existing 
 Build first with `gradlew.bat build`. From the project root, run one suite at a time:
 
 ```powershell
+python qa/launch.py --clean --polish
 python qa/launch.py --clean --all-modules
 python qa/launch.py --clean --repair
 python qa/launch.py --clean --core
@@ -27,3 +28,5 @@ The probes report `PASS`, `FAIL` and completion totals in the log. Some probes s
 ## Retained evidence
 
 `evidence/` contains the 225-module runtime CSV, selected assertion output extracted from the original test runs, and inspected Xray scene screenshots. Raw logs, credentials, private installation paths and game data are excluded. `extended-bow-cleanup.txt` intentionally retains the earlier CrystalAura failure; `crystal-recovery-passed.txt` records the later passing combat check. These are historical results, not new test runs performed during the repository upload.
+
+The `--polish` suite exercises menu keyboard routing, responsive layouts, module and entity-picker interactions, size presets, masked proxy editing, encrypted proxy persistence and real TCP SOCKS5 routing using loopback fixtures. It also opens an integrated world for popup and reduced-motion checks. This suite returns a failure exit code if assertions fail or its completion marker is absent. See [UI-VERIFICATION.md](../UI-VERIFICATION.md) for the display matrix and the limits of the CPU extraction benchmark.

@@ -44,7 +44,10 @@
     "XrayLightingMixin",
     "XrayIndigoMixin",
     "NavigationShutdownMixin",
-    "XrayFluidMixin"
+    "XrayFluidMixin",
+    "GlobalMenuKeyMixin",
+    "MultiplayerHeaderMixin",
+    "ProxyConnectionMixin"
   ],
   "injectors": {
     "defaultRequire": 1
