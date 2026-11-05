@@ -17,5 +17,6 @@ logs/
 crash-reports/
 screenshots/
 *accounts*.dat
+*proxies*.dat
 *.key
 *.pem

@@ -45,6 +45,8 @@ public final class Wanderlust implements ClientModInitializer {
         Settings.load();
         for(Feature feature:Feature.values())try{String group=Settings.text("category."+feature.id);if(!group.isBlank())feature.group=Feature.Group.valueOf(group);}catch(IllegalArgumentException ignored){}
         Accounts.init();
+        MenuAccess.init();
+        Proxies.load();
         ExtraMisc.init();
         var category = KeyMapping.Category.register(Identifier.fromNamespaceAndPath("wanderlust", "modules"));
         for (Feature feature : Feature.values()) {
@@ -61,9 +63,7 @@ public final class Wanderlust implements ClientModInitializer {
 
     private void tick(Minecraft mc) {
         while (menu.consumeClick()) {
-            if (mc.gui.screen() instanceof ControlPanel panel) panel.onClose();
-            else if (mc.gui.screen() == null || mc.gui.screen() instanceof net.minecraft.client.gui.screens.TitleScreen)
-                mc.gui.setScreen(new ControlPanel());
+            MenuAccess.toggle(mc);
         }
         for (var entry : binds.entrySet()) {
             while (entry.getValue().consumeClick()) {

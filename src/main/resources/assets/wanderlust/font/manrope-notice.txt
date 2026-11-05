@@ -1,0 +1,6 @@
+Manrope Semibold
+
+Copyright 2018 The Manrope Project Authors (https://github.com/googlefonts/manrope).
+Source: https://github.com/google/fonts/tree/main/ofl/manrope
+The bundled static font was instantiated at weight 600 from Manrope[wght].ttf using FontTools.
+Licensed under the SIL Open Font License 1.1. See manrope-license.txt in this directory.

@@ -31,11 +31,6 @@ final class Accounts {
 
     static void init() {
         loadSaved();
-        ScreenEvents.AFTER_INIT.register((mc, screen, w, h) -> {
-            if (screen instanceof TitleScreen) Screens.getWidgets(screen).add(
-                Button.builder(Component.literal("Wanderlust"), b -> mc.gui.setScreen(new ControlPanel()))
-                    .bounds(6, 6, 104, 20).build());
-        });
     }
 
     static void loadSaved() {

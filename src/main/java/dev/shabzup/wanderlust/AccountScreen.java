@@ -1,65 +1,36 @@
 package dev.shabzup.wanderlust;
-
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
 import net.minecraft.util.Util;
-
-final class AccountScreen extends Screen {
-    private final Screen parent;
-    private int page;
+final class AccountScreen extends ClientScreen {
+    private int page,count,rows;
     private boolean wasBusy;
-    private int count;
-    AccountScreen(Screen parent) { super(Component.literal("Accounts")); this.parent = parent; }
-
-    private Button button(int x, int y, int width, String text, Runnable action) {
-        return addRenderableWidget(Button.builder(Component.literal(text), b -> action.run()).bounds(x,y,width,20).build());
-    }
-
-    @Override protected void init() {
-        wasBusy = Accounts.busy;
-        count = Accounts.entries.size();
-        int x = width / 2 - 150, y = Math.max(32, height / 2 - 104);
-        var name = addRenderableWidget(new EditBox(font, x, y, 198, 20, Component.literal("Offline username")));
-        name.setMaxLength(16);
-        name.setHint(Component.literal("Offline username"));
-        button(x + 202, y, 98, "Add offline", () -> { Accounts.addOffline(name.getValue().trim()); rebuildWidgets(); });
-        button(x, y + 24, 148, "Microsoft sign-in", Accounts::login).active = Accounts.canSwitch() && !Accounts.busy;
-        button(x + 152, y + 24, 148, "Restore launcher", Accounts::restore).active = Accounts.canSwitch() && !Accounts.busy;
-        int rows = Math.max(1, Math.min(4, (height - 190) / 24));
-        int pages = Math.max(1, (count + rows - 1) / rows);
-        page = Math.clamp(page, 0, pages - 1);
-        for (int i = page * rows; i < Math.min(count, (page + 1) * rows); i++) {
-            var entry = Accounts.entries.get(i);
-            int row = y + 52 + (i % rows) * 24;
-            button(x, row, 268, entry.name() + (entry.auth() == null ? " (offline)" : " (Microsoft)"), () -> Accounts.use(entry))
-                .active = Accounts.canSwitch() && !Accounts.busy;
-            button(x + 272, row, 28, "X", () -> { Accounts.entries.remove(entry); Accounts.saveNames(); rebuildWidgets(); });
+    private String username="";
+    AccountScreen(net.minecraft.client.gui.screens.Screen parent){super("Accounts",parent);}
+    @Override protected void init(){
+        layout(440,360);wasBusy=Accounts.busy;count=Accounts.entries.size();
+        int x=left+16,w=cardWidth-32,y=top+57;
+        var name=input(x,y,w-106,"Offline username",username,16);name.setResponder(s->username=s);
+        button(x+w-100,y,100,"Add offline",()->{Accounts.addOffline(username.trim());rebuildWidgets();});
+        button(x,y+29,(w-6)/2,"Microsoft sign-in",Accounts::login).active=Accounts.canSwitch()&&!Accounts.busy;
+        button(x+(w+6)/2,y+29,(w-6)/2,"Restore launcher",Accounts::restore).active=Accounts.canSwitch()&&!Accounts.busy;
+        rows=Math.max(1,(cardHeight-205)/28);int pages=Math.max(1,(count+rows-1)/rows);page=Math.clamp(page,0,pages-1);
+        for(int i=page*rows;i<Math.min(count,(page+1)*rows);i++){
+            var entry=Accounts.entries.get(i);int yy=y+59+(i%rows)*28;
+            button(x,yy,w-34,entry.name()+(entry.auth()==null?" · Offline":" · Microsoft"),()->Accounts.use(entry)).active=Accounts.canSwitch()&&!Accounts.busy;
+            button(x+w-28,yy,28,"×",()->{Accounts.entries.remove(entry);Accounts.saveNames();rebuildWidgets();});
         }
-        int bottom = y + 56 + rows * 24;
-        button(x, bottom, 35, "<", () -> { page--; rebuildWidgets(); }).active = page > 0;
-        button(x + 39, bottom, 35, ">", () -> { page++; rebuildWidgets(); }).active = page + 1 < pages;
-        button(x + 78, bottom, 108, "Open sign-in page", () -> {
-            if (Accounts.verificationUrl.startsWith("https://")) Util.getPlatform().openUri(Accounts.verificationUrl);
-        });
-        button(x + 190, bottom, 110, Accounts.busy ? "Cancel sign-in" : "Back", () -> {
-            if (Accounts.busy) { Accounts.cancel(); rebuildWidgets(); } else onClose();
-        });
+        int bottom=top+cardHeight-70;
+        button(x,bottom,28,"‹",()->{page--;rebuildWidgets();}).active=page>0;
+        button(x+34,bottom,28,"›",()->{page++;rebuildWidgets();}).active=page+1<pages;
+        button(x+68,bottom,w-150,"Sign-in page",()->{if(Accounts.verificationUrl.startsWith("https://"))Util.getPlatform().openUri(Accounts.verificationUrl);}).active=Accounts.busy&&!Accounts.verificationUrl.isBlank();
+        button(x+w-76,bottom,76,Accounts.busy?"Cancel":"Back",()->{if(Accounts.busy){Accounts.cancel();rebuildWidgets();}else onClose();});
     }
-
-    @Override public void tick() {
-        if (wasBusy != Accounts.busy || count != Accounts.entries.size()) rebuildWidgets();
+    @Override public void tick(){if(wasBusy!=Accounts.busy||count!=Accounts.entries.size())rebuildWidgets();}
+    @Override void drawContent(GuiGraphicsExtractor g,int mx,int my,float delta){
+        subtitle(g,Accounts.canSwitch()?"Current session · "+minecraft.getUser().getName():"Disconnect before switching accounts");
+        if(count==0)text(g,"No saved accounts. Add one above.",left+16,top+128,cardWidth-32,PanelStyle.MUTED);
+        text(g,Accounts.status,left+16,top+cardHeight-43,cardWidth-32,PanelStyle.TEXT);
+        text(g,Accounts.busy?"Microsoft code · "+Accounts.verificationCode:"Encrypted for your Windows login · Page "+(page+1),left+16,top+cardHeight-24,cardWidth-32,PanelStyle.MUTED);
     }
-
-    @Override public void extractRenderState(GuiGraphicsExtractor g, int x, int y, float delta) {
-        g.fill(0, 0, width, height, 0xF5192422);
-        g.centeredText(font, "Accounts / " + minecraft.getUser().getName(), width / 2, 7, 0xFF85E7B6);
-        g.centeredText(font, Accounts.canSwitch() ? "Offline names work in offline-mode servers and single-player." : "Disconnect to switch accounts.", width / 2, 20, 0xFFFFFFFF);
-        g.centeredText(font, Accounts.status, width / 2, height - 36, 0xFFFFFFFF);
-        g.centeredText(font, Accounts.busy ? "Microsoft code: " + Accounts.verificationCode : "Saved accounts are encrypted for your Windows login.", width / 2, height - 21, 0xFFB0C8BD);
-        super.extractRenderState(g, x, y, delta);
-    }
-    @Override public void onClose() { Accounts.cancel(); minecraft.gui.setScreen(parent); }
+    @Override public void onClose(){Accounts.cancel();super.onClose();}
 }

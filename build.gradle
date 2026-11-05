@@ -14,6 +14,8 @@ dependencies {
     implementation include('net.raphimc:MinecraftAuth:5.0.2')
     implementation include('net.lenni0451.commons:httpclient:1.9.2')
     implementation include('net.lenni0451.commons:gson:1.9.2')
+    implementation include('io.netty:netty-handler-proxy:4.2.15.Final')
+    implementation include('io.netty:netty-codec-socks:4.2.15.Final')
 }
 
 java {

@@ -14,7 +14,7 @@ import org.lwjgl.glfw.GLFW;
 
 /** Translucent, draggable module windows with a compact settings popover. */
 final class ControlPanel extends Screen {
-    private static final int GAP = 7, HEADER = 27;
+    private static final int GAP = 10, HEADER = 29;
     private static final long OPEN_NANOS = 440_000_000L, CLOSE_NANOS = 170_000_000L;
     private static final EnumMap<Feature.Group, List<Feature>> MODULES = new EnumMap<>(Feature.Group.class);
 
@@ -25,6 +25,12 @@ final class ControlPanel extends Screen {
     }
 
     private final Screen parent;
+    private final boolean settingsEntry;
+    private final EnumMap<Feature.Group,List<Feature>> filteredModules=new EnumMap<>(Feature.Group.class);
+    private long filteredRevision=-1;
+    private long lastFrame=System.nanoTime();
+    private float frameSeconds;
+    private final EnumMap<Feature,Float> rowHover=new EnumMap<>(Feature.class);
     private final EnumMap<Feature.Group, int[]> positions = new EnumMap<>(Feature.Group.class);
     private final EnumMap<Feature.Group, Integer> scrolls = new EnumMap<>(Feature.Group.class);
     private final EnumSet<Feature.Group> collapsed = EnumSet.noneOf(Feature.Group.class);
@@ -49,10 +55,15 @@ final class ControlPanel extends Screen {
     private long opened = System.nanoTime(), closingAt;
     private float closeFrom = 1f;
 
-    ControlPanel() {
+    ControlPanel() { this(net.minecraft.client.Minecraft.getInstance().gui.screen(),false); }
+    ControlPanel(Screen parent,boolean settings) {
         super(Component.literal("WanderlustClient"));
-        Screen current = net.minecraft.client.Minecraft.getInstance().gui.screen();
-        parent = current instanceof TitleScreen ? current : null;
+        this.parent=parent;this.settingsEntry=settings;this.uiSettings=settings;
+    }
+    boolean settingsEntry(){return settingsEntry;}
+    private void backFromDetails(){
+        if(settingsEntry){onClose();return;}
+        detail=null;uiSettings=false;detailScroll=0;rebuildWidgets();
     }
 
     private boolean showingDetails() { return uiSettings || detail != null; }
@@ -62,6 +73,8 @@ final class ControlPanel extends Screen {
 
     @Override protected void init() {
         viewScale = (float)Settings.number("ui.scale") / 100;
+        if(Settings.toggle("ui.auto-fit")&&width<420)viewScale=Math.min(viewScale,(width-24f)/(3*184+2*GAP));
+        filteredModules.clear();filteredRevision=-1;
         for(Feature.Group group:Feature.Group.values())MODULES.put(group,Arrays.stream(Feature.values()).filter(f->f.group==group).toList());
         positions.clear();
         collapsed.clear();
@@ -84,29 +97,35 @@ final class ControlPanel extends Screen {
             zOrder.clear();
             zOrder.addAll(parsed);
         }
+        // Even with optional fitting off, keep every category inside a tiny viewport.
+        for(int attempt=0;attempt<4;attempt++){
+            updateWindowMetrics();
+            int rows=(Feature.Group.values().length+columns-1)/columns;
+            if(rows*(HEADER+rowHeight+18+GAP)<=workspaceBottom-homeTop)break;
+            viewScale*=.85f;
+        }
         updateWindowMetrics();
         layoutWindows();
         for (Feature.Group group : Feature.Group.values()) scroll(group, 0);
 
         if (!showingDetails()) {
-            int navY = width < 600 ? 36 : 10;
-            addButton(width < 600 ? 12 : width - 285, navY, 76, 22, "UI Settings", PanelButton.Kind.Small, () -> false,
-                () -> { uiSettings = true; detailScroll = 0; rebuildWidgets(); });
-            addButton(width < 600 ? 95 : width - 202, navY, 76, 22, "Accounts", PanelButton.Kind.Small, () -> false,
-                () -> navigate(new AccountScreen(this)));
-            addButton(width < 600 ? 178 : width - 119, navY, 76, 22, "Baritone", PanelButton.Kind.Small, () -> false,
-                () -> navigate(new BaritoneScreen(this)));
-            addButton(width - 34, 10, 22, 22, "×", PanelButton.Kind.Small, () -> false, this::onClose);
-            int searchY=width<600?70:40;
+            int navY = width < 660 ? 39 : 12;
+            int navX=width<660?12:width-214;
+            addButton(navX,navY,92,24,"UI Settings",PanelButton.Kind.Small,()->false,
+                ()->{uiSettings=true;detailScroll=0;rebuildWidgets();});
+            addButton(navX+98,navY,68,24,"Baritone",PanelButton.Kind.Small,()->false,
+                ()->navigate(new BaritoneScreen(this)));
+            addButton(width-36,12,24,24,"×",PanelButton.Kind.Small,()->false,this::onClose);
+            int searchY=width<660?76:44;
             search=addRenderableWidget(new EditBox(font,20,searchY+3,width-252,18,PanelStyle.text("Search modules")));
-            search.setBordered(false);search.setHint(PanelStyle.text(width<600?"Search…":"Search modules…  Ctrl+F"));search.setValue(query);
-            search.addFormatter((value,position)->PanelStyle.text(value).getVisualOrderText());
+            search.setBordered(false);search.setHint(PanelStyle.text(width<660?"Search…":"Search modules…  Ctrl+F"));search.setValue(query);
+            search.addFormatter((value,position)->PanelStyle.text(value).getVisualOrderText());search.setValue(query);
             search.setResponder(this::updateSearch);
             clearSearch=addButton(width-224,searchY,42,22,"Clear",PanelButton.Kind.Small,()->false,()->search.setValue(""));
             clearSearch.active=!query.isBlank();
             clearSearch.setTooltip(Tooltip.create(PanelStyle.text("Clear search (Escape)")));
             addButton(width-176,searchY,76,22,"Active only",PanelButton.Kind.Small,()->activeOnly,()->{
-                activeOnly=!activeOnly;for(Feature.Group group:Feature.Group.values())scrolls.put(group,0);
+                activeOnly=!activeOnly;filteredModules.clear();for(Feature.Group group:Feature.Group.values())scrolls.put(group,0);
             }).setTooltip(Tooltip.create(PanelStyle.text("Show only enabled modules")));
             addButton(width-94,searchY,82,22,allCollapsed()?"Expand all":"Fold all",PanelButton.Kind.Small,()->allCollapsed(),()->{
                 boolean fold=!allCollapsed();for(Feature.Group group:Feature.Group.values())setCollapsed(group,fold);rebuildWidgets();
@@ -119,11 +138,11 @@ final class ControlPanel extends Screen {
         workspaceWidth=(int)Math.floor(width/viewScale);
         workspaceHeight=(int)Math.floor(height/viewScale);
         workspaceBottom=(int)Math.floor((height-18)/viewScale);
-        columnWidth=Math.clamp((width-24-GAP*5)/6,128,180);
+        columnWidth=184;
         columns=1;
         for(int candidate:new int[]{6,3,2,1})if(candidate*columnWidth+(candidate-1)*GAP+24<=workspaceWidth){columns=candidate;break;}
-        rowHeight=height<300?18:22;
-        homeTop=(int)Math.ceil((width<600?104:74)/viewScale);
+        rowHeight=switch(Settings.choice("ui.density")){case "Compact"->20;case "Spacious"->28;default->24;};
+        homeTop=(int)Math.ceil((width<660?110:80)/viewScale);
         int groupRows=(Feature.Group.values().length+columns-1)/columns;
         int rowSpace=(workspaceBottom-homeTop)/groupRows;
         maxRows=Math.max(1,(rowSpace-HEADER-18-GAP)/rowHeight);
@@ -147,7 +166,7 @@ final class ControlPanel extends Screen {
         saveWindowPositions();
     }
     private void updateSearch(String value) {
-        query=value;if(clearSearch!=null)clearSearch.active=!query.isBlank();
+        query=value;filteredModules.clear();if(clearSearch!=null)clearSearch.active=!query.isBlank();
         boolean changed=false;
         for(Feature.Group group:Feature.Group.values()){
             scrolls.put(group,0);
@@ -160,10 +179,10 @@ final class ControlPanel extends Screen {
     }
 
     private void layoutWindows() {
-        int startX = (int)Math.ceil(12/viewScale);
+        int startX = Math.max(4,(workspaceWidth-(columns*columnWidth+(columns-1)*GAP))/2);
         int rows = (Feature.Group.values().length + columns - 1) / columns;
         int rowSpace = rows <= 1 ? 0 : (workspaceBottom - homeTop) / rows;
-        boolean restore=Settings.text("ui.window.layout.version").equals("2")
+        boolean restore=Settings.text("ui.window.layout.version").equals("3")
             &&Settings.text("ui.window.layout.scale").equals(Settings.format(viewScale))
             &&Settings.text("ui.window.layout.columns").equals(Integer.toString(columns))
             &&Settings.text("ui.window.layout.width").equals(Integer.toString(width))
@@ -179,7 +198,7 @@ final class ControlPanel extends Screen {
             if(!restore){Settings.put(prefix+".x",Integer.toString(clampX(x)));Settings.put(prefix+".y",Integer.toString(clampY(group,y)));}
         }
         Settings.put("ui.window.layout.columns",Integer.toString(columns));
-        Settings.put("ui.window.layout.version","2");
+        Settings.put("ui.window.layout.version","3");
         Settings.put("ui.window.layout.scale",Settings.format(viewScale));
         Settings.put("ui.window.layout.width",Integer.toString(width));
         Settings.put("ui.window.layout.height",Integer.toString(height));
@@ -202,8 +221,11 @@ final class ControlPanel extends Screen {
     }
 
     private List<Feature> features(Feature.Group group) {
-        String filter=query.toLowerCase(Locale.ROOT);
-        return MODULES.get(group).stream().filter(f->(!activeOnly||Settings.on(f.id))&&(filter.isBlank()||(f.label+" "+f.id).toLowerCase(Locale.ROOT).contains(filter))).toList();
+        if(filteredRevision!=Settings.moduleRevision){filteredModules.clear();filteredRevision=Settings.moduleRevision;}
+        return filteredModules.computeIfAbsent(group,key->{
+            String filter=query.toLowerCase(Locale.ROOT);
+            return MODULES.get(key).stream().filter(f->(!activeOnly||Settings.on(f.id))&&(filter.isBlank()||(f.label+" "+f.id).toLowerCase(Locale.ROOT).contains(filter))).toList();
+        });
     }
 
     private void initDetails() {
@@ -218,10 +240,16 @@ final class ControlPanel extends Screen {
         optionVisible = Math.max(1, (dialogY + dialogH - 38 - optionStart) / optionPitch);
         detailScroll = Math.clamp(detailScroll, 0, Math.max(0, detailOptions.size() - optionVisible));
         shownOptions = detailOptions.subList(detailScroll, Math.min(detailOptions.size(), detailScroll + optionVisible));
-        addButton(dialogX + 14, dialogY + 13, 68, 22, "‹  Modules", PanelButton.Kind.Small, () -> false,
-            () -> { detail = null; uiSettings = false; detailScroll = 0; rebuildWidgets(); });
+        addButton(dialogX + 14, dialogY + 13, 68, 22, "‹  Back", PanelButton.Kind.Small, () -> false,
+            this::backFromDetails);
         if (uiSettings) {
-            addButton(dialogX + dialogW - 130, dialogY + 13, 116, 22, "Reset layout", PanelButton.Kind.Small, () -> false, () -> {
+            int presetWidth=dialogW<380?30:44;
+            for(int i=0;i<3;i++){
+                int target=new int[]{60,70,85}[i];
+                addButton(dialogX+88+i*(presetWidth+4),dialogY+13,presetWidth,22,Integer.toString(target)+(dialogW<380?"":"%"),PanelButton.Kind.Small,()->Math.abs(Settings.number("ui.scale")-target)<.5,
+                    ()->resizeLists(target-(int)Settings.number("ui.scale"))).setTooltip(Tooltip.create(PanelStyle.text("Module size preset · "+target+"%")));
+            }
+            addButton(dialogX + dialogW - 106, dialogY + 13, 92, 22, "Reset layout", PanelButton.Kind.Small, () -> false, () -> {
                 for (Feature.Group group : Feature.Group.values()) {
                     String key = "ui.window." + group.name().toLowerCase(Locale.ROOT);
                     Settings.put(key + ".x", ""); Settings.put(key + ".y", "");
@@ -278,7 +306,7 @@ final class ControlPanel extends Screen {
     }
 
     @Override public void tick() {
-        if (closing && System.nanoTime() - closingAt >= CLOSE_NANOS) {
+        if (closing && (!Settings.toggle("ui.motion")||System.nanoTime() - closingAt >= CLOSE_NANOS)) {
             closing = false;
             minecraft.gui.setScreen(destination);
         }
@@ -294,12 +322,12 @@ final class ControlPanel extends Screen {
 
     @Override public boolean keyPressed(KeyEvent event) {
         KeyMapping menuKey = KeyMapping.get("key.wanderlust.menu");
-        if (menuKey != null && menuKey.matches(event)) { onClose(); return true; }
+        if (menuKey != null && menuKey.matches(event)) { MenuAccess.toggle(minecraft); return true; }
         if(closing)return true;
         if(event.key()==GLFW.GLFW_KEY_ESCAPE){
-            if(showingDetails()){detail=null;uiSettings=false;detailScroll=0;rebuildWidgets();return true;}
+            if(showingDetails()){backFromDetails();return true;}
             if(!query.isBlank()){search.setValue("");return true;}
-            if(activeOnly){activeOnly=false;rebuildWidgets();return true;}
+            if(activeOnly){activeOnly=false;filteredModules.clear();rebuildWidgets();return true;}
             onClose();return true;
         }
         if(!showingDetails()&&event.key()==GLFW.GLFW_KEY_F&&(event.modifiers()&(GLFW.GLFW_MOD_CONTROL|GLFW.GLFW_MOD_SUPER))!=0){
@@ -366,7 +394,7 @@ final class ControlPanel extends Screen {
                 }
                 if (event.button() == 1) {
                     int index = group.ordinal();
-                    int startX = (int)Math.ceil(12/viewScale);
+                    int startX = Math.max(4,(workspaceWidth-(columns*columnWidth+(columns-1)*GAP))/2);
                     int rows = (Feature.Group.values().length + columns - 1) / columns;
                     int rowSpace = rows <= 1 ? 0 : (workspaceBottom - homeTop) / rows;
                     dragStart=pos.clone();
@@ -475,10 +503,11 @@ final class ControlPanel extends Screen {
             }}
         }
         int bestX=pos[0],bestY=pos[1];double best=Double.MAX_VALUE;
-        for(int y=homeTop;y<=workspaceBottom-windowHeight(group)-5;y+=3)for(int x=4;x<=workspaceWidth-columnWidth-4;x+=3){
-            double distance=Math.pow(x-pos[0],2)+Math.pow(y-pos[1],2);
-            if(distance<best&&freePosition(group,x,y)){best=distance;bestX=x;bestY=y;}
-        }
+        Set<Integer> xs=new TreeSet<>(List.of(4,pos[0],clampX(workspaceWidth-columnWidth-4)));
+        Set<Integer> ys=new TreeSet<>(List.of(homeTop,pos[1],clampY(group,workspaceBottom-windowHeight(group)-5)));
+        if(dragStart!=null){xs.add(dragStart[0]);ys.add(dragStart[1]);}
+        for(Feature.Group other:Feature.Group.values())if(other!=group){int[] q=positions.get(other);xs.add(clampX(q[0]+columnWidth+GAP));xs.add(clampX(q[0]-columnWidth-GAP));ys.add(clampY(group,q[1]+windowHeight(other)+GAP));ys.add(clampY(group,q[1]-windowHeight(group)-GAP));}
+        for(int y:ys)for(int x:xs){double distance=Math.pow(x-pos[0],2)+Math.pow(y-pos[1],2);if(distance<best&&freePosition(group,x,y)){best=distance;bestX=x;bestY=y;}}
         if(best==Double.MAX_VALUE&&dragStart!=null){bestX=dragStart[0];bestY=dragStart[1];}
         pos[0]=bestX;pos[1]=bestY;
     }
@@ -496,6 +525,9 @@ final class ControlPanel extends Screen {
 
     @Override public boolean mouseScrolled(double x, double y, double horizontal, double vertical) {
         if (closing || vertical == 0) return false;
+        if(!showingDetails()&&(com.mojang.blaze3d.platform.InputConstants.isKeyDown(minecraft.getWindow(),GLFW.GLFW_KEY_LEFT_CONTROL)||com.mojang.blaze3d.platform.InputConstants.isKeyDown(minecraft.getWindow(),GLFW.GLFW_KEY_RIGHT_CONTROL))){
+            resizeLists(vertical>0?5:-5);return true;
+        }
         if (showingDetails()) {
             if(!inside(x,y,dialogX,optionStart,dialogW,dialogH-(optionStart-dialogY)))return false;
             detailScroll = Math.clamp(detailScroll + (vertical < 0 ? 1 : -1), 0,
@@ -520,6 +552,11 @@ final class ControlPanel extends Screen {
         scrolls.put(group,Math.clamp(scrolls.getOrDefault(group,0)+delta,0,Math.max(0,features(group).size()-maxRows)));
     }
 
+    private void resizeLists(int delta){
+        Settings.Option option=Settings.options.stream().filter(o->o.key().equals("ui.scale")).findFirst().orElseThrow();
+        Settings.setNumber(option,Settings.number("ui.scale")+delta);Settings.save();rebuildWidgets();
+    }
+
     private void setSlider(Settings.Option option, double mouseX) {
         double left = dialogX + 20, right = dialogX + dialogW - 20;
         double ratio = Math.clamp((mouseX - left) / (right - left), 0, 1);
@@ -533,33 +570,38 @@ final class ControlPanel extends Screen {
     }
 
     private float openProgress(long now) {
+        if(!Settings.toggle("ui.motion"))return 1;
         return PanelStyle.ease((now - opened) / (float)OPEN_NANOS);
     }
 
     private float windowProgress(Feature.Group group, long now) {
+        if(!Settings.toggle("ui.motion"))return closing?0:1;
         float delay = group.ordinal() * 30_000_000f;
         float incoming = PanelStyle.ease((now - opened - delay) / (OPEN_NANOS - delay));
         return closing ? closeFrom * (1 - PanelStyle.ease((now - closingAt) / (float)CLOSE_NANOS)) : incoming;
     }
 
     private float featureProgress(Feature.Group group, int row, int start, long now) {
+        if(!Settings.toggle("ui.motion"))return 1;
         if (closing) return windowProgress(group, now);
         long delay = group.ordinal() * 30_000_000L + Math.min(12,row-start) * 12_000_000L;
         return PanelStyle.ease((now - opened - delay) / (float)Math.max(1, OPEN_NANOS - delay));
     }
 
     private int featureSlide(Feature.Group group, int row, int start, long now) {
-        return Math.round((1 - featureProgress(group, row, start, now)) * 5);
+        return 0; // Fade rows in place so animation never overlaps neighboring rows.
     }
 
     private static int slideY(float progress) { return Math.round((1 - progress) * 9); }
 
     @Override public void extractRenderState(GuiGraphicsExtractor g, int mouseX, int mouseY, float delta) {
         long now = System.nanoTime();
+        frameSeconds=Math.min(.05f,(now-lastFrame)/1_000_000_000f);lastFrame=now;
+        if(parent!=null&&minecraft.level==null)g.fillGradient(0,0,width,height,0xE0101522,0xEC080C14);
         if (Wanderlust.on("blur")) g.blurBeforeThisStratum();
         if(!showingDetails()){
             drawTopBar(g, mouseX, mouseY, now);
-            g.enableScissor(0,width<600?100:70,width,height-17);
+            g.enableScissor(0,width<660?106:76,width,height-17);
             g.pose().pushMatrix();
             g.pose().scale(viewScale,viewScale);
             for (Feature.Group group : zOrder) drawWindow(g, group, (int)(mouseX/viewScale), (int)(mouseY/viewScale), now);
@@ -576,13 +618,14 @@ final class ControlPanel extends Screen {
 
     private void drawTopBar(GuiGraphicsExtractor g, int mouseX, int mouseY, long now) {
         float alpha = closing ? closeFrom * (1 - PanelStyle.ease((now - closingAt) / (float)CLOSE_NANOS)) : openProgress(now);
-        PanelStyle.round(g, 12, 9, width - 24, width < 600 ? 88 : 58, 0, PanelStyle.background(0x0B101A, alpha));
-        label(g, "WANDERLUST", 22, 16, PanelStyle.TEXT, alpha);
+        PanelStyle.surface(g,12,8,width-24,width<660?94:62,alpha);
+        PanelStyle.gem(g,29,24,11,now,alpha);
+        label(g, "WANDERLUST", Settings.toggle("ui.depth")?48:22, 19, PanelStyle.TEXT, alpha);
         long enabled = Arrays.stream(Feature.values()).filter(feature -> Settings.on(feature.id)).count();
-        if (width > 400) label(g, enabled + " active", 125, 16, PanelStyle.PURPLE_LIGHT, alpha);
-        int searchY=width<600?70:40;
+        if(width>440)label(g,enabled+" active",166,19,PanelStyle.MUTED,alpha);
+        int searchY=width<660?76:44;
         PanelStyle.control(g,16,searchY,width-244,22,search!=null&&search.isFocused(),false,alpha);
-        if (!showingDetails()) drawFittedLabel(g,width<600?"Drag titles · + / − fold · Ctrl+F search":"Left-click: toggle   ·   Right-click / …: settings   ·   Drag titles   ·   + / −: fold   ·   Ctrl+F: search",14,height-13,width-28,alpha,PanelStyle.TEXT);
+        if (!showingDetails()) drawFittedLabel(g,width<660?"Drag titles · Ctrl+F search · Ctrl+wheel size":"Left-click: toggle   ·   Right-click / …: settings   ·   Drag titles   ·   + / −: fold   ·   Ctrl+F: search   ·   Ctrl+wheel: size",14,height-13,width-28,alpha,PanelStyle.TEXT);
         for (var child : children()) {
             if (child instanceof net.minecraft.client.gui.components.AbstractWidget widget) widget.setAlpha(alpha);
         }
@@ -598,9 +641,9 @@ final class ControlPanel extends Screen {
         int h = windowHeight(group);
         g.pose().pushMatrix();
         g.pose().translate(0, slide);
-        if(!isCollapsed(group))g.fill(x, y + HEADER, x + w, y + h, PanelStyle.background(0x0A0D14, alpha));
-        g.fill(x, y, x + w, y + HEADER, PanelStyle.background(PanelStyle.PURPLE, alpha));
-        g.fill(x,y,x+w,y+1,PanelStyle.alpha(PanelStyle.PURPLE_LIGHT,alpha*.8f));
+        PanelStyle.surface(g,x,y,w,h,alpha);
+        g.fillGradient(x+1,y+1,x+w-1,y+HEADER,PanelStyle.alpha(0xBA2D304A,alpha),PanelStyle.alpha(0xA11A2233,alpha));
+        g.fill(x+1,y+HEADER-1,x+w-1,y+HEADER,PanelStyle.alpha(0x557C74AE,alpha));
         drawFittedLabel(g,group.toString(),x+8,y+9,w-61,alpha,PanelStyle.TEXT);
         int count = features(group).size();
         String countText = Integer.toString(count);
@@ -618,7 +661,9 @@ final class ControlPanel extends Screen {
             boolean hover = !showingDetails() && inside(mouseX, mouseY - slide, x, rowY, w, rowHeight);
             if (rowAlpha < .015f) continue;
             if ((row & 1) == 0) g.fill(x + 1, rowY, x + w - 1, rowY + rowHeight, PanelStyle.alpha(0x10000000, rowAlpha));
-            if (hover) g.fill(x + 1, rowY, x + w - 1, rowY + rowHeight, PanelStyle.alpha(0x33A76AFF, rowAlpha));
+            float over=Settings.toggle("ui.motion")?PanelStyle.approach(rowHover.getOrDefault(feature,0f),hover?1:0,frameSeconds,18):(hover?1:0);
+            rowHover.put(feature,over);
+            if(over>.01f)g.fill(x+1,rowY,x+w-1,rowY+rowHeight,PanelStyle.alpha(0x386B6E9F,rowAlpha*over));
             if (Settings.on(feature.id)) {
                 g.fill(x + 1, rowY, x + w - 1, rowY + rowHeight, PanelStyle.alpha(0x382C1550, rowAlpha));
                 g.fill(x + 1, rowY + 3, x + 3, rowY + rowHeight - 3, PanelStyle.alpha(PanelStyle.PURPLE_LIGHT, rowAlpha));
@@ -645,7 +690,7 @@ final class ControlPanel extends Screen {
     }
 
     private void drawSmallControl(GuiGraphicsExtractor g,int x,int y,int w,int h,String text,boolean hover,float alpha){
-        PanelStyle.control(g,x,y,w,h,hover,false,alpha);
+        if(!text.equals("…")||hover)PanelStyle.control(g,x,y,w,h,hover,false,alpha);
         label(g,text,x+(w-font.width(PanelStyle.text(text)))/2,y+(h-9)/2,PanelStyle.TEXT,alpha);
     }
 
@@ -670,7 +715,10 @@ final class ControlPanel extends Screen {
         if(!hint.isBlank()&&now-hoverSince>400_000_000L){
             List<net.minecraft.util.FormattedCharSequence> lines=new ArrayList<>();
             for(String line:hint.split("\n"))lines.addAll(font.split(PanelStyle.text(line),Math.min(320,width-32)));
-            g.setTooltipForNextFrame(font,lines,mouseX,mouseY);
+            int tw=0;for(var line:lines)tw=Math.max(tw,font.width(line));
+            int th=lines.size()*13+16,tx=Math.clamp(mouseX+12,8,Math.max(8,width-tw-24)),ty=Math.clamp(mouseY+16,8,Math.max(8,height-th-8));
+            PanelStyle.control(g,tx,ty,tw+16,th,false,false,1);
+            for(int i=0;i<lines.size();i++)g.text(font,lines.get(i),tx+8,ty+8+i*13,i==0?PanelStyle.TEXT:PanelStyle.MUTED,false);
         }
     }
 
@@ -678,10 +726,9 @@ final class ControlPanel extends Screen {
         long age = now - opened;
         float alpha = closing ? closeFrom * (1 - PanelStyle.ease((now - closingAt) / (float)CLOSE_NANOS)) : openProgress(now);
         if (alpha < .015f) return;
-        g.fill(dialogX, dialogY, dialogX + dialogW, dialogY + dialogH, PanelStyle.background(0x0B101A, alpha));
-        g.fill(dialogX,dialogY,dialogX+dialogW,dialogY+1,PanelStyle.alpha(PanelStyle.PURPLE_LIGHT,alpha));
+        PanelStyle.surface(g,dialogX,dialogY,dialogW,dialogH,alpha);
         label(g, uiSettings ? "UI Settings" : detail.label, dialogX + 18, dialogY + 45, PanelStyle.TEXT, alpha);
-        drawFittedLabel(g, uiSettings ? "Size changes module lists. The workspace and controls stay fullscreen." : detail.description, dialogX + 18, dialogY + 62, dialogW - 36, alpha * .9f, PanelStyle.TEXT);
+        drawFittedLabel(g, uiSettings ? "Fine-tune size, spacing and motion. Controls stay at native size." : detail.description, dialogX + 18, dialogY + 62, dialogW - 36, alpha * .9f, PanelStyle.TEXT);
         for (int i = 0; i < shownOptions.size(); i++) {
             Settings.Option option = shownOptions.get(i);
             int y = optionStart + i * optionPitch;
@@ -692,7 +739,7 @@ final class ControlPanel extends Screen {
         if (detailOptions.isEmpty()) label(g, "No additional settings for this module.", dialogX + 18, optionStart + 6,
             PanelStyle.MUTED, alpha);
         String footer = detailOptions.size() > optionVisible ? "Scroll for more  ·  Right-click a slider to reset" : "Settings save when you close the panel";
-        label(g, footer, dialogX + 18, dialogY + dialogH - 22, PanelStyle.MUTED, alpha * .85f);
+        drawFittedLabel(g,footer,dialogX+18,dialogY+dialogH-22,dialogW-(detailOptions.size()>optionVisible?110:36),alpha*.85f,PanelStyle.MUTED);
         if (detailOptions.size() > optionVisible) {
             String page = (detailScroll + 1) + "–" + Math.min(detailOptions.size(), detailScroll + optionVisible) + " / " + detailOptions.size();
             label(g, page, dialogX + dialogW - font.width(PanelStyle.text(page)) - 18, dialogY + dialogH - 22, PanelStyle.MUTED, alpha);
@@ -746,7 +793,7 @@ final class ControlPanel extends Screen {
 
     private void label(GuiGraphicsExtractor g, String value, int x, int y, int color, float alpha) {
         if (alpha < .015f) return;
-        g.text(font, PanelStyle.text(value), x, y, PanelStyle.alpha(color, alpha), true);
+        g.text(font, PanelStyle.text(value), x, y, PanelStyle.alpha(color, alpha), minecraft.level!=null);
     }
 
     @Override public void extractBackground(GuiGraphicsExtractor g, int mouseX, int mouseY, float delta) { }
