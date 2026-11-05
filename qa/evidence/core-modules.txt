@@ -1,0 +1,11 @@
+Historical assertion output, extracted from the original local run.
+Full game logs and personal filesystem paths are intentionally excluded.
+
+CORE PASS AutoTotem equips inventory totem on server
+CORE PASS disabled AutoTotem leaves offhand unchanged
+CORE PASS AutoReplenish replaces depleted hotbar stack on server
+CORE PASS AutoEat consumes bread and restores server hunger
+CORE PASS AutoGap consumes golden apple and grants server absorption
+CORE PASS AutoMend repairs Mending armor using server XP bottles
+CORE PASS KillAura damages selected cow type on integrated server
+CORE COMPLETE failures=0

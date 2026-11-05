@@ -1,0 +1,454 @@
+Historical assertion output, extracted from the original local run.
+Full game logs and personal filesystem paths are intentionally excluded.
+
+ALL START active-modules
+ALL RESULT active-modules RUNTIME_PASS
+ALL START kill-aura
+ALL RESULT kill-aura RUNTIME_PASS
+ALL START crystal-aura
+ALL RESULT crystal-aura RUNTIME_PASS
+ALL START anchor-aura
+ALL RESULT anchor-aura RUNTIME_PASS
+ALL START bed-aura
+ALL RESULT bed-aura RUNTIME_PASS
+ALL START auto-totem
+ALL RESULT auto-totem RUNTIME_PASS
+ALL START criticals
+ALL RESULT criticals RUNTIME_PASS
+ALL START bow-aimbot
+ALL RESULT bow-aimbot RUNTIME_PASS
+ALL START bow-spam
+ALL RESULT bow-spam RUNTIME_PASS
+ALL START auto-clicker
+ALL RESULT auto-clicker RUNTIME_PASS
+ALL START flight
+ALL RESULT flight RUNTIME_PASS
+ALL START boat-fly
+ALL RESULT boat-fly RUNTIME_PASS
+ALL START elytra-fly
+ALL RESULT elytra-fly RUNTIME_PASS
+ALL START elytra-boost
+ALL RESULT elytra-boost RUNTIME_PASS
+ALL START speed
+ALL RESULT speed RUNTIME_PASS
+ALL START no-fall
+ALL RESULT no-fall RUNTIME_PASS
+ALL START jesus
+ALL RESULT jesus RUNTIME_PASS
+ALL START step
+ALL RESULT step RUNTIME_PASS
+ALL START blink
+ALL RESULT blink RUNTIME_PASS
+ALL START freecam
+ALL RESULT freecam RUNTIME_PASS
+ALL START esp
+ALL RESULT esp RUNTIME_PASS
+ALL START storage-esp
+ALL RESULT storage-esp RUNTIME_PASS
+ALL START structure-esp
+ALL RESULT structure-esp RUNTIME_PASS
+ALL START free-look
+ALL RESULT free-look RUNTIME_PASS
+ALL START tracers
+ALL RESULT tracers RUNTIME_PASS
+ALL START nametags
+ALL RESULT nametags RUNTIME_PASS
+ALL START auto-eat
+ALL RESULT auto-eat RUNTIME_PASS
+ALL START auto-gap
+ALL RESULT auto-gap RUNTIME_PASS
+ALL START auto-log
+ALL RESULT auto-log RUNTIME_PASS
+ALL START auto-mend
+ALL RESULT auto-mend RUNTIME_PASS
+ALL START auto-replenish
+ALL RESULT auto-replenish RUNTIME_PASS
+ALL START fast-climb
+ALL RESULT fast-climb RUNTIME_PASS
+ALL START auto-respawn
+ALL RESULT auto-respawn RUNTIME_PASS
+ALL START auto-sign
+ALL RESULT auto-sign RUNTIME_PASS
+ALL START auto-breed
+ALL RESULT auto-breed RUNTIME_PASS
+ALL START auto-shearer
+ALL RESULT auto-shearer RUNTIME_PASS
+ALL START auto-fish
+ALL RESULT auto-fish RUNTIME_PASS
+ALL START build-pos
+ALL RESULT build-pos RUNTIME_PASS
+ALL START air-jump
+ALL RESULT air-jump RUNTIME_PASS
+ALL START anchor
+ALL RESULT anchor RUNTIME_PASS
+ALL START anti-void
+ALL RESULT anti-void RUNTIME_PASS
+ALL START auto-jump
+ALL RESULT auto-jump RUNTIME_PASS
+ALL START auto-walk
+ALL RESULT auto-walk RUNTIME_PASS
+ALL START auto-wasp
+ALL RESULT auto-wasp RUNTIME_PASS
+ALL START click-tp
+ALL RESULT click-tp RUNTIME_PASS
+ALL START entity-control
+ALL RESULT entity-control RUNTIME_PASS
+ALL START gui-move
+ALL RESULT gui-move RUNTIME_PASS
+ALL START high-jump
+ALL RESULT high-jump RUNTIME_PASS
+ALL START long-jump
+ALL RESULT long-jump RUNTIME_PASS
+ALL START no-slow
+ALL RESULT no-slow RUNTIME_PASS
+ALL START parkour
+ALL RESULT parkour RUNTIME_PASS
+ALL START reverse-step
+ALL RESULT reverse-step RUNTIME_PASS
+ALL START safe-walk
+ALL RESULT safe-walk RUNTIME_PASS
+ALL START slippy
+ALL RESULT slippy RUNTIME_PASS
+ALL START sneak
+ALL RESULT sneak RUNTIME_PASS
+ALL START spider
+ALL RESULT spider RUNTIME_PASS
+ALL START sprint
+ALL RESULT sprint RUNTIME_PASS
+ALL START trident-boost
+ALL RESULT trident-boost RUNTIME_PASS
+ALL START boat-control
+ALL RESULT boat-control RUNTIME_PASS
+ALL START auto-sneak
+ALL RESULT auto-sneak RUNTIME_PASS
+ALL START jump-flight
+ALL RESULT jump-flight RUNTIME_PASS
+ALL START jumps
+ALL RESULT jumps RUNTIME_PASS
+ALL START fly-speed
+ALL RESULT fly-speed RUNTIME_PASS
+ALL START anti-anvil
+ALL RESULT anti-anvil RUNTIME_PASS
+ALL START anti-bed
+ALL RESULT anti-bed RUNTIME_PASS
+ALL START arrow-dodge
+ALL RESULT arrow-dodge RUNTIME_PASS
+ALL START auto-anvil
+ALL RESULT auto-anvil RUNTIME_PASS
+ALL START auto-armor
+ALL RESULT auto-armor RUNTIME_PASS
+ALL START auto-city
+ALL RESULT auto-city RUNTIME_PASS
+ALL START auto-exp
+ALL RESULT auto-exp RUNTIME_PASS
+ALL START auto-trap
+ALL RESULT auto-trap RUNTIME_PASS
+ALL START auto-weapon
+ALL RESULT auto-weapon RUNTIME_PASS
+ALL START auto-web
+ALL RESULT auto-web RUNTIME_PASS
+ALL START burrow
+ALL RESULT burrow RUNTIME_PASS
+ALL START hole-filler
+ALL RESULT hole-filler RUNTIME_PASS
+ALL START offhand
+ALL RESULT offhand RUNTIME_PASS
+ALL START self-anvil
+ALL RESULT self-anvil RUNTIME_PASS
+ALL START self-trap
+ALL RESULT self-trap RUNTIME_PASS
+ALL START self-web
+ALL RESULT self-web RUNTIME_PASS
+ALL START surround
+ALL RESULT surround RUNTIME_PASS
+ALL START air-place
+ALL RESULT air-place RUNTIME_PASS
+ALL START anti-afk
+ALL RESULT anti-afk RUNTIME_PASS
+ALL START auto-tool
+ALL RESULT auto-tool RUNTIME_PASS
+ALL START exp-thrower
+ALL RESULT exp-thrower RUNTIME_PASS
+ALL START no-mining-trace
+ALL RESULT no-mining-trace RUNTIME_PASS
+ALL START speed-mine
+ALL RESULT speed-mine RUNTIME_PASS
+ALL START instant-rebreak
+ALL RESULT instant-rebreak RUNTIME_PASS
+ALL START scaffold
+ALL RESULT scaffold RUNTIME_PASS
+ALL START auto-mount
+ALL RESULT auto-mount RUNTIME_PASS
+ALL START auto-dirt-path
+ALL RESULT auto-dirt-path RUNTIME_PASS
+ALL START auto-farm-land
+ALL RESULT auto-farm-land RUNTIME_PASS
+ALL START auto-log-strip
+ALL RESULT auto-log-strip RUNTIME_PASS
+ALL START auto-farming
+ALL RESULT auto-farming RUNTIME_PASS
+ALL START auto-mud
+ALL RESULT auto-mud RUNTIME_PASS
+ALL START placer
+ALL RESULT placer RUNTIME_PASS
+ALL START liquid-filler
+ALL RESULT liquid-filler RUNTIME_PASS
+ALL START nuker
+ALL RESULT nuker RUNTIME_PASS
+ALL START excavator
+ALL RESULT excavator RUNTIME_PASS
+ALL START vein-miner
+ALL RESULT vein-miner RUNTIME_PASS
+ALL START spawn-proofer
+ALL RESULT spawn-proofer RUNTIME_PASS
+ALL START e-chest-farmer
+ALL RESULT e-chest-farmer RUNTIME_PASS
+ALL START packet-mine
+ALL RESULT packet-mine RUNTIME_PASS
+ALL START auto-smelter
+ALL RESULT auto-smelter RUNTIME_PASS
+ALL START auto-brewer
+ALL RESULT auto-brewer RUNTIME_PASS
+ALL START entity-interact
+ALL RESULT entity-interact RUNTIME_PASS
+ALL START auto-interact
+ALL RESULT auto-interact RUNTIME_PASS
+ALL START double-doors-interact
+ALL RESULT double-doors-interact RUNTIME_PASS
+ALL START xray
+ALL RESULT xray RUNTIME_PASS
+ALL START fullbright
+ALL RESULT fullbright RUNTIME_PASS
+ALL START zoom-plus
+ALL RESULT zoom-plus RUNTIME_PASS
+ALL START block-esp
+ALL RESULT block-esp RUNTIME_PASS
+ALL START block-selection
+ALL RESULT block-selection RUNTIME_PASS
+ALL START breadcrumbs
+ALL RESULT breadcrumbs RUNTIME_PASS
+ALL START trail
+ALL RESULT trail RUNTIME_PASS
+ALL START city-esp
+ALL RESULT city-esp RUNTIME_PASS
+ALL START entity-owner
+ALL RESULT entity-owner RUNTIME_PASS
+ALL START hole-esp
+ALL RESULT hole-esp RUNTIME_PASS
+ALL START item-highlight
+ALL RESULT item-highlight RUNTIME_PASS
+ALL START light-overlay
+ALL RESULT light-overlay RUNTIME_PASS
+ALL START logout-spots
+ALL RESULT logout-spots RUNTIME_PASS
+ALL START marker
+ALL RESULT marker RUNTIME_PASS
+ALL START trajectories
+ALL RESULT trajectories RUNTIME_PASS
+ALL START trajectories-plus
+ALL RESULT trajectories-plus RUNTIME_PASS
+ALL START tunnel-esp
+ALL RESULT tunnel-esp RUNTIME_PASS
+ALL START void-esp
+ALL RESULT void-esp RUNTIME_PASS
+ALL START grid
+ALL RESULT grid RUNTIME_PASS
+ALL START deepslate-esp
+ALL RESULT deepslate-esp RUNTIME_PASS
+ALL START better-locator
+ALL RESULT better-locator RUNTIME_PASS
+ALL START nerd-vision
+ALL RESULT nerd-vision RUNTIME_PASS
+ALL START break-indicators
+ALL RESULT break-indicators RUNTIME_PASS
+ALL START better-beacons
+ALL RESULT better-beacons RUNTIME_PASS
+ALL START stash-finder
+ALL RESULT stash-finder RUNTIME_PASS
+ALL START sign-search
+ALL RESULT sign-search RUNTIME_PASS
+ALL START chest-swap
+ALL RESULT chest-swap RUNTIME_PASS
+ALL START fake-player
+ALL RESULT fake-player RUNTIME_PASS
+ALL START fast-use
+ALL RESULT fast-use RUNTIME_PASS
+ALL START ghost-hand
+ALL RESULT ghost-hand RUNTIME_PASS
+ALL START liquid-interact
+ALL RESULT liquid-interact RUNTIME_PASS
+ALL START middle-click-extra
+ALL RESULT middle-click-extra RUNTIME_PASS
+ALL START name-protect
+ALL RESULT name-protect RUNTIME_PASS
+ALL START no-interact
+ALL RESULT no-interact RUNTIME_PASS
+ALL START no-rotate
+ALL RESULT no-rotate RUNTIME_PASS
+ALL START no-status-effects
+ALL RESULT no-status-effects RUNTIME_PASS
+ALL START portals
+ALL RESULT portals RUNTIME_PASS
+ALL START reach
+ALL RESULT reach RUNTIME_PASS
+ALL START rotation
+ALL RESULT rotation RUNTIME_PASS
+ALL START break-delay
+ALL RESULT break-delay RUNTIME_PASS
+ALL START attribute-swap
+ALL RESULT attribute-swap RUNTIME_PASS
+ALL START hitboxes
+ALL RESULT hitboxes RUNTIME_PASS
+ALL START quiver
+ALL RESULT quiver RUNTIME_PASS
+ALL START velocity
+ALL RESULT velocity RUNTIME_PASS
+ALL START better-tooltips
+ALL RESULT better-tooltips RUNTIME_PASS
+ALL START camera-tweaks
+ALL RESULT camera-tweaks RUNTIME_PASS
+ALL START hand-view
+ALL RESULT hand-view RUNTIME_PASS
+ALL START item-physics
+ALL RESULT item-physics RUNTIME_PASS
+ALL START no-render
+ALL RESULT no-render RUNTIME_PASS
+ALL START hand-derp
+ALL RESULT hand-derp RUNTIME_PASS
+ALL START anti-hunger
+ALL RESULT anti-hunger RUNTIME_PASS
+ALL START multitask
+ALL RESULT multitask RUNTIME_PASS
+ALL START potion-saver
+ALL RESULT potion-saver RUNTIME_PASS
+ALL START better-tab
+ALL RESULT better-tab RUNTIME_PASS
+ALL START blur
+ALL RESULT blur RUNTIME_PASS
+ALL START boss-stack
+ALL RESULT boss-stack RUNTIME_PASS
+ALL START chams
+ALL RESULT chams RUNTIME_PASS
+ALL START pop-chams
+ALL RESULT pop-chams RUNTIME_PASS
+ALL START time-changer
+ALL RESULT time-changer RUNTIME_PASS
+ALL START ambience
+ALL RESULT ambience RUNTIME_PASS
+ALL START auto-nametag
+ALL RESULT auto-nametag RUNTIME_PASS
+ALL START build-height
+ALL RESULT build-height RUNTIME_PASS
+ALL START collisions
+ALL RESULT collisions RUNTIME_PASS
+ALL START enderman-look
+ALL RESULT enderman-look RUNTIME_PASS
+ALL START flamethrower
+ALL RESULT flamethrower RUNTIME_PASS
+ALL START highway-builder
+ALL RESULT highway-builder RUNTIME_PASS
+ALL START infinity-miner
+ALL RESULT infinity-miner RUNTIME_PASS
+ALL START no-ghost-blocks
+ALL RESULT no-ghost-blocks RUNTIME_PASS
+ALL START timer
+ALL RESULT timer RUNTIME_PASS
+ALL START anti-packet-kick
+ALL RESULT anti-packet-kick RUNTIME_PASS
+ALL START auto-reconnect
+ALL RESULT auto-reconnect RUNTIME_PASS
+ALL START better-chat
+ALL RESULT better-chat RUNTIME_PASS
+ALL START book-bot
+ALL RESULT book-bot RUNTIME_PASS
+ALL START discord-presence
+ALL RESULT discord-presence RUNTIME_PASS
+ALL START inventory-tweaks
+ALL RESULT inventory-tweaks RUNTIME_PASS
+ALL START message-aura
+ALL RESULT message-aura RUNTIME_PASS
+ALL START notebot
+ALL RESULT notebot RUNTIME_PASS
+ALL START notifier
+ALL RESULT notifier RUNTIME_PASS
+ALL START packet-canceller
+ALL RESULT packet-canceller RUNTIME_PASS
+ALL START packet-logger
+ALL RESULT packet-logger RUNTIME_PASS
+ALL START server-spoof
+ALL RESULT server-spoof RUNTIME_PASS
+ALL START sound-blocker
+ALL RESULT sound-blocker RUNTIME_PASS
+ALL START spam
+ALL RESULT spam RUNTIME_PASS
+ALL START disconnect-sound
+ALL RESULT disconnect-sound RUNTIME_PASS
+ALL START dm-spam
+ALL RESULT dm-spam RUNTIME_PASS
+ALL START auto-endorse
+ALL RESULT auto-endorse RUNTIME_PASS
+ALL START auto-login
+ALL RESULT auto-login RUNTIME_PASS
+ALL START auto-sell
+ALL RESULT auto-sell RUNTIME_PASS
+ALL START chat-utility
+ALL RESULT chat-utility RUNTIME_PASS
+ALL START auto-crafter
+ALL RESULT auto-crafter RUNTIME_PASS
+ALL START auto-feed
+ALL RESULT auto-feed RUNTIME_PASS
+ALL START auto-heal
+ALL RESULT auto-heal RUNTIME_PASS
+ALL START auto-repair
+ALL RESULT auto-repair RUNTIME_PASS
+ALL START auto-sleep
+ALL RESULT auto-sleep RUNTIME_PASS
+ALL START auto-trade
+ALL RESULT auto-trade RUNTIME_PASS
+ALL START bedrock-printer
+ALL RESULT bedrock-printer RUNTIME_PASS
+ALL START ore-sim
+ALL RESULT ore-sim RUNTIME_PASS
+ALL START auto-leave
+ALL RESULT auto-leave RUNTIME_PASS
+ALL START slot-click
+ALL RESULT slot-click RUNTIME_PASS
+ALL START item-sucker
+ALL RESULT item-sucker RUNTIME_PASS
+ALL START z-aimbot
+ALL RESULT z-aimbot RUNTIME_PASS
+ALL START z-auto-totem
+ALL RESULT z-auto-totem RUNTIME_PASS
+ALL START z-kill-aura
+ALL RESULT z-kill-aura RUNTIME_PASS
+ALL START auto-trap-plus
+ALL RESULT auto-trap-plus RUNTIME_PASS
+ALL START legit-mace-kill
+ALL RESULT legit-mace-kill RUNTIME_PASS
+ALL START mace-combo
+ALL RESULT mace-combo RUNTIME_PASS
+ALL START armor-buster
+ALL RESULT armor-buster RUNTIME_PASS
+ALL START blaze-form
+ALL RESULT blaze-form RUNTIME_PASS
+ALL START smite-aura
+ALL RESULT smite-aura RUNTIME_PASS
+ALL START wind-charge-jump
+ALL RESULT wind-charge-jump RUNTIME_PASS
+ALL START swarm
+ALL RESULT swarm RUNTIME_PASS
+ALL START instructions
+ALL RESULT instructions RUNTIME_PASS
+ALL START minescript-integration
+ALL RESULT minescript-integration RUNTIME_PASS
+ALL START range-actions
+ALL RESULT range-actions RUNTIME_PASS
+ALL START category-manager
+ALL RESULT category-manager RUNTIME_PASS
+ALL START hotkey-utility
+ALL RESULT hotkey-utility RUNTIME_PASS
+ALL START pearl-checker
+ALL RESULT pearl-checker RUNTIME_PASS
+ALL START death-commands
+ALL RESULT death-commands RUNTIME_PASS
+ALL COMPLETE tested=225 failures=0 elapsed_ms=123728

@@ -1,0 +1,32 @@
+Historical assertion output, extracted from the original local run.
+Full game logs and personal filesystem paths are intentionally excluded.
+
+UPGRADE PASS default opacity 20 percent
+UPGRADE PASS default scale 70 percent
+UPGRADE PASS category bounds do not overlap at 720x450
+UPGRADE PASS scaled left-click toggles module
+UPGRADE PASS right click exposes entity selector
+UPGRADE PASS entity selector opens
+UPGRADE PASS runtime attackable registry list
+UPGRADE PASS multipart dragon included in target registry
+UPGRADE PASS None button clears entity selection
+UPGRADE PASS single entity type selection excludes other types
+UPGRADE PASS UI settings tab opens
+UPGRADE PASS opacity slider updates live setting
+UPGRADE PASS size slider changes scale on release
+UPGRADE PASS 225 module entries registered
+UPGRADE PASS every module has a key mapping
+UPGRADE PASS FakePlayer creates local dummy
+UPGRADE PASS Fullbright applies local night vision
+UPGRADE PASS FakePlayer removed when disabled
+UPGRADE PASS HighJump uses configured jump power
+UPGRADE PASS Fullbright restores prior visual state
+UPGRADE PASS AutoTool chooses faster hotbar tool
+UPGRADE PASS Scaffold places block confirmed by integrated server
+UPGRADE PASS packet filter matches configured type
+UPGRADE PASS AutoLogin secret is not written to config
+UPGRADE PASS category bounds do not overlap at 640x360
+UPGRADE PASS dragging onto another category swaps windows
+UPGRADE PASS category bounds do not overlap at 640x360
+UPGRADE PASS category bounds do not overlap at 320x240
+UPGRADE COMPLETE failures=0

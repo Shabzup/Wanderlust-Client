@@ -1,0 +1,351 @@
+Historical assertion output, extracted from the original local run.
+Full game logs and personal filesystem paths are intentionally excluded.
+
+REPAIR PASS normal renderer hides fully enclosed ore faces
+REPAIR PASS Fabric renderer emits fully bright emissive ore faces
+REPAIR PASS Fabric renderer hides unselected uncullable plant quads
+REPAIR PASS Xray suppresses unselected fluid geometry
+REPAIR PASS Xray emits all enclosed ore faces using the actual model renderer
+REPAIR PASS Xray emitted ore quads are fully lit
+REPAIR PASS Xray emits no ordinary stone geometry
+REPAIR PASS Xray exposes otherwise occluded chunk sections
+REPAIR PASS normal plant rendering is restored after Xray
+REPAIR PASS normal fluid rendering is restored after Xray
+REPAIR PASS disabling Xray restores normal face culling
+REPAIR PASS disabling Xray restores section occlusion
+REPAIR PASS server inventory contains supplied XP bottles
+REPAIR PASS AutoEXP consumes XP bottles on integrated server with undamaged equipment
+REPAIR PASS AutoEXP stops consuming after disable
+REPAIR PASS optional repair-only mode waits for damaged equipment
+REPAIR PASS repair-only mode throws once equipment is damaged
+REPAIR PASS AutoEXP consumes offhand bottles on integrated server
+REPAIR PASS ExpThrower consumes XP bottles on integrated server
+REPAIR PASS Xray rebuilds complete scene geometry
+REPAIR PASS normal scene geometry is restored after Xray
+AUDIT WIRING PASS active-modules
+AUDIT WIRING PASS kill-aura
+AUDIT WIRING PASS crystal-aura
+AUDIT WIRING PASS anchor-aura
+AUDIT WIRING PASS bed-aura
+AUDIT WIRING PASS auto-totem
+AUDIT WIRING PASS criticals
+AUDIT WIRING PASS bow-aimbot
+AUDIT WIRING PASS bow-spam
+AUDIT WIRING PASS auto-clicker
+AUDIT WIRING PASS flight
+AUDIT WIRING PASS boat-fly
+AUDIT WIRING PASS elytra-fly
+AUDIT WIRING PASS elytra-boost
+AUDIT WIRING PASS speed
+AUDIT WIRING PASS no-fall
+AUDIT WIRING PASS jesus
+AUDIT WIRING PASS step
+AUDIT WIRING PASS blink
+AUDIT WIRING PASS freecam
+AUDIT WIRING PASS esp
+AUDIT WIRING PASS storage-esp
+AUDIT WIRING PASS structure-esp
+AUDIT WIRING PASS free-look
+AUDIT WIRING PASS tracers
+AUDIT WIRING PASS nametags
+AUDIT WIRING PASS auto-eat
+AUDIT WIRING PASS auto-gap
+AUDIT WIRING PASS auto-log
+AUDIT WIRING PASS auto-mend
+AUDIT WIRING PASS auto-replenish
+AUDIT WIRING PASS fast-climb
+AUDIT WIRING PASS auto-respawn
+AUDIT WIRING PASS auto-sign
+AUDIT WIRING PASS auto-breed
+AUDIT WIRING PASS auto-shearer
+AUDIT WIRING PASS auto-fish
+AUDIT WIRING PASS build-pos
+AUDIT WIRING PASS air-jump
+AUDIT WIRING PASS anchor
+AUDIT WIRING PASS anti-void
+AUDIT WIRING PASS auto-jump
+AUDIT WIRING PASS auto-walk
+AUDIT WIRING PASS auto-wasp
+AUDIT WIRING PASS click-tp
+AUDIT WIRING PASS entity-control
+AUDIT WIRING PASS gui-move
+AUDIT WIRING PASS high-jump
+AUDIT WIRING PASS long-jump
+AUDIT WIRING PASS no-slow
+AUDIT WIRING PASS parkour
+AUDIT WIRING PASS reverse-step
+AUDIT WIRING PASS safe-walk
+AUDIT WIRING PASS slippy
+AUDIT WIRING PASS sneak
+AUDIT WIRING PASS spider
+AUDIT WIRING PASS sprint
+AUDIT WIRING PASS trident-boost
+AUDIT WIRING PASS boat-control
+AUDIT WIRING PASS auto-sneak
+AUDIT WIRING PASS jump-flight
+AUDIT WIRING PASS jumps
+AUDIT WIRING PASS fly-speed
+AUDIT WIRING PASS anti-anvil
+AUDIT WIRING PASS anti-bed
+AUDIT WIRING PASS arrow-dodge
+AUDIT WIRING PASS auto-anvil
+AUDIT WIRING PASS auto-armor
+AUDIT WIRING PASS auto-city
+AUDIT WIRING PASS auto-exp
+AUDIT WIRING PASS auto-trap
+AUDIT WIRING PASS auto-weapon
+AUDIT WIRING PASS auto-web
+AUDIT WIRING PASS burrow
+AUDIT WIRING PASS hole-filler
+AUDIT WIRING PASS offhand
+AUDIT WIRING PASS self-anvil
+AUDIT WIRING PASS self-trap
+AUDIT WIRING PASS self-web
+AUDIT WIRING PASS surround
+AUDIT WIRING PASS air-place
+AUDIT WIRING PASS anti-afk
+AUDIT WIRING PASS auto-tool
+AUDIT WIRING PASS exp-thrower
+AUDIT WIRING PASS no-mining-trace
+AUDIT WIRING PASS speed-mine
+AUDIT WIRING PASS instant-rebreak
+AUDIT WIRING PASS scaffold
+AUDIT WIRING PASS auto-mount
+AUDIT WIRING PASS auto-dirt-path
+AUDIT WIRING PASS auto-farm-land
+AUDIT WIRING PASS auto-log-strip
+AUDIT WIRING PASS auto-farming
+AUDIT WIRING PASS auto-mud
+AUDIT WIRING PASS placer
+AUDIT WIRING PASS liquid-filler
+AUDIT WIRING PASS nuker
+AUDIT WIRING PASS excavator
+AUDIT WIRING PASS vein-miner
+AUDIT WIRING PASS spawn-proofer
+AUDIT WIRING PASS e-chest-farmer
+AUDIT WIRING PASS packet-mine
+AUDIT WIRING PASS auto-smelter
+AUDIT WIRING PASS auto-brewer
+AUDIT WIRING PASS entity-interact
+AUDIT WIRING PASS auto-interact
+AUDIT WIRING PASS double-doors-interact
+AUDIT WIRING PASS xray
+AUDIT WIRING PASS fullbright
+AUDIT WIRING PASS zoom-plus
+AUDIT WIRING PASS block-esp
+AUDIT WIRING PASS block-selection
+AUDIT WIRING PASS breadcrumbs
+AUDIT WIRING PASS trail
+AUDIT WIRING PASS city-esp
+AUDIT WIRING PASS entity-owner
+AUDIT WIRING PASS hole-esp
+AUDIT WIRING PASS item-highlight
+AUDIT WIRING PASS light-overlay
+AUDIT WIRING PASS logout-spots
+AUDIT WIRING PASS marker
+AUDIT WIRING PASS trajectories
+AUDIT WIRING PASS trajectories-plus
+AUDIT WIRING PASS tunnel-esp
+AUDIT WIRING PASS void-esp
+AUDIT WIRING PASS grid
+AUDIT WIRING PASS deepslate-esp
+AUDIT WIRING PASS better-locator
+AUDIT WIRING PASS nerd-vision
+AUDIT WIRING PASS break-indicators
+AUDIT WIRING PASS better-beacons
+AUDIT WIRING PASS stash-finder
+AUDIT WIRING PASS sign-search
+AUDIT WIRING PASS chest-swap
+AUDIT WIRING PASS fake-player
+AUDIT WIRING PASS fast-use
+AUDIT WIRING PASS ghost-hand
+AUDIT WIRING PASS liquid-interact
+AUDIT WIRING PASS middle-click-extra
+AUDIT WIRING PASS name-protect
+AUDIT WIRING PASS no-interact
+AUDIT WIRING PASS no-rotate
+AUDIT WIRING PASS no-status-effects
+AUDIT WIRING PASS portals
+AUDIT WIRING PASS reach
+AUDIT WIRING PASS rotation
+AUDIT WIRING PASS break-delay
+AUDIT WIRING PASS attribute-swap
+AUDIT WIRING PASS hitboxes
+AUDIT WIRING PASS quiver
+AUDIT WIRING PASS velocity
+AUDIT WIRING PASS better-tooltips
+AUDIT WIRING PASS camera-tweaks
+AUDIT WIRING PASS hand-view
+AUDIT WIRING PASS item-physics
+AUDIT WIRING PASS no-render
+AUDIT WIRING PASS hand-derp
+AUDIT WIRING PASS anti-hunger
+AUDIT WIRING PASS multitask
+AUDIT WIRING PASS potion-saver
+AUDIT WIRING PASS better-tab
+AUDIT WIRING PASS blur
+AUDIT WIRING PASS boss-stack
+AUDIT WIRING PASS chams
+AUDIT WIRING PASS pop-chams
+AUDIT WIRING PASS time-changer
+AUDIT WIRING PASS ambience
+AUDIT WIRING PASS auto-nametag
+AUDIT WIRING PASS build-height
+AUDIT WIRING PASS collisions
+AUDIT WIRING PASS enderman-look
+AUDIT WIRING PASS flamethrower
+AUDIT WIRING PASS highway-builder
+AUDIT WIRING PASS infinity-miner
+AUDIT WIRING PASS no-ghost-blocks
+AUDIT WIRING PASS timer
+AUDIT WIRING PASS anti-packet-kick
+AUDIT WIRING PASS auto-reconnect
+AUDIT WIRING PASS better-chat
+AUDIT WIRING PASS book-bot
+AUDIT WIRING PASS discord-presence
+AUDIT WIRING PASS inventory-tweaks
+AUDIT WIRING PASS message-aura
+AUDIT WIRING PASS notebot
+AUDIT WIRING PASS notifier
+AUDIT WIRING PASS packet-canceller
+AUDIT WIRING PASS packet-logger
+AUDIT WIRING PASS server-spoof
+AUDIT WIRING PASS sound-blocker
+AUDIT WIRING PASS spam
+AUDIT WIRING PASS disconnect-sound
+AUDIT WIRING PASS dm-spam
+AUDIT WIRING PASS auto-endorse
+AUDIT WIRING PASS auto-login
+AUDIT WIRING PASS auto-sell
+AUDIT WIRING PASS chat-utility
+AUDIT WIRING PASS auto-crafter
+AUDIT WIRING PASS auto-feed
+AUDIT WIRING PASS auto-heal
+AUDIT WIRING PASS auto-repair
+AUDIT WIRING PASS auto-sleep
+AUDIT WIRING PASS auto-trade
+AUDIT WIRING PASS bedrock-printer
+AUDIT WIRING PASS ore-sim
+AUDIT WIRING PASS auto-leave
+AUDIT WIRING PASS slot-click
+AUDIT WIRING PASS item-sucker
+AUDIT WIRING PASS z-aimbot
+AUDIT WIRING PASS z-auto-totem
+AUDIT WIRING PASS z-kill-aura
+AUDIT WIRING PASS auto-trap-plus
+AUDIT WIRING PASS legit-mace-kill
+AUDIT WIRING PASS mace-combo
+AUDIT WIRING PASS armor-buster
+AUDIT WIRING PASS blaze-form
+AUDIT WIRING PASS smite-aura
+AUDIT WIRING PASS wind-charge-jump
+AUDIT WIRING PASS swarm
+AUDIT WIRING PASS instructions
+AUDIT WIRING PASS minescript-integration
+AUDIT WIRING PASS range-actions
+AUDIT WIRING PASS category-manager
+AUDIT WIRING PASS hotkey-utility
+AUDIT WIRING PASS pearl-checker
+AUDIT WIRING PASS death-commands
+REPAIR PASS numeric setting exists: active-modules.scale
+REPAIR PASS numeric setting exists: active-modules.x
+REPAIR PASS numeric setting exists: active-modules.y
+REPAIR PASS numeric setting exists: air-jump.power
+REPAIR PASS numeric setting exists: ambience.rain
+REPAIR PASS numeric setting exists: ambience.thunder
+REPAIR PASS numeric setting exists: anchor-aura-range
+REPAIR PASS numeric setting exists: anti-afk.delay
+REPAIR PASS numeric setting exists: anti-void.height
+REPAIR PASS numeric setting exists: arrow-dodge.range
+REPAIR PASS numeric setting exists: attribute-swap.slot
+REPAIR PASS numeric setting exists: aura-delay
+REPAIR PASS numeric setting exists: aura-range
+REPAIR PASS numeric setting exists: auto-crafter.delay
+REPAIR PASS numeric setting exists: auto-feed.threshold
+REPAIR PASS numeric setting exists: auto-heal.threshold
+REPAIR PASS numeric setting exists: auto-leave.health
+REPAIR PASS numeric setting exists: auto-nametag.range
+REPAIR PASS numeric setting exists: auto-reconnect.seconds
+REPAIR PASS numeric setting exists: auto-repair.threshold
+REPAIR PASS numeric setting exists: auto-trade.delay
+REPAIR PASS numeric setting exists: auto-trade.offer
+REPAIR PASS numeric setting exists: auto-wasp.speed
+REPAIR PASS numeric setting exists: bed-aura-range
+REPAIR PASS numeric setting exists: blink.max-packets
+REPAIR PASS numeric setting exists: blink.ticks
+REPAIR PASS numeric setting exists: boat-fly.speed
+REPAIR PASS numeric setting exists: boat-fly.vertical
+REPAIR PASS numeric setting exists: bow-draw
+REPAIR PASS numeric setting exists: bow-range
+REPAIR PASS numeric setting exists: bowspam-range
+REPAIR PASS numeric setting exists: breadcrumbs.length
+REPAIR PASS numeric setting exists: breed-range
+REPAIR PASS numeric setting exists: build-length
+REPAIR PASS numeric setting exists: build-width
+REPAIR PASS numeric setting exists: click-interval
+REPAIR PASS numeric setting exists: crystal-aura-range
+REPAIR PASS numeric setting exists: eat-hunger
+REPAIR PASS numeric setting exists: elytra-boost.speed
+REPAIR PASS numeric setting exists: elytra-fly.speed
+REPAIR PASS numeric setting exists: esp-range
+REPAIR PASS numeric setting exists: fast-climb.speed
+REPAIR PASS numeric setting exists: fish-delay
+REPAIR PASS numeric setting exists: flight.speed
+REPAIR PASS numeric setting exists: flight.vertical
+REPAIR PASS numeric setting exists: fly-speed.speed
+REPAIR PASS numeric setting exists: freecam.range
+REPAIR PASS numeric setting exists: freecam.speed
+REPAIR PASS numeric setting exists: freelook.sensitivity
+REPAIR PASS numeric setting exists: gap-health
+REPAIR PASS numeric setting exists: grid.range
+REPAIR PASS numeric setting exists: hand-view.scale
+REPAIR PASS numeric setting exists: hand-view.x
+REPAIR PASS numeric setting exists: hand-view.y
+REPAIR PASS numeric setting exists: hand-view.z
+REPAIR PASS numeric setting exists: high-jump.power
+REPAIR PASS numeric setting exists: hitboxes.expand
+REPAIR PASS numeric setting exists: infinity-miner.delay
+REPAIR PASS numeric setting exists: item-sucker.range
+REPAIR PASS numeric setting exists: jump-flight.power
+REPAIR PASS numeric setting exists: jumps.power
+REPAIR PASS numeric setting exists: log-health
+REPAIR PASS numeric setting exists: long-jump.power
+REPAIR PASS numeric setting exists: marker.x
+REPAIR PASS numeric setting exists: marker.y
+REPAIR PASS numeric setting exists: marker.z
+REPAIR PASS numeric setting exists: mend-durability
+REPAIR PASS numeric setting exists: mend-interval
+REPAIR PASS numeric setting exists: nametag-range
+REPAIR PASS numeric setting exists: notebot.delay
+REPAIR PASS numeric setting exists: range-actions.radius
+REPAIR PASS numeric setting exists: range-actions.x
+REPAIR PASS numeric setting exists: range-actions.y
+REPAIR PASS numeric setting exists: range-actions.z
+REPAIR PASS numeric setting exists: reach.blocks
+REPAIR PASS numeric setting exists: reach.entities
+REPAIR PASS numeric setting exists: replenish-count
+REPAIR PASS numeric setting exists: respawn-delay
+REPAIR PASS numeric setting exists: reverse-step.speed
+REPAIR PASS numeric setting exists: rotation.pitch
+REPAIR PASS numeric setting exists: rotation.yaw
+REPAIR PASS numeric setting exists: shearer-range
+REPAIR PASS numeric setting exists: slot-click.delay
+REPAIR PASS numeric setting exists: slot-click.slot
+REPAIR PASS numeric setting exists: smite-aura.delay
+REPAIR PASS numeric setting exists: speed.speed
+REPAIR PASS numeric setting exists: spider.power
+REPAIR PASS numeric setting exists: step.height
+REPAIR PASS numeric setting exists: storage-range
+REPAIR PASS numeric setting exists: structure-range
+REPAIR PASS numeric setting exists: swarm.port
+REPAIR PASS numeric setting exists: time-changer.time
+REPAIR PASS numeric setting exists: timer.factor
+REPAIR PASS numeric setting exists: totem-health
+REPAIR PASS numeric setting exists: tracer-range
+REPAIR PASS numeric setting exists: trail.length
+REPAIR PASS numeric setting exists: trident-boost.factor
+REPAIR PASS numeric setting exists: ui.opacity
+REPAIR PASS numeric setting exists: ui.scale
+REPAIR PASS numeric setting exists: velocity.factor
+REPAIR PASS numeric setting exists: zoom-plus.fov
+REPAIR COMPLETE failures=0

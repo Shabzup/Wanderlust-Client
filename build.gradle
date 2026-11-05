@@ -1,0 +1,21 @@
+plugins {
+    id 'net.fabricmc.fabric-loom' version '1.17.7'
+}
+
+group = 'dev.shabzup'
+version = '1.0.0+26.2'
+
+repositories { mavenCentral() }
+
+dependencies {
+    minecraft 'com.mojang:minecraft:26.2'
+    implementation 'net.fabricmc:fabric-loader:0.19.5'
+    implementation 'net.fabricmc.fabric-api:fabric-api:0.161.0+26.2'
+    implementation include('net.raphimc:MinecraftAuth:5.0.2')
+    implementation include('net.lenni0451.commons:httpclient:1.9.2')
+    implementation include('net.lenni0451.commons:gson:1.9.2')
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
+}

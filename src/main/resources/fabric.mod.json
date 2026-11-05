@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "wanderlust",
+  "version": "1.0.0+26.2",
+  "name": "WanderlustClient",
+  "description": "Client-side combat, movement, visual, inventory and world tools.",
+  "authors": ["Shabzup"],
+  "environment": "client",
+  "entrypoints": { "client": ["dev.shabzup.wanderlust.Wanderlust"] },
+  "mixins": ["wanderlust.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "26.2",
+    "java": ">=25",
+    "fabric-api": ">=0.161.0"
+  }
+}

@@ -1,0 +1,15 @@
+Historical assertion output, extracted from the original local run.
+Full game logs and personal filesystem paths are intentionally excluded.
+
+WORLD PASS AutoDirtPath converts grass on server
+WORLD PASS AutoFarmLand tills ground on server
+WORLD PASS AutoLogStrip strips an oak log on server
+WORLD PASS AutoArmor upgrades leather to netherite on server
+WORLD PASS Offhand equips configured inventory shield on server
+WORLD PASS AutoShearer shears a sheep on server
+WORLD PASS AutoBreed feeds sheep into server breeding state
+WORLD PASS Step raises client step attribute
+WORLD PASS disabling Step restores client step attribute
+WORLD PASS AirPlace places floating cobblestone on server from a missed ray hit
+WORLD PASS Placer repeatedly places held blocks on server
+WORLD COMPLETE failures=0

@@ -1,0 +1,10 @@
+Historical assertion output, extracted from the original local run.
+Full game logs and personal filesystem paths are intentionally excluded.
+
+QA PASS client target fixture added
+QA PASS BowSpam fired multiple arrows on the integrated server
+QA PASS BowAimbot aimed toward the player fixture
+CRYSTAL OBSERVED placed=true broken=true
+QA PASS CrystalAura placed and broke an end crystal on the integrated server
+QA PASS AnchorAura placed, charged and detonated an Overworld anchor on the integrated server
+COMBAT COMPLETE failures=0
