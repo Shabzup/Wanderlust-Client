@@ -62,7 +62,13 @@ final class ModuleOptions {
         Settings.toggle("auto-mend", "mend-armor", "Repair armor", true);
         Settings.toggle("auto-mend", "mend-tools", "Repair held tools", false);
         Settings.numeric("auto-mend", "mend-durability", "Repair below durability (%)", 95, 5, 99, 5);
-        Settings.numeric("auto-replenish", "replenish-count", "Replace at stack count", 0, 0, 64, 1);
+        Settings.numeric("auto-replenish", "replenish-count", "Minimum stack count", 8, 1, 63, 1);
+        Settings.numeric("auto-replenish", "replenish-delay", "Ticks between moves", 1, 0, 40, 1);
+        Settings.toggle("auto-replenish", "replenish-offhand", "Refill offhand", true);
+        Settings.toggle("auto-replenish", "replenish-unstackable", "Replace used tools and items", true);
+        Settings.toggle("auto-replenish", "replenish-same-enchants", "Match enchantments", true);
+        Settings.toggle("auto-replenish", "replenish-hotbar", "Search other hotbar slots", false);
+        Settings.string("auto-replenish", "replenish-excluded", "Excluded item IDs (comma separated)", "");
         Settings.toggle("auto-log", "log-absorption", "Include absorption health", true);
         Settings.numeric("auto-respawn", "respawn-delay", "Respawn delay (ticks)", 1, 1, 100, 1);
 

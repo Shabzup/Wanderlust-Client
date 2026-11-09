@@ -10,6 +10,7 @@ Build first with `gradlew.bat build`. From the project root, run one suite at a 
 
 ```powershell
 python qa/launch.py --clean --polish
+python qa/launch.py --clean --replenish
 python qa/launch.py --clean --all-modules
 python qa/launch.py --clean --repair
 python qa/launch.py --clean --core
