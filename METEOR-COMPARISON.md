@@ -1,6 +1,6 @@
 # Meteor module comparison
 
-Source: [Meteor's registered modules](https://github.com/MeteorDevelopment/meteor-client/blob/master/src/main/java/meteordevelopment/meteorclient/systems/modules/Modules.java), reviewed 9 November 2026. Its registry has 169 modules. Wanderlust's 225 menu entries also include modules from the extra screenshot columns. Names in this table identify corresponding features, not equal behavior. See [MODULE-AUDIT.md](MODULE-AUDIT.md) for Wanderlust behavior evidence. Work through each row by reviewing Meteor's settings and behavior, implementing independent code, then recording a specific gameplay scenario.
+Source: [Meteor's registered modules](https://github.com/MeteorDevelopment/meteor-client/blob/e3a2e77967629d216e127b5ceecf71fb15f9d2e5/src/main/java/meteordevelopment/meteorclient/systems/modules/Modules.java), reviewed 9 November 2026. Its registry has 169 modules. Wanderlust's 225 menu entries also include modules from the extra screenshot columns. Names in this table identify corresponding features, not equal behavior. [METEOR-SETTINGS.md](METEOR-SETTINGS.md) indexes their declared setting names and defaults; 13 modules need manual inspection because the indexer found no standard setting builder. See [MODULE-AUDIT.md](MODULE-AUDIT.md) for Wanderlust behavior evidence. Work through each row by reviewing Meteor's settings and behavior, implementing independent code, then recording a specific gameplay scenario.
 
 ### Current implementation pass
 
