@@ -35,7 +35,7 @@ enum Feature {
     AUTO_EAT(Player, "AutoEat", "Eat food from your hotbar when hunger falls."),
     AUTO_GAP(Player, "AutoGap", "Eat a golden apple from your hotbar when health falls."),
     AUTO_LOG(Player, "AutoLog", "Disconnect from multiplayer below your health threshold."),
-    AUTO_MEND(Player, "AutoMend", "Throw hotbar XP bottles at your feet to repair worn Mending armor."),
+    AUTO_MEND(Player, "AutoMend", "Repair with XP bottles or queue damaged Mending items in your offhand."),
     AUTO_REPLENISH(Player, "AutoReplenish", "Replace depleted hotbar stacks and broken tools from your inventory."),
     FAST_CLIMB(Player, "FastClimb", "Ascend ladders and vines faster."),
     AUTO_RESPAWN(Player, "AutoRespawn", "Respawn automatically after death in a non-hardcore world."),

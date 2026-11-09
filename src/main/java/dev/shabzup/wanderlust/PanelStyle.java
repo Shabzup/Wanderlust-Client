@@ -8,6 +8,34 @@ import net.minecraft.resources.Identifier;
 final class PanelStyle {
     static final int TEXT = 0xFFF2F3F8, MUTED = 0xFF9DA6BB, BLUE = 0xFF8AAFFF;
     static final int PURPLE = 0xFF7561C9, PURPLE_LIGHT = 0xFFBAACF4;
+    static int accent() {
+        return switch (Settings.choice("ui.accent")) {
+            case "Ocean" -> 0xFF419DE8;
+            case "Mint" -> 0xFF38BFA0;
+            case "Rose" -> 0xFFE16E99;
+            case "Amber" -> 0xFFE6AE4E;
+            default -> PURPLE;
+        };
+    }
+    static int accentLight() { return mix(accent(), 0xFFFFFFFF, .38f); }
+    static int category(Feature.Group group) {
+        if (!Settings.toggle("ui.category-colours")) return accentLight();
+        return switch (group) {
+            case Combat -> 0xFFF28C9A;
+            case Movement -> 0xFF72C8EE;
+            case Visuals -> 0xFFBCA1F3;
+            case Player -> 0xFF73D9B2;
+            case World -> 0xFFF1C075;
+            case Misc -> 0xFF92A9EA;
+        };
+    }
+    static int mix(int a, int b, float t) {
+        t = Math.clamp(t, 0, 1);
+        int result = 0;
+        for (int shift = 0; shift <= 24; shift += 8)
+            result |= Math.round(((a >>> shift) & 255) * (1-t) + ((b >>> shift) & 255) * t) << shift;
+        return result;
+    }
     private static final FontDescription FONT = new FontDescription.Resource(Identifier.fromNamespaceAndPath("wanderlust", "ui"));
     private static final java.util.Map<String,Component> LABELS=new java.util.LinkedHashMap<>(512,.75f,true){
         @Override protected boolean removeEldestEntry(java.util.Map.Entry<String,Component> entry){return size()>512;}
@@ -42,7 +70,7 @@ final class PanelStyle {
         float[][] p=new float[6][3];
         float[][] vertices={{0,-1,0},{1,0,0},{0,0,1},{-1,0,0},{0,0,-1},{0,1,0}};
         for(int i=0;i<6;i++){float[] v=vertices[i];double xx=v[0]*Math.cos(angle)-v[2]*Math.sin(angle),zz=v[0]*Math.sin(angle)+v[2]*Math.cos(angle);p[i][0]=x+(float)xx*size;p[i][1]=y+(v[1]*.85f+(float)zz*.32f)*size;p[i][2]=(float)zz;}
-        for(int i=1;i<=4;i++){int next=i==4?1:i+1;int c=alpha(PURPLE_LIGHT,opacity*(p[i][2]<0?.28f:.75f));line(g,p[0][0],p[0][1],p[i][0],p[i][1],c);line(g,p[5][0],p[5][1],p[i][0],p[i][1],c);line(g,p[i][0],p[i][1],p[next][0],p[next][1],c);}
+        for(int i=1;i<=4;i++){int next=i==4?1:i+1;int c=alpha(accentLight(),opacity*(p[i][2]<0?.28f:.75f));line(g,p[0][0],p[0][1],p[i][0],p[i][1],c);line(g,p[5][0],p[5][1],p[i][0],p[i][1],c);line(g,p[i][0],p[i][1],p[next][0],p[next][1],c);}
     }
     static float ease(float t) { return 1 - (float)Math.pow(1 - Math.clamp(t, 0, 1), 3); }
     static float approach(float current, float target, float seconds, float speed) {
@@ -60,8 +88,11 @@ final class PanelStyle {
         g.fill(x, y, x + w, y + h, color);
     }
     static void control(GuiGraphicsExtractor g,int x,int y,int w,int h,boolean hover,boolean selected,float alpha) {
-        int edge=selected?PURPLE_LIGHT:hover?0xFF8E96B5:0xFF46516B;
-        int fill=selected?0xEE393052:hover?0xEE293248:0xE51B2333;
+        control(g,x,y,w,h,hover?1f:0f,selected,alpha);
+    }
+    static void control(GuiGraphicsExtractor g,int x,int y,int w,int h,float hover,boolean selected,float alpha) {
+        int edge=selected?accentLight():mix(0xFF46516B,accentLight(),hover*.7f);
+        int fill=selected?mix(0xEE1B2333,accent(),.25f):mix(0xE51B2333,0xEE35425C,hover);
         g.fill(x,y,x+w,y+h,alpha(edge,alpha));
         g.fill(x+1,y+1,x+w-1,y+h-1,alpha(fill,alpha));
         g.fill(x+1,y+1,x+w-1,y+2,alpha(0x228F9DBD,alpha));

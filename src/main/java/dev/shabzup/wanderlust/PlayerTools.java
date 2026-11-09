@@ -39,6 +39,7 @@ public final class PlayerTools {
     static void reset(Minecraft mc) {
         finishFood(mc);
         AutoReplenish.reset();
+        AutoMend.reset();
         fedAt.clear();
         nextMeal = nextUtility = nextCast = nextRespawn = 0;
     }
@@ -99,6 +100,7 @@ public final class PlayerTools {
         }
         if (p.isSpectator() || mc.isPaused() || p.containerMenu != p.inventoryMenu || Wanderlust.on("freecam")) return true;
         AutoReplenish.tick(mc, p);
+        if (!Wanderlust.on("auto-mend")) AutoMend.reset();
         if (p.isUsingItem()) return false; // Combat can still update its own bow draw.
         if (p.tickCount >= nextMeal && startFood(mc, p)) return true;
         if (p.tickCount >= nextUtility) {
@@ -145,6 +147,8 @@ public final class PlayerTools {
     }
 
     private static boolean mend(Minecraft mc, LocalPlayer p) {
+        if (Settings.choice("mend-mode").equals("Offhand queue")) return AutoMend.tick(mc, p);
+        AutoMend.reset();
         int bottles = hotbar(p, s -> s.is(Items.EXPERIENCE_BOTTLE));
         if (bottles < 0) return false;
         ItemStack repair = null;

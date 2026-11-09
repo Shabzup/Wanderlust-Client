@@ -64,3 +64,9 @@ Full retained assertions: [qa/evidence/ui-polish.txt](qa/evidence/ui-polish.txt)
 ![Translucent in-game workspace](docs/ui/ingame.png)
 
 [Minimum-size preview](docs/ui/minimum.png) · [4K preview](docs/ui/4k.png)
+
+## Colour and inventory follow-up — 9 November 2026
+
+Added five accent presets, optional category colours, and interpolated button hover colours. The UI suite passed 659 checks with zero failures after these changes, including the screen-size matrix and settings dialogs. Fresh 1080p and minimum-size captures were inspected. CPU extraction p95 in this run was 9.7393 ms; this is a machine-dependent observation, not a GPU or FPS guarantee. See `qa/evidence/ui-colours.txt`.
+
+![Category colours](docs/ui/category-colours.png)

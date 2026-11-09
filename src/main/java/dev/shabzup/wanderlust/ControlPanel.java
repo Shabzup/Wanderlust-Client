@@ -639,16 +639,17 @@ final class ControlPanel extends Screen {
         int slide = slideY(progress);
         int x = pos[0], y = pos[1], w = columnWidth;
         int h = windowHeight(group);
+        int tint = PanelStyle.category(group);
         g.pose().pushMatrix();
         g.pose().translate(0, slide);
         PanelStyle.surface(g,x,y,w,h,alpha);
-        g.fillGradient(x+1,y+1,x+w-1,y+HEADER,PanelStyle.alpha(0xBA2D304A,alpha),PanelStyle.alpha(0xA11A2233,alpha));
-        g.fill(x+1,y+HEADER-1,x+w-1,y+HEADER,PanelStyle.alpha(0x557C74AE,alpha));
+        g.fillGradient(x+1,y+1,x+w-1,y+HEADER,PanelStyle.alpha(PanelStyle.mix(0xBA202638,tint,.22f),alpha),PanelStyle.alpha(0xA11A2233,alpha));
+        g.fill(x+1,y+HEADER-1,x+w-1,y+HEADER,PanelStyle.alpha(tint,alpha*.55f));
         drawFittedLabel(g,group.toString(),x+8,y+9,w-61,alpha,PanelStyle.TEXT);
         int count = features(group).size();
         String countText = Integer.toString(count);
         g.text(font, PanelStyle.text(countText), x + w - font.width(PanelStyle.text(countText)) - 33, y + 9,
-            PanelStyle.alpha(0xFFE4D2FF, alpha), true);
+            PanelStyle.alpha(tint, alpha), true);
         boolean foldHover=inside(mouseX,mouseY-slide,x+w-27,y+3,23,21);
         drawSmallControl(g,x+w-27,y+3,23,21,isCollapsed(group)?"+":"−",foldHover,alpha);
         if(isCollapsed(group)){g.pose().popMatrix();return;}
@@ -663,13 +664,13 @@ final class ControlPanel extends Screen {
             if ((row & 1) == 0) g.fill(x + 1, rowY, x + w - 1, rowY + rowHeight, PanelStyle.alpha(0x10000000, rowAlpha));
             float over=Settings.toggle("ui.motion")?PanelStyle.approach(rowHover.getOrDefault(feature,0f),hover?1:0,frameSeconds,18):(hover?1:0);
             rowHover.put(feature,over);
-            if(over>.01f)g.fill(x+1,rowY,x+w-1,rowY+rowHeight,PanelStyle.alpha(0x386B6E9F,rowAlpha*over));
+            if(over>.01f)g.fill(x+1,rowY,x+w-1,rowY+rowHeight,PanelStyle.alpha(tint,rowAlpha*over*.16f));
             if (Settings.on(feature.id)) {
-                g.fill(x + 1, rowY, x + w - 1, rowY + rowHeight, PanelStyle.alpha(0x382C1550, rowAlpha));
-                g.fill(x + 1, rowY + 3, x + 3, rowY + rowHeight - 3, PanelStyle.alpha(PanelStyle.PURPLE_LIGHT, rowAlpha));
+                g.fill(x + 1, rowY, x + w - 1, rowY + rowHeight, PanelStyle.alpha(tint, rowAlpha*.13f));
+                g.fill(x + 1, rowY + 3, x + 3, rowY + rowHeight - 3, PanelStyle.alpha(tint, rowAlpha));
             }
             int checkY=rowY+(rowHeight-9)/2;
-            g.fill(x+7,checkY,x+16,checkY+9,PanelStyle.alpha(Settings.on(feature.id)?PanelStyle.PURPLE_LIGHT:0xFFAAB5C9,rowAlpha));
+            g.fill(x+7,checkY,x+16,checkY+9,PanelStyle.alpha(Settings.on(feature.id)?tint:0xFFAAB5C9,rowAlpha));
             if(!Settings.on(feature.id))g.fill(x+8,checkY+1,x+15,checkY+8,PanelStyle.alpha(0xFF1B2130,rowAlpha));
             drawSmallControl(g,x+w-24,rowY+2,19,rowHeight-4,"…",hover&&mouseX>=x+w-25,rowAlpha);
             drawFittedLabel(g, feature.label, x + 22, rowY + (rowHeight - 9) / 2, w - 49, rowAlpha,
@@ -684,7 +685,7 @@ final class ControlPanel extends Screen {
             int thumbH=Math.max(8,trackH*maxRows/count);
             int thumbY=trackY+(trackH-thumbH)*start/Math.max(1,count-maxRows);
             g.fill(x+w-2,trackY,x+w,trackY+trackH,PanelStyle.alpha(0x553E485E,alpha));
-            g.fill(x+w-2,thumbY,x+w,thumbY+thumbH,PanelStyle.alpha(PanelStyle.PURPLE_LIGHT,alpha));
+            g.fill(x+w-2,thumbY,x+w,thumbY+thumbH,PanelStyle.alpha(PanelStyle.accentLight(),alpha));
         }
         g.pose().popMatrix();
     }
@@ -753,18 +754,18 @@ final class ControlPanel extends Screen {
             case NUMBER -> {
                 String value = Wanderlust.text(option.key());
                 var comp = PanelStyle.text(value);
-                g.text(font, comp, dialogX + dialogW - font.width(comp) - 20, y + 5, PanelStyle.alpha(PanelStyle.PURPLE_LIGHT, alpha), true);
+                g.text(font, comp, dialogX + dialogW - font.width(comp) - 20, y + 5, PanelStyle.alpha(PanelStyle.accentLight(), alpha), true);
                 int sx = dialogX + 20, sy = y + 25, sw = dialogW - 40;
                 PanelStyle.round(g, sx, sy, sw, 3, 2, PanelStyle.alpha(0xFF343B49, alpha));
                 double ratio = (Wanderlust.number(option.key()) - option.min()) / (option.max() - option.min());
                 int fill = (int)Math.round(sw * Math.clamp(ratio, 0, 1));
-                PanelStyle.round(g, sx, sy, fill, 3, 2, PanelStyle.alpha(PanelStyle.PURPLE, alpha));
-                PanelStyle.round(g, sx + fill - 4, sy - 3, 8, 9, 4, PanelStyle.alpha(PanelStyle.PURPLE_LIGHT, alpha));
+                PanelStyle.round(g, sx, sy, fill, 3, 2, PanelStyle.alpha(PanelStyle.accent(), alpha));
+                PanelStyle.round(g, sx + fill - 4, sy - 3, 8, 9, 4, PanelStyle.alpha(PanelStyle.accentLight(), alpha));
             }
             case TOGGLE -> {
                 boolean active = Settings.toggle(option.key());
                 int sx = dialogX + dialogW - 48, sy = y + 5;
-                PanelStyle.round(g, sx, sy, 30, 15, 8, PanelStyle.alpha(active ? PanelStyle.PURPLE : 0xFF3B4557, alpha));
+                PanelStyle.round(g, sx, sy, 30, 15, 8, PanelStyle.alpha(active ? PanelStyle.accent() : 0xFF3B4557, alpha));
                 PanelStyle.round(g, sx + (active ? 17 : 2), sy + 2, 11, 11, 6, PanelStyle.alpha(0xFFF0ECF8, alpha));
             }
             case CHOICE -> {
@@ -772,7 +773,7 @@ final class ControlPanel extends Screen {
                 var comp = PanelStyle.text("‹  " + value + "  ›");
                 int cw = Math.max(104, font.width(comp) + 18);
                 PanelStyle.control(g, dialogX + dialogW - cw - 18, y + 3, cw, 20, false, false, alpha);
-                g.text(font, comp, dialogX + dialogW - cw - 9, y + 8, PanelStyle.alpha(PanelStyle.PURPLE_LIGHT, alpha), true);
+                g.text(font, comp, dialogX + dialogW - cw - 9, y + 8, PanelStyle.alpha(PanelStyle.accentLight(), alpha), true);
             }
             case TEXT -> {
                 PanelStyle.round(g, dialogX + 14, y + 15, dialogW - 28, 21, 4, PanelStyle.alpha(0x57242B38, alpha));

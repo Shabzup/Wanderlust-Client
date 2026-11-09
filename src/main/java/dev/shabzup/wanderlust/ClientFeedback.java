@@ -71,7 +71,7 @@ final class ClientFeedback {
         List<Feature> modules = enabled();
         g.pose().pushMatrix();
         g.pose().scale(scale, scale);
-        g.text(mc.font, PanelStyle.text("Active modules"), x + 5, y, PanelStyle.PURPLE_LIGHT, true);
+        g.text(mc.font, PanelStyle.text("Active modules"), x + 5, y, PanelStyle.accentLight(), true);
         int top = y + pitch;
         for (int offset = 0; offset < modules.size(); offset += rows) {
             List<String> labels = modules.subList(offset, Math.min(modules.size(), offset + rows)).stream()
@@ -84,7 +84,7 @@ final class ClientFeedback {
             for (int row = 0; row < labels.size(); row++) {
                 int rowY = top + row * pitch;
                 if (Settings.toggle("active-modules.background")) g.fill(x, rowY - 2, x + width, rowY + 11, PanelStyle.background(0x0B101A, 1));
-                g.fill(x, rowY - 2, x + 2, rowY + 11, PanelStyle.PURPLE);
+                g.fill(x, rowY - 2, x + 2, rowY + 11, PanelStyle.accent());
                 g.text(mc.font, PanelStyle.text(labels.get(row)), x + 6, rowY, PanelStyle.TEXT, true);
             }
             x += width + 8;

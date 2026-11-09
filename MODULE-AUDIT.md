@@ -58,8 +58,8 @@ Each module below needs a realistic setup, action/result checks, disable cleanup
 | AutoEat (`auto-eat`) | Player | PASS: 7 enabled ticks and disable | PASS: Server hunger increase and item consumption | PlayerTools.java |
 | AutoGap (`auto-gap`) | Player | PASS: 7 enabled ticks and disable | PASS: Server absorption and item consumption | PlayerTools.java |
 | AutoLog (`auto-log`) | Player | PASS: 7 enabled ticks and disable | Pending scenario verification | ModuleOptions.java, PlayerTools.java |
-| AutoMend (`auto-mend`) | Player | PASS: 7 enabled ticks and disable | PASS: Server Mending repair and XP consumption | BaritoneBridge.java, ModuleOptions.java, PlayerTools.java |
-| AutoReplenish (`auto-replenish`) | Player | PASS: 7 enabled ticks and disable | PASS: Integrated-server low-stack merge, offhand refill, depleted-slot replacement and disable cleanup; tool and exclusion scenarios still pending | AutoReplenish.java, ModuleOptions.java, PlayerTools.java, qa/ReplenishProbe.java |
+| AutoMend (`auto-mend`) | Player | PASS: 7 enabled ticks and disable | PASS: XP-bottle repair plus offhand queue selection, exclusions, occupied-hand protection, safe completion and auto-disable | AutoMend.java, BaritoneBridge.java, ModuleOptions.java, PlayerTools.java, qa/InventoryParityProbe.java |
+| AutoReplenish (`auto-replenish`) | Player | PASS: 7 enabled ticks and disable | PASS: Integrated-server low-stack merge, offhand refill, depleted-slot replacement and disable cleanup; slot 9 and item exclusions also verified; tool-matching scenarios still pending | AutoReplenish.java, ModuleOptions.java, PlayerTools.java, qa/ReplenishProbe.java |
 | FastClimb (`fast-climb`) | Player | PASS: 7 enabled ticks and disable | Pending scenario verification | BaritoneBridge.java, Movement.java |
 | AutoRespawn (`auto-respawn`) | Player | PASS: 7 enabled ticks and disable | Pending scenario verification | ModuleOptions.java, PlayerTools.java |
 | AutoSign (`auto-sign`) | World | PASS: 7 enabled ticks and disable | Pending scenario verification | BaritoneBridge.java, PlayerTools.java |

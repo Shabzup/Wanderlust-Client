@@ -44,6 +44,7 @@ final class AutoReplenish {
         Set<String> excluded = Arrays.stream(Settings.text("replenish-excluded").split(","))
             .map(String::trim).filter(s -> !s.isEmpty()).collect(Collectors.toSet());
         int count = Settings.toggle("replenish-offhand") ? 10 : 9;
+        if (Wanderlust.on("auto-mend") && Settings.choice("mend-mode").equals("Offhand queue")) count = 9;
         for (int slot = 0; slot < count; slot++) {
             ItemStack now = current(player, slot);
             ItemStack before = previous[slot];
@@ -61,7 +62,7 @@ final class AutoReplenish {
 
             int source = findSource(player, empty ? before : now, slot, empty && !stackable);
             if (source < 0) continue;
-            int sourceMenu = menuSlot(source);
+            int sourceMenu = source < 9 ? source + 36 : source;
             int targetMenu = menuSlot(slot);
             if (empty) {
                 mc.gameMode.handleContainerInput(player.inventoryMenu.containerId, sourceMenu,

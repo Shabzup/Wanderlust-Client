@@ -11,6 +11,8 @@ final class ModuleOptions {
         Settings.toggle("ui", "ui.auto-fit", "Fit lists to available space", true);
         Settings.toggle("ui", "ui.motion", "Smooth animations", true);
         Settings.toggle("ui", "ui.depth", "Decorative 3D motion", true);
+        Settings.choice("ui", "ui.accent", "Accent colour", "Violet", "Violet", "Ocean", "Mint", "Rose", "Amber");
+        Settings.toggle("ui", "ui.category-colours", "Colour each category", true);
         Settings.string("xray", "xray.blocks", "Block IDs (comma separated)", "minecraft:coal_ore,minecraft:deepslate_coal_ore,minecraft:iron_ore,minecraft:deepslate_iron_ore,minecraft:copper_ore,minecraft:deepslate_copper_ore,minecraft:gold_ore,minecraft:deepslate_gold_ore,minecraft:redstone_ore,minecraft:deepslate_redstone_ore,minecraft:lapis_ore,minecraft:deepslate_lapis_ore,minecraft:emerald_ore,minecraft:deepslate_emerald_ore,minecraft:diamond_ore,minecraft:deepslate_diamond_ore,minecraft:nether_gold_ore,minecraft:nether_quartz_ore,minecraft:ancient_debris");
         Settings.numeric("kill-aura", "aura-delay", "Attack delay (ticks)", 3, 1, 20, 1);
         Settings.toggle("kill-aura", "aura-through-walls", "Allow targets through walls", false);
@@ -60,6 +62,11 @@ final class ModuleOptions {
         }
 
         Settings.toggle("auto-mend", "mend-armor", "Repair armor", true);
+        Settings.choice("auto-mend", "mend-mode", "Repair mode", "XP bottles", "XP bottles", "Offhand queue");
+        Settings.toggle("auto-mend", "mend-force", "Replace occupied offhand", false);
+        Settings.toggle("auto-mend", "mend-auto-disable", "Disable when queue finishes", true);
+        Settings.string("auto-mend", "mend-excluded", "Excluded item IDs (comma separated)", "");
+        Settings.numeric("auto-mend", "mend-queue-delay", "Ticks between item swaps", 2, 1, 40, 1);
         Settings.toggle("auto-mend", "mend-tools", "Repair held tools", false);
         Settings.numeric("auto-mend", "mend-durability", "Repair below durability (%)", 95, 5, 99, 5);
         Settings.numeric("auto-replenish", "replenish-count", "Minimum stack count", 8, 1, 63, 1);
