@@ -16,12 +16,29 @@ final class ModuleOptions {
         Settings.string("xray", "xray.blocks", "Block IDs (comma separated)", "minecraft:coal_ore,minecraft:deepslate_coal_ore,minecraft:iron_ore,minecraft:deepslate_iron_ore,minecraft:copper_ore,minecraft:deepslate_copper_ore,minecraft:gold_ore,minecraft:deepslate_gold_ore,minecraft:redstone_ore,minecraft:deepslate_redstone_ore,minecraft:lapis_ore,minecraft:deepslate_lapis_ore,minecraft:emerald_ore,minecraft:deepslate_emerald_ore,minecraft:diamond_ore,minecraft:deepslate_diamond_ore,minecraft:nether_gold_ore,minecraft:nether_quartz_ore,minecraft:ancient_debris");
         Settings.numeric("kill-aura", "aura-delay", "Attack delay (ticks)", 3, 1, 20, 1);
         Settings.toggle("kill-aura", "aura-through-walls", "Allow targets through walls", false);
-        Settings.choice("kill-aura", "aura-priority", "Target priority", "Closest", "Closest", "Lowest health");
+        Settings.choice("kill-aura", "aura-priority", "Target priority", "Closest", "Closest", "Lowest health", "Closest angle");
+        Settings.numeric("kill-aura","aura-fov","Field of view (degrees)",360,10,360,5);
+        Settings.numeric("kill-aura","aura-wall-range","Through-wall range",3,0,6,.25);
+        Settings.toggle("kill-aura","aura-ignore-named","Ignore named mobs",false);
+        Settings.toggle("kill-aura","aura-ignore-babies","Ignore baby mobs",true);
+        Settings.toggle("kill-aura","aura-only-click","Require attack key held",false);
+        Settings.toggle("kill-aura","aura-only-look","Require crosshair target",false);
+        Settings.toggle("kill-aura","aura-custom-delay","Use fixed delay instead of cooldown",false);
+        Settings.choice("kill-aura","aura-weapon","Required held weapon","Any","Any","Weapons","Sword","Axe");
+        Settings.toggle("kill-aura","aura-auto-switch","Select required hotbar weapon",false);
+        Settings.toggle("kill-aura","aura-swap-back","Restore previous hotbar slot",true);
+        Settings.numeric("kill-aura","aura-switch-delay","Wait after weapon switch (ticks)",1,0,10,1);
+        Settings.toggle("kill-aura","aura-rotate","Aim at attacked target",true);
 
         for (String id : new String[]{"crystal-aura", "anchor-aura", "bed-aura"}) {
             Settings.numeric(id, id + "-range", "Target range (blocks)", 12, 4, 32, 1);
         }
         Settings.numeric("auto-totem", "totem-health", "Equip below health (HP)", 20, 1, 20, 1);
+        Settings.choice("auto-totem","totem-mode","Totem mode","Smart","Smart","Strict");
+        Settings.numeric("auto-totem","totem-delay","Ticks between totem moves",0,0,20,1);
+        Settings.toggle("auto-totem","totem-elytra","Protect while gliding",true);
+        Settings.toggle("auto-totem","totem-fall","Protect against estimated lethal fall",true);
+        Settings.toggle("auto-totem","totem-crystals","Protect against estimated crystal damage",true);
         Settings.toggle("criticals", "criticals-players-only", "Only critical player targets", false);
         for (String id : new String[]{"bow-aimbot", "bow-spam"}) {
             String key = id.equals("bow-aimbot") ? "bow" : "bowspam";

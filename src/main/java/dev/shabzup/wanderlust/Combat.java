@@ -21,7 +21,10 @@ import net.minecraft.world.phys.Vec3;
 public final class Combat {
     private static int nextClick;
     private static int nextAura;
+    private static int nextTotem;
     private static LocalPlayer archer;
+    private static LocalPlayer auraOwner;
+    private static int auraOriginal=-1,auraSelected=-1,auraReady;
 
     static void options() {
         Settings.numeric("kill-aura", "aura-range", "Reach (blocks)", 3, 1, 6, .25);
@@ -32,9 +35,11 @@ public final class Combat {
     }
 
     static void reset(Minecraft mc) {
+        restoreAura();
         archer = null;
         nextClick = 0;
         nextAura = 0;
+        nextTotem = 0;
         Explosives.reset();
     }
 
@@ -42,14 +47,31 @@ public final class Combat {
         LocalPlayer p = mc.player;
         if (!Wanderlust.on("auto-totem") || p == null || mc.gameMode == null || !p.isAlive()
             || p.isSpectator() || p.containerMenu != p.inventoryMenu || !p.inventoryMenu.getCarried().isEmpty()
-            || p.getHealth() + p.getAbsorptionAmount() > Wanderlust.number("totem-health")
+            || !needsTotem(mc) || p.tickCount < nextTotem
             || p.getOffhandItem().is(Items.TOTEM_OF_UNDYING)) return;
         for (int i = 0; i < 36; i++) {
             if (!p.getInventory().getItem(i).is(Items.TOTEM_OF_UNDYING)) continue;
             int menuSlot = i < 9 ? i + 36 : i;
             mc.gameMode.handleContainerInput(p.inventoryMenu.containerId, menuSlot, 40, ContainerInput.SWAP, p);
+            nextTotem = p.tickCount + (int)Settings.number("totem-delay");
             return;
         }
+    }
+
+    static boolean needsTotem(Minecraft mc) {
+        var p=mc.player;
+        if(p==null||!Wanderlust.on("auto-totem"))return false;
+        if(Settings.choice("totem-mode").equals("Strict"))return true;
+        double health=p.getHealth()+p.getAbsorptionAmount();
+        if(health<=Settings.number("totem-health"))return true;
+        if(Settings.toggle("totem-elytra")&&p.isFallFlying())return true;
+        if(Settings.toggle("totem-fall")&&!p.isFallFlying()&&!p.isInWater()
+            &&Math.max(0,Math.ceil(p.fallDistance-3))>=health)return true;
+        if(Settings.toggle("totem-crystals"))for(var crystal:mc.level.getEntitiesOfClass(
+            net.minecraft.world.entity.boss.enderdragon.EndCrystal.class,p.getBoundingBox().inflate(12))) {
+            if(Explosives.crystalDamage(mc,crystal.position(),p)>=health-Settings.number("totem-health"))return true;
+        }
+        return false;
     }
 
     public static boolean holdingBow(Minecraft mc) {
@@ -88,14 +110,62 @@ public final class Combat {
         if (Settings.choice("aura-priority").equals("Lowest health")) priority = Comparator
             .comparingDouble((Entity e) -> e instanceof LivingEntity living ? living.getHealth() : Double.MAX_VALUE)
             .thenComparingDouble(e -> e.distanceToSqr(p));
+        if(Settings.choice("aura-priority").equals("Closest angle"))priority=Comparator.comparingDouble(e->targetAngle(p,e));
         var candidates=java.util.stream.Stream.concat(mc.level.getEntitiesOfClass(Entity.class,p.getBoundingBox().inflate(range)).stream(),mc.level.dragonParts().stream().map(e->(Entity)e));
         return candidates.filter(e -> e != p && e.isAlive()
             && e.isPickable() && e.isAttackable() && EntityTargets.includes(e) && !p.isAlliedTo(e)
             && (!(e instanceof LivingEntity living) || validTarget(p,living))
+            && (!Settings.toggle("aura-ignore-named") || e instanceof Player || !e.hasCustomName())
+            && (!Settings.toggle("aura-ignore-babies") || !(e instanceof LivingEntity living) || !living.isBaby())
+            && (!Settings.toggle("aura-only-look") || mc.crosshairPickEntity==e)
+            && targetAngle(p,e)<=Settings.number("aura-fov")/2
             && e.getBoundingBox().distanceToSqr(p.getEyePosition()) <= range*range
             && p.isWithinAttackRange(p.getMainHandItem(),e.getBoundingBox(),0)
-            && (Settings.toggle("aura-through-walls") || p.hasLineOfSight(e)))
+            && (p.hasLineOfSight(e) || Settings.toggle("aura-through-walls")
+                && e.getBoundingBox().distanceToSqr(p.getEyePosition())<=Math.pow(Settings.number("aura-wall-range"),2)))
             .min(priority).orElse(null);
+    }
+
+    private static double targetAngle(LocalPlayer p,Entity e){
+        Vec3 direction=e.getBoundingBox().getCenter().subtract(p.getEyePosition()).normalize();
+        return Math.toDegrees(Math.acos(Math.clamp(p.getLookAngle().dot(direction),-1,1)));
+    }
+
+    private static boolean weapon(net.minecraft.world.item.ItemStack item){
+        boolean sword=item.is(net.minecraft.tags.ItemTags.SWORDS),axe=item.is(net.minecraft.tags.ItemTags.AXES);
+        return switch(Settings.choice("aura-weapon")){
+            case "Weapons"->sword||axe||item.is(Items.MACE)||item.is(Items.TRIDENT);
+            case "Sword"->sword;case "Axe"->axe;default->true;};
+    }
+    private static void restoreAura(){
+        if(auraOwner!=null&&auraOriginal>=0&&auraOwner.getInventory().getSelectedSlot()==auraSelected
+            &&Settings.toggle("aura-swap-back"))auraOwner.getInventory().setSelectedSlot(auraOriginal);
+        auraOwner=null;auraOriginal=auraSelected=-1;auraReady=0;
+    }
+    private static boolean attackAura(Minecraft mc){
+        var p=mc.player;
+        if(!Wanderlust.on("kill-aura")||Settings.toggle("aura-only-click")&&!mc.options.keyAttack.isDown()){
+            restoreAura();return false;
+        }
+        Entity e=meleeTarget(mc);
+        if(e==null){restoreAura();return false;}
+        if(!weapon(p.getMainHandItem())){
+            if(!Settings.toggle("aura-auto-switch"))return false;
+            int slot=ExtraActions.slot(mc,Combat::weapon);if(slot<0)return false;
+            if(auraOwner==null){auraOwner=p;auraOriginal=p.getInventory().getSelectedSlot();}
+            auraSelected=slot;p.getInventory().setSelectedSlot(slot);
+            auraReady=p.tickCount+(int)Settings.number("aura-switch-delay");
+        }
+        if(p.tickCount<nextAura||p.tickCount<auraReady
+            ||!Settings.toggle("aura-custom-delay")&&p.getAttackStrengthScale(.5f)<.99f)return false;
+        if(Settings.toggle("aura-rotate")){
+            Vec3 d=e.getBoundingBox().getCenter().subtract(p.getEyePosition());
+            p.setYRot((float)Math.toDegrees(Math.atan2(-d.x,d.z)));
+            p.setXRot((float)-Math.toDegrees(Math.atan2(d.y,d.horizontalDistance())));
+            p.connection.send(new ServerboundMovePlayerPacket.Rot(p.getYRot(),p.getXRot(),p.onGround(),p.horizontalCollision));
+        }
+        mc.gameMode.attack(p,e);p.swing(InteractionHand.MAIN_HAND);
+        nextAura=p.tickCount+(int)Settings.number("aura-delay");return true;
     }
 
     private static boolean acceptedTarget(LivingEntity entity, String module) {
@@ -113,8 +183,17 @@ public final class Combat {
         return Comparator.comparingDouble(e -> e.distanceToSqr(player));
     }
 
+    static void cleanup(Minecraft mc) {
+        if (!Wanderlust.on("kill-aura") || auraOwner != null && auraOwner != mc.player) restoreAura();
+        if (archer != null && (!Wanderlust.on("bow-spam") || Wanderlust.on("freecam"))) {
+            if (archer == mc.player && archer.getUseItem().is(Items.BOW)) mc.gameMode.releaseUsingItem(archer);
+            archer = null;
+        }
+    }
+
     static void tick(Minecraft mc) {
         var p = mc.player;
+        if(!Wanderlust.on("kill-aura")||auraOwner!=null&&auraOwner!=p)restoreAura();
         if (mc.gui.screen() != null || !p.isAlive() || p.isSpectator() || mc.isPaused() || Wanderlust.on("freecam")) return;
         boolean drawing = p.getUseItem().is(Items.BOW);
         if(drawing&&archer==p&&!Wanderlust.on("bow-spam")){
@@ -144,15 +223,7 @@ public final class Combat {
             return;
         }
         if (p.isUsingItem() || Explosives.tick(mc)) return;
-        if (Wanderlust.on("kill-aura") && p.tickCount >= nextAura && p.getAttackStrengthScale(.5f) >= .99f) {
-            Entity e = meleeTarget(mc);
-            if (e != null) {
-                mc.gameMode.attack(p, e);
-                p.swing(InteractionHand.MAIN_HAND);
-                nextAura = p.tickCount + (int)Wanderlust.number("aura-delay");
-                return;
-            }
-        }
+        if (attackAura(mc)) return;
         if (Wanderlust.on("auto-clicker") && p.tickCount >= nextClick
             && (!Settings.toggle("click-hold-only") || mc.options.keyAttack.isDown())) {
             ((AttackInvoker) mc).wanderlust$attack();

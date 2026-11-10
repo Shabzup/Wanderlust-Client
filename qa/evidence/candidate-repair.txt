@@ -1,0 +1,125 @@
+JAR SHA256 277ee373844de061241e32008ed85593d3fe375f7b104db988eb42f56bab69a7
+Mods: WanderlustClient-1.0.0+26.2.jar, fabric-api-0.161.0+26.2.jar, qa-probe.jar
+REPAIR PASS normal renderer hides fully enclosed ore faces
+REPAIR PASS Fabric renderer emits fully bright emissive ore faces
+REPAIR PASS Fabric renderer hides unselected uncullable plant quads
+REPAIR PASS Xray suppresses unselected fluid geometry
+REPAIR PASS Xray emits all enclosed ore faces using the actual model renderer
+REPAIR PASS Xray emitted ore quads are fully lit
+REPAIR PASS Xray emits no ordinary stone geometry
+REPAIR PASS Xray exposes otherwise occluded chunk sections
+REPAIR PASS normal plant rendering is restored after Xray
+REPAIR PASS normal fluid rendering is restored after Xray
+REPAIR PASS disabling Xray restores normal face culling
+REPAIR PASS disabling Xray restores section occlusion
+REPAIR PASS server inventory contains supplied XP bottles
+REPAIR PASS AutoEXP consumes XP bottles on integrated server with undamaged equipment
+REPAIR PASS AutoEXP stops consuming after disable
+REPAIR PASS optional repair-only mode waits for damaged equipment
+REPAIR PASS repair-only mode throws once equipment is damaged
+REPAIR PASS AutoEXP consumes offhand bottles on integrated server
+REPAIR PASS ExpThrower consumes XP bottles on integrated server
+REPAIR PASS Xray rebuilds complete scene geometry
+REPAIR PASS normal scene geometry is restored after Xray
+REPAIR PASS numeric setting exists: active-modules.scale
+REPAIR PASS numeric setting exists: active-modules.x
+REPAIR PASS numeric setting exists: active-modules.y
+REPAIR PASS numeric setting exists: air-jump.power
+REPAIR PASS numeric setting exists: ambience.rain
+REPAIR PASS numeric setting exists: ambience.thunder
+REPAIR PASS numeric setting exists: anchor-aura-range
+REPAIR PASS numeric setting exists: anti-afk.delay
+REPAIR PASS numeric setting exists: anti-void.height
+REPAIR PASS numeric setting exists: arrow-dodge.range
+REPAIR PASS numeric setting exists: attribute-swap.slot
+REPAIR PASS numeric setting exists: aura-delay
+REPAIR PASS numeric setting exists: aura-range
+REPAIR PASS numeric setting exists: auto-crafter.delay
+REPAIR PASS numeric setting exists: auto-feed.threshold
+REPAIR PASS numeric setting exists: auto-heal.threshold
+REPAIR PASS numeric setting exists: auto-leave.health
+REPAIR PASS numeric setting exists: auto-nametag.range
+REPAIR PASS numeric setting exists: auto-reconnect.seconds
+REPAIR PASS numeric setting exists: auto-repair.threshold
+REPAIR PASS numeric setting exists: auto-trade.delay
+REPAIR PASS numeric setting exists: auto-trade.offer
+REPAIR PASS numeric setting exists: auto-wasp.speed
+REPAIR PASS numeric setting exists: bed-aura-range
+REPAIR PASS numeric setting exists: blink.max-packets
+REPAIR PASS numeric setting exists: blink.ticks
+REPAIR PASS numeric setting exists: boat-fly.speed
+REPAIR PASS numeric setting exists: boat-fly.vertical
+REPAIR PASS numeric setting exists: bow-draw
+REPAIR PASS numeric setting exists: bow-range
+REPAIR PASS numeric setting exists: bowspam-range
+REPAIR PASS numeric setting exists: breadcrumbs.length
+REPAIR PASS numeric setting exists: breed-range
+REPAIR PASS numeric setting exists: build-length
+REPAIR PASS numeric setting exists: build-width
+REPAIR PASS numeric setting exists: click-interval
+REPAIR PASS numeric setting exists: crystal-aura-range
+REPAIR PASS numeric setting exists: eat-hunger
+REPAIR PASS numeric setting exists: elytra-boost.speed
+REPAIR PASS numeric setting exists: elytra-fly.speed
+REPAIR PASS numeric setting exists: esp-range
+REPAIR PASS numeric setting exists: fast-climb.speed
+REPAIR PASS numeric setting exists: fish-delay
+REPAIR PASS numeric setting exists: flight.speed
+REPAIR PASS numeric setting exists: flight.vertical
+REPAIR PASS numeric setting exists: fly-speed.speed
+REPAIR PASS numeric setting exists: freecam.range
+REPAIR PASS numeric setting exists: freecam.speed
+REPAIR PASS numeric setting exists: freelook.sensitivity
+REPAIR PASS numeric setting exists: gap-health
+REPAIR PASS numeric setting exists: grid.range
+REPAIR PASS numeric setting exists: hand-view.scale
+REPAIR PASS numeric setting exists: hand-view.x
+REPAIR PASS numeric setting exists: hand-view.y
+REPAIR PASS numeric setting exists: hand-view.z
+REPAIR PASS numeric setting exists: high-jump.power
+REPAIR PASS numeric setting exists: hitboxes.expand
+REPAIR PASS numeric setting exists: infinity-miner.delay
+REPAIR PASS numeric setting exists: item-sucker.range
+REPAIR PASS numeric setting exists: jump-flight.power
+REPAIR PASS numeric setting exists: jumps.power
+REPAIR PASS numeric setting exists: log-health
+REPAIR PASS numeric setting exists: long-jump.power
+REPAIR PASS numeric setting exists: marker.x
+REPAIR PASS numeric setting exists: marker.y
+REPAIR PASS numeric setting exists: marker.z
+REPAIR PASS numeric setting exists: mend-durability
+REPAIR PASS numeric setting exists: mend-interval
+REPAIR PASS numeric setting exists: nametag-range
+REPAIR PASS numeric setting exists: notebot.delay
+REPAIR PASS numeric setting exists: range-actions.radius
+REPAIR PASS numeric setting exists: range-actions.x
+REPAIR PASS numeric setting exists: range-actions.y
+REPAIR PASS numeric setting exists: range-actions.z
+REPAIR PASS numeric setting exists: reach.blocks
+REPAIR PASS numeric setting exists: reach.entities
+REPAIR PASS numeric setting exists: replenish-count
+REPAIR PASS numeric setting exists: respawn-delay
+REPAIR PASS numeric setting exists: reverse-step.speed
+REPAIR PASS numeric setting exists: rotation.pitch
+REPAIR PASS numeric setting exists: rotation.yaw
+REPAIR PASS numeric setting exists: shearer-range
+REPAIR PASS numeric setting exists: slot-click.delay
+REPAIR PASS numeric setting exists: slot-click.slot
+REPAIR PASS numeric setting exists: smite-aura.delay
+REPAIR PASS numeric setting exists: speed.speed
+REPAIR PASS numeric setting exists: spider.power
+REPAIR PASS numeric setting exists: step.height
+REPAIR PASS numeric setting exists: storage-range
+REPAIR PASS numeric setting exists: structure-range
+REPAIR PASS numeric setting exists: swarm.port
+REPAIR PASS numeric setting exists: time-changer.time
+REPAIR PASS numeric setting exists: timer.factor
+REPAIR PASS numeric setting exists: totem-health
+REPAIR PASS numeric setting exists: tracer-range
+REPAIR PASS numeric setting exists: trail.length
+REPAIR PASS numeric setting exists: trident-boost.factor
+REPAIR PASS numeric setting exists: ui.opacity
+REPAIR PASS numeric setting exists: ui.scale
+REPAIR PASS numeric setting exists: velocity.factor
+REPAIR PASS numeric setting exists: zoom-plus.fov
+REPAIR COMPLETE failures=0

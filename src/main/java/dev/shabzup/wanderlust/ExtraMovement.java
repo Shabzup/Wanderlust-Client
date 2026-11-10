@@ -24,6 +24,10 @@ final class ExtraMovement {
         Settings.numeric("boat-control","boat-control.speed","Boat speed",.5,.1,3,.1);
         Settings.numeric("fly-speed","fly-speed.speed","Creative flight speed",.12,.05,1,.01);
         Settings.numeric("velocity","velocity.factor","Knockback multiplier",0,0,1,.1);
+        Settings.choice("high-jump","high-jump.mode","Jump power mode","Fixed","Fixed","Multiplier");
+        Settings.numeric("high-jump","high-jump.multiplier","Vanilla jump multiplier",2,1,5,.1);
+        Settings.numeric("safe-walk","safe-walk.drop","Allowed drop (blocks)",.6,.1,3,.1);
+        Settings.numeric("safe-walk","safe-walk.margin","Edge inset (blocks)",.05,0,.25,.01);
     }
     static void tick(Minecraft mc) {
         var p=mc.player; if(p==null)return;
@@ -57,14 +61,12 @@ final class ExtraMovement {
         Vec3 result=velocity;
         if(on("no-slow")&&p.isUsingItem())result=new Vec3(result.x*5,result.y,result.z*5);
         if(on("spider")&&p.horizontalCollision&&moving(mc))result=new Vec3(result.x,Settings.number("spider.power"),result.z);
-        if(on("high-jump")&&mc.options.keyJump.isDown()&&p.onGround())result=new Vec3(result.x,Settings.number("high-jump.power"),result.z);
         if(on("long-jump")&&mc.options.keyJump.isDown()&&moving(mc)){Vec3 d=direction(mc);result=new Vec3(d.x*Settings.number("long-jump.power"),Math.max(result.y,.42),d.z*Settings.number("long-jump.power"));}
         if(on("jump-flight")&&mc.options.keyJump.isDown())result=new Vec3(result.x,Settings.number("jump-flight.power"),result.z);
         if(on("jumps")&&p.onGround()&&moving(mc))result=new Vec3(result.x,Settings.number("jumps.power"),result.z);
         if(on("reverse-step")&&!p.onGround()&&result.y<0&&!p.isInWater())result=new Vec3(result.x,-Settings.number("reverse-step.speed"),result.z);
         if(on("trident-boost")&&p.isAutoSpinAttack()){result=result.scale(Settings.number("trident-boost.factor"));if(result.length()>3)result=result.normalize().scale(3);}
         if(on("slippy")&&p.onGround())result=new Vec3(result.x*1.08,result.y,result.z*1.08);
-        if(on("safe-walk")&&p.onGround()&&mc.level.getBlockState(BlockPos.containing(p.position().add(result.x,-.6,result.z))).isAir())result=new Vec3(0,result.y,0);
         if(on("parkour")&&p.onGround()&&moving(mc)&&mc.level.getBlockState(BlockPos.containing(p.position().add(result.x*3,-.6,result.z*3))).isAir())result=new Vec3(result.x,.42,result.z);
         if(on("anchor")&&result.y<0&&mc.level.getBlockState(p.blockPosition().below(2)).isAir())result=new Vec3(0,result.y,0);
         if(on("auto-wasp")&&p.isFallFlying()){

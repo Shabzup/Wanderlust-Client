@@ -1,0 +1,13 @@
+JAR SHA256 277ee373844de061241e32008ed85593d3fe375f7b104db988eb42f56bab69a7
+Mods: WanderlustClient-1.0.0+26.2.jar, fabric-api-0.161.0+26.2.jar, qa-probe.jar
+CORE PASS replenish exclusion prevents move
+CORE PASS inventory slot 9 replenishes hotbar correctly
+CORE PASS slot 9 operation preserves offhand
+CORE PASS mending queue protects occupied offhand
+CORE PASS force mode queues damaged Mending tool
+CORE PASS mending queue respects item exclusion
+CORE PASS displaced offhand safely stored
+CORE PASS mending queue disables on completion
+CORE PASS completed repair returned to inventory
+CORE PASS repaired item preserved
+INVENTORY COMPLETE failures=0

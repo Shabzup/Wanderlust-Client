@@ -23,8 +23,9 @@ final class ExtraActions {
     private static final Map<String,Integer> next=new HashMap<>();
     private static String vein="";
     private static int afkTick;
-    static void reset(){next.clear();vein="";afkTick=0;}
+    static void reset(){next.clear();vein="";afkTick=0;AutoExperience.reset();AutoArmor.reset();}
     static void options() {
+        AutoExperience.options();AutoArmor.options();
         for(String id:new String[]{"anti-anvil","anti-bed","auto-anvil","auto-city","auto-trap","auto-web","self-anvil","self-trap","self-web","surround","burrow","hole-filler","scaffold","air-place","liquid-filler","nuker","excavator","vein-miner","e-chest-farmer","spawn-proofer","auto-mount","auto-dirt-path","auto-farm-land","auto-log-strip","auto-farming","auto-mud","placer","entity-interact","auto-interact","double-doors-interact"}) {
             Settings.numeric(id,id+".range","Action range (blocks)",4,1,6,.25);
             Settings.numeric(id,id+".delay","Action delay (ticks)",4,1,40,1);
@@ -50,13 +51,13 @@ final class ExtraActions {
         if(p.containerMenu!=p.inventoryMenu){containers(mc);return;}
         if(mc.gui.screen()!=null||mc.isPaused())return;
         if(on("anti-afk")&&p.tickCount>=afkTick){p.jumpFromGround();p.setYRot(p.getYRot()+15);afkTick=p.tickCount+(int)Settings.number("anti-afk.delay");}
-        if(on("auto-armor")&&p.tickCount%5==0)armor(mc);
+        AutoArmor.tick(mc);
         if(on("auto-tool")&&mc.options.keyAttack.isDown()&&mc.hitResult instanceof BlockHitResult hit)tool(mc,mc.level.getBlockState(hit.getBlockPos()));
         if(on("auto-weapon")&&mc.crosshairPickEntity instanceof LivingEntity)weapon(mc);
         if(on("offhand"))offhand(mc);
         if(on("arrow-dodge"))dodge(mc);
-        boolean needsRepair=EquipmentSlot.VALUES.stream().anyMatch(s->p.getItemBySlot(s).isDamaged());
-        if(due("exp-thrower",p.tickCount)||(on("auto-exp")&&(!Settings.toggle("auto-exp.only-damaged")||needsRepair)&&due("auto-exp",p.tickCount)))use(mc,s->s.is(Items.EXPERIENCE_BOTTLE),90);
+        AutoExperience.tick(mc);
+        if(due("exp-thrower",p.tickCount))use(mc,s->s.is(Items.EXPERIENCE_BOTTLE),90);
         if(on("no-mining-trace")&&mc.options.keyAttack.isDown())mc.hitResult=p.pick(p.blockInteractionRange(),1,false);
         if((on("speed-mine")||on("packet-mine")||on("instant-rebreak"))&&mc.options.keyAttack.isDown()&&mc.hitResult instanceof BlockHitResult hit)mine(mc,hit.getBlockPos());
         for(String id:new String[]{"surround","self-trap","self-web","self-anvil","burrow","auto-trap","auto-web","auto-anvil","auto-city","hole-filler","scaffold","anti-bed","anti-anvil","liquid-filler","nuker","excavator","vein-miner","e-chest-farmer","spawn-proofer","auto-dirt-path","auto-farm-land","auto-log-strip","auto-farming","auto-mud","placer","air-place","auto-mount","entity-interact","auto-interact","double-doors-interact"}){
@@ -134,10 +135,9 @@ final class ExtraActions {
         try{mc.player.setXRot(pitch);return mc.gameMode.useItem(mc.player,hand).consumesAction();}
         finally{mc.player.setXRot(before);mc.player.getInventory().setSelectedSlot(old);}
     }
-    private static void armor(Minecraft mc){for(EquipmentSlot slot:EquipmentSlot.VALUES){if(!slot.isArmor())continue;int best=-1,score=mc.player.getItemBySlot(slot).getMaxDamage();for(int i=0;i<36;i++){ItemStack item=mc.player.getInventory().getItem(i);var equip=item.get(DataComponents.EQUIPPABLE);if(equip!=null&&equip.slot()==slot&&item.getMaxDamage()>score){score=item.getMaxDamage();best=i;}}if(best<0)continue;int from=best<9?best+36:best;int to=switch(slot){case HEAD->5;case CHEST->6;case LEGS->7;case FEET->8;default->-1;};if(to<0||!mc.player.inventoryMenu.getCarried().isEmpty())continue;for(int target:new int[]{from,to,from})mc.gameMode.handleContainerInput(mc.player.inventoryMenu.containerId,target,0,ContainerInput.PICKUP,mc.player);return;}}
     private static void tool(Minecraft mc,BlockState block){int best=mc.player.getInventory().getSelectedSlot();float speed=mc.player.getMainHandItem().getDestroySpeed(block);for(int i=0;i<9;i++){float candidate=mc.player.getInventory().getItem(i).getDestroySpeed(block);if(candidate>speed){speed=candidate;best=i;}}mc.player.getInventory().setSelectedSlot(best);}
     private static void weapon(Minecraft mc){String mode=Settings.choice("auto-weapon.kind");int best=-1,score=-1;for(int i=0;i<9;i++){ItemStack s=mc.player.getInventory().getItem(i);boolean match=mode.equals("Sword")?s.is(ItemTags.SWORDS):mode.equals("Axe")?s.is(ItemTags.AXES):s.is(Items.MACE);if(match&&s.getMaxDamage()>score){best=i;score=s.getMaxDamage();}}if(best>=0)mc.player.getInventory().setSelectedSlot(best);}
-    private static void offhand(Minecraft mc){String id=Settings.text("offhand.item");if(key(mc.player.getOffhandItem().getItem()).equals(id))return;for(int i=0;i<36;i++)if(key(mc.player.getInventory().getItem(i).getItem()).equals(id)){mc.gameMode.handleContainerInput(mc.player.inventoryMenu.containerId,i<9?i+36:i,40,ContainerInput.SWAP,mc.player);return;}}
+    private static void offhand(Minecraft mc){if(Combat.needsTotem(mc)||!mc.player.inventoryMenu.getCarried().isEmpty())return;String id=Settings.text("offhand.item");if(key(mc.player.getOffhandItem().getItem()).equals(id))return;for(int i=0;i<36;i++)if(key(mc.player.getInventory().getItem(i).getItem()).equals(id)){mc.gameMode.handleContainerInput(mc.player.inventoryMenu.containerId,i<9?i+36:i,40,ContainerInput.SWAP,mc.player);return;}}
     private static void dodge(Minecraft mc){for(AbstractArrow arrow:mc.level.getEntitiesOfClass(AbstractArrow.class,mc.player.getBoundingBox().inflate(Settings.number("arrow-dodge.range")))){Vec3 flight=arrow.getDeltaMovement();if(flight.lengthSqr()<.01)continue;Vec3 to=mc.player.position().subtract(arrow.position());if(to.dot(flight)>0&&to.normalize().dot(flight.normalize())>.9){Vec3 side=new Vec3(-flight.z,0,flight.x).normalize().scale(.5);mc.player.setDeltaMovement(side.x,mc.player.getDeltaMovement().y,side.z);return;}}}
     private static void containers(Minecraft mc){for(String id:new String[]{"auto-smelter","auto-brewer"}){boolean valid=id.equals("auto-smelter")?mc.player.containerMenu instanceof net.minecraft.world.inventory.AbstractFurnaceMenu:mc.player.containerMenu instanceof net.minecraft.world.inventory.BrewingStandMenu;if(!valid||!due(id,mc.player.tickCount))continue;var slots=mc.player.containerMenu.slots;int inventoryStart=id.equals("auto-smelter")?3:5;for(int i=0;i<inventoryStart;i++)if(i==(id.equals("auto-smelter")?2:-1)&&!slots.get(i).getItem().isEmpty()){mc.gameMode.handleContainerInput(mc.player.containerMenu.containerId,i,0,ContainerInput.QUICK_MOVE,mc.player);return;}for(int i=inventoryStart;i<slots.size();i++){String item=key(slots.get(i).getItem().getItem());if(item.equals(Settings.text(id+".input"))||item.equals(Settings.text(id+".fuel"))){mc.gameMode.handleContainerInput(mc.player.containerMenu.containerId,i,0,ContainerInput.QUICK_MOVE,mc.player);return;}}}}
     private static String key(Item item){return BuiltInRegistries.ITEM.getKey(item).toString();}

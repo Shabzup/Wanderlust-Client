@@ -12,6 +12,8 @@
     "CameraMixin",
     "MouseLookMixin",
     "MovementMixin",
+    "HighJumpMixin",
+    "SafeWalkMixin",
     "LiquidSurfaceMixin",
     "MovementPacketsMixin",
     "GroundFlagAccessor",

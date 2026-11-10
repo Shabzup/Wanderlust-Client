@@ -88,6 +88,7 @@ public final class Wanderlust implements ClientModInitializer {
             lastPlayer = mc.player;
         }
         if (mc.level == null || mc.player == null || mc.gameMode == null) return;
+        Combat.cleanup(mc);
         Movement.tick(mc);
         ExtraMovement.tick(mc);
         ExtraActions.tick(mc);
