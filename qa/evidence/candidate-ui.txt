@@ -1,0 +1,665 @@
+JAR SHA256 b04ae13b13852d00fba1abb2662755f710dcd0bb31d60a9ff3af68ab34466419
+Mods: WanderlustClient-1.0.0+26.2.jar, fabric-api-0.161.0+26.2.jar, qa-probe.jar
+POLISH PASS title screen replaces Wanderlust with styled UI Settings
+POLISH PASS account and proxy entry points are absent from title screen
+POLISH PASS real keyboard handler opens modules from title screen
+POLISH PASS Right Shift restores TitleScreen
+POLISH PASS Right Shift opens modules from world list
+POLISH PASS Right Shift restores SelectWorldScreen
+POLISH PASS Right Shift opens modules from an arbitrary screen
+POLISH PASS Right Shift restores 
+POLISH PASS multiplayer has styled Accounts button
+POLISH PASS multiplayer has styled UI Settings button
+POLISH PASS multiplayer has styled Proxies button
+POLISH PASS Multiplayer toolbar, title, list and footer widgets fit without overlap
+POLISH PASS multiplayer list reserves room for the toolbar
+POLISH PASS module workspace does not duplicate multiplayer account/proxy controls
+POLISH PASS Right Shift restores JoinMultiplayerScreen
+POLISH PASS menu UI Settings opens the settings dialog directly
+POLISH PASS Right Shift opens an independent module workspace over UI Settings
+POLISH PASS Right Shift restores ControlPanel
+POLISH PASS 320x240 40.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 320x240 40.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 320x240 40.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 320x240 40.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 320x240 40.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 320x240 40.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 320x240 70.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 320x240 70.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 320x240 70.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 320x240 70.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 320x240 70.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 320x240 70.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 320x240 100.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 320x240 100.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 320x240 100.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 320x240 100.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 320x240 100.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 320x240 100.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 400x300 40.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 400x300 40.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 400x300 40.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 400x300 40.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 400x300 40.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 400x300 40.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 400x300 70.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 400x300 70.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 400x300 70.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 400x300 70.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 400x300 70.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 400x300 70.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 400x300 100.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 400x300 100.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 400x300 100.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 400x300 100.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 400x300 100.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 400x300 100.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 512x384 40.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 512x384 40.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 512x384 40.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 512x384 40.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 512x384 40.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 512x384 40.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 512x384 70.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 512x384 70.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 512x384 70.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 512x384 70.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 512x384 70.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 512x384 70.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 512x384 100.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 512x384 100.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 512x384 100.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 512x384 100.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 512x384 100.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 512x384 100.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 640x360 40.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 640x360 40.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 640x360 40.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 640x360 40.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 640x360 40.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 640x360 40.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 640x360 70.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 640x360 70.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 640x360 70.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 640x360 70.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 640x360 70.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 640x360 70.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 640x360 100.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 640x360 100.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 640x360 100.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 640x360 100.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 640x360 100.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 640x360 100.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 640x400 40.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 640x400 40.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 640x400 40.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 640x400 40.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 640x400 40.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 640x400 40.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 640x400 70.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 640x400 70.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 640x400 70.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 640x400 70.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 640x400 70.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 640x400 70.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 640x400 100.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 640x400 100.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 640x400 100.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 640x400 100.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 640x400 100.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 640x400 100.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 683x384 40.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 683x384 40.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 683x384 40.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 683x384 40.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 683x384 40.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 683x384 40.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 683x384 70.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 683x384 70.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 683x384 70.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 683x384 70.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 683x384 70.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 683x384 70.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 683x384 100.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 683x384 100.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 683x384 100.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 683x384 100.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 683x384 100.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 683x384 100.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 720x450 40.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 720x450 40.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 720x450 40.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 720x450 40.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 720x450 40.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 720x450 40.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 720x450 70.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 720x450 70.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 720x450 70.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 720x450 70.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 720x450 70.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 720x450 70.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 720x450 100.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 720x450 100.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 720x450 100.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 720x450 100.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 720x450 100.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 720x450 100.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 800x450 40.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 800x450 40.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 800x450 40.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 800x450 40.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 800x450 40.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 800x450 40.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 800x450 70.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 800x450 70.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 800x450 70.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 800x450 70.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 800x450 70.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 800x450 70.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 800x450 100.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 800x450 100.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 800x450 100.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 800x450 100.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 800x450 100.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 800x450 100.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 960x540 40.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 960x540 40.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 960x540 40.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 960x540 40.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 960x540 40.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 960x540 40.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 960x540 70.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 960x540 70.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 960x540 70.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 960x540 70.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 960x540 70.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 960x540 70.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 960x540 100.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 960x540 100.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 960x540 100.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 960x540 100.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 960x540 100.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 960x540 100.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 960x600 40.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 960x600 40.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 960x600 40.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 960x600 40.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 960x600 40.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 960x600 40.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 960x600 70.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 960x600 70.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 960x600 70.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 960x600 70.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 960x600 70.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 960x600 70.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 960x600 100.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 960x600 100.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 960x600 100.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 960x600 100.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 960x600 100.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 960x600 100.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 1280x540 40.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 1280x540 40.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 1280x540 40.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 1280x540 40.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 1280x540 40.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 1280x540 40.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 1280x540 70.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 1280x540 70.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 1280x540 70.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 1280x540 70.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 1280x540 70.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 1280x540 70.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 1280x540 100.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 1280x540 100.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 1280x540 100.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 1280x540 100.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 1280x540 100.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 1280x540 100.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 1280x720 40.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 1280x720 40.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 1280x720 40.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 1280x720 40.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 1280x720 40.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 1280x720 40.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 1280x720 70.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 1280x720 70.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 1280x720 70.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 1280x720 70.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 1280x720 70.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 1280x720 70.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 1280x720 100.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 1280x720 100.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 1280x720 100.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 1280x720 100.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 1280x720 100.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 1280x720 100.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 1280x800 40.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 1280x800 40.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 1280x800 40.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 1280x800 40.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 1280x800 40.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 1280x800 40.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 1280x800 70.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 1280x800 70.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 1280x800 70.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 1280x800 70.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 1280x800 70.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 1280x800 70.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 1280x800 100.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 1280x800 100.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 1280x800 100.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 1280x800 100.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 1280x800 100.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 1280x800 100.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 1720x720 40.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 1720x720 40.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 1720x720 40.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 1720x720 40.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 1720x720 40.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 1720x720 40.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 1720x720 70.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 1720x720 70.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 1720x720 70.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 1720x720 70.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 1720x720 70.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 1720x720 70.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 1720x720 100.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 1720x720 100.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 1720x720 100.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 1720x720 100.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 1720x720 100.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 1720x720 100.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 1920x1080 40.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 1920x1080 40.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 1920x1080 40.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 1920x1080 40.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 1920x1080 40.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 1920x1080 40.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 1920x1080 70.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 1920x1080 70.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 1920x1080 70.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 1920x1080 70.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 1920x1080 70.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 1920x1080 70.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 1920x1080 100.0% Compact auto-fit=false category windows fit without overlap
+POLISH PASS 1920x1080 100.0% Compact auto-fit=false widgets fit without overlap
+POLISH PASS 1920x1080 100.0% Comfortable auto-fit=false category windows fit without overlap
+POLISH PASS 1920x1080 100.0% Comfortable auto-fit=false widgets fit without overlap
+POLISH PASS 1920x1080 100.0% Spacious auto-fit=false category windows fit without overlap
+POLISH PASS 1920x1080 100.0% Spacious auto-fit=false widgets fit without overlap
+POLISH PASS 320x240 40.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 320x240 40.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 320x240 40.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 320x240 40.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 320x240 40.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 320x240 40.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 320x240 70.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 320x240 70.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 320x240 70.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 320x240 70.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 320x240 70.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 320x240 70.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 320x240 100.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 320x240 100.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 320x240 100.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 320x240 100.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 320x240 100.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 320x240 100.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 400x300 40.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 400x300 40.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 400x300 40.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 400x300 40.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 400x300 40.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 400x300 40.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 400x300 70.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 400x300 70.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 400x300 70.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 400x300 70.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 400x300 70.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 400x300 70.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 400x300 100.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 400x300 100.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 400x300 100.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 400x300 100.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 400x300 100.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 400x300 100.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 512x384 40.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 512x384 40.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 512x384 40.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 512x384 40.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 512x384 40.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 512x384 40.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 512x384 70.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 512x384 70.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 512x384 70.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 512x384 70.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 512x384 70.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 512x384 70.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 512x384 100.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 512x384 100.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 512x384 100.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 512x384 100.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 512x384 100.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 512x384 100.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 640x360 40.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 640x360 40.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 640x360 40.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 640x360 40.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 640x360 40.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 640x360 40.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 640x360 70.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 640x360 70.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 640x360 70.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 640x360 70.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 640x360 70.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 640x360 70.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 640x360 100.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 640x360 100.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 640x360 100.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 640x360 100.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 640x360 100.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 640x360 100.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 640x400 40.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 640x400 40.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 640x400 40.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 640x400 40.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 640x400 40.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 640x400 40.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 640x400 70.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 640x400 70.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 640x400 70.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 640x400 70.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 640x400 70.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 640x400 70.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 640x400 100.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 640x400 100.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 640x400 100.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 640x400 100.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 640x400 100.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 640x400 100.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 683x384 40.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 683x384 40.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 683x384 40.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 683x384 40.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 683x384 40.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 683x384 40.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 683x384 70.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 683x384 70.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 683x384 70.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 683x384 70.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 683x384 70.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 683x384 70.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 683x384 100.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 683x384 100.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 683x384 100.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 683x384 100.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 683x384 100.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 683x384 100.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 720x450 40.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 720x450 40.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 720x450 40.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 720x450 40.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 720x450 40.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 720x450 40.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 720x450 70.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 720x450 70.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 720x450 70.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 720x450 70.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 720x450 70.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 720x450 70.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 720x450 100.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 720x450 100.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 720x450 100.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 720x450 100.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 720x450 100.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 720x450 100.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 800x450 40.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 800x450 40.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 800x450 40.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 800x450 40.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 800x450 40.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 800x450 40.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 800x450 70.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 800x450 70.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 800x450 70.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 800x450 70.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 800x450 70.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 800x450 70.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 800x450 100.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 800x450 100.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 800x450 100.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 800x450 100.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 800x450 100.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 800x450 100.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 960x540 40.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 960x540 40.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 960x540 40.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 960x540 40.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 960x540 40.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 960x540 40.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 960x540 70.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 960x540 70.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 960x540 70.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 960x540 70.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 960x540 70.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 960x540 70.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 960x540 100.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 960x540 100.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 960x540 100.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 960x540 100.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 960x540 100.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 960x540 100.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 960x600 40.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 960x600 40.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 960x600 40.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 960x600 40.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 960x600 40.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 960x600 40.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 960x600 70.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 960x600 70.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 960x600 70.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 960x600 70.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 960x600 70.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 960x600 70.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 960x600 100.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 960x600 100.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 960x600 100.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 960x600 100.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 960x600 100.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 960x600 100.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 1280x540 40.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 1280x540 40.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 1280x540 40.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 1280x540 40.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 1280x540 40.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 1280x540 40.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 1280x540 70.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 1280x540 70.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 1280x540 70.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 1280x540 70.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 1280x540 70.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 1280x540 70.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 1280x540 100.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 1280x540 100.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 1280x540 100.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 1280x540 100.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 1280x540 100.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 1280x540 100.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 1280x720 40.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 1280x720 40.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 1280x720 40.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 1280x720 40.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 1280x720 40.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 1280x720 40.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 1280x720 70.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 1280x720 70.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 1280x720 70.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 1280x720 70.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 1280x720 70.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 1280x720 70.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 1280x720 100.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 1280x720 100.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 1280x720 100.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 1280x720 100.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 1280x720 100.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 1280x720 100.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 1280x800 40.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 1280x800 40.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 1280x800 40.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 1280x800 40.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 1280x800 40.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 1280x800 40.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 1280x800 70.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 1280x800 70.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 1280x800 70.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 1280x800 70.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 1280x800 70.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 1280x800 70.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 1280x800 100.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 1280x800 100.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 1280x800 100.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 1280x800 100.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 1280x800 100.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 1280x800 100.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 1720x720 40.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 1720x720 40.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 1720x720 40.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 1720x720 40.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 1720x720 40.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 1720x720 40.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 1720x720 70.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 1720x720 70.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 1720x720 70.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 1720x720 70.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 1720x720 70.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 1720x720 70.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 1720x720 100.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 1720x720 100.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 1720x720 100.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 1720x720 100.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 1720x720 100.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 1720x720 100.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 1920x1080 40.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 1920x1080 40.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 1920x1080 40.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 1920x1080 40.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 1920x1080 40.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 1920x1080 40.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 1920x1080 70.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 1920x1080 70.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 1920x1080 70.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 1920x1080 70.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 1920x1080 70.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 1920x1080 70.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS 1920x1080 100.0% Compact auto-fit=true category windows fit without overlap
+POLISH PASS 1920x1080 100.0% Compact auto-fit=true widgets fit without overlap
+POLISH PASS 1920x1080 100.0% Comfortable auto-fit=true category windows fit without overlap
+POLISH PASS 1920x1080 100.0% Comfortable auto-fit=true widgets fit without overlap
+POLISH PASS 1920x1080 100.0% Spacious auto-fit=true category windows fit without overlap
+POLISH PASS 1920x1080 100.0% Spacious auto-fit=true widgets fit without overlap
+POLISH PASS AccountScreen 320x240 widgets fit without overlap
+POLISH PASS ProxyScreen 320x240 widgets fit without overlap
+POLISH PASS BaritoneScreen 320x240 widgets fit without overlap
+POLISH PASS EntitySelectionScreen 320x240 widgets fit without overlap
+POLISH PASS AccountScreen 400x300 widgets fit without overlap
+POLISH PASS ProxyScreen 400x300 widgets fit without overlap
+POLISH PASS BaritoneScreen 400x300 widgets fit without overlap
+POLISH PASS EntitySelectionScreen 400x300 widgets fit without overlap
+POLISH PASS AccountScreen 512x384 widgets fit without overlap
+POLISH PASS ProxyScreen 512x384 widgets fit without overlap
+POLISH PASS BaritoneScreen 512x384 widgets fit without overlap
+POLISH PASS unauthenticated SOCKS5 tunnels bytes through loopback proxy
+POLISH PASS EntitySelectionScreen 512x384 widgets fit without overlap
+POLISH PASS AccountScreen 640x360 widgets fit without overlap
+POLISH PASS ProxyScreen 640x360 widgets fit without overlap
+POLISH PASS BaritoneScreen 640x360 widgets fit without overlap
+POLISH PASS EntitySelectionScreen 640x360 widgets fit without overlap
+POLISH PASS AccountScreen 640x400 widgets fit without overlap
+POLISH PASS ProxyScreen 640x400 widgets fit without overlap
+POLISH PASS BaritoneScreen 640x400 widgets fit without overlap
+POLISH PASS EntitySelectionScreen 640x400 widgets fit without overlap
+POLISH PASS AccountScreen 683x384 widgets fit without overlap
+POLISH PASS ProxyScreen 683x384 widgets fit without overlap
+POLISH PASS BaritoneScreen 683x384 widgets fit without overlap
+POLISH PASS EntitySelectionScreen 683x384 widgets fit without overlap
+POLISH PASS AccountScreen 720x450 widgets fit without overlap
+POLISH PASS ProxyScreen 720x450 widgets fit without overlap
+POLISH PASS BaritoneScreen 720x450 widgets fit without overlap
+POLISH PASS EntitySelectionScreen 720x450 widgets fit without overlap
+POLISH PASS AccountScreen 800x450 widgets fit without overlap
+POLISH PASS ProxyScreen 800x450 widgets fit without overlap
+POLISH PASS BaritoneScreen 800x450 widgets fit without overlap
+POLISH PASS EntitySelectionScreen 800x450 widgets fit without overlap
+POLISH PASS AccountScreen 960x540 widgets fit without overlap
+POLISH PASS ProxyScreen 960x540 widgets fit without overlap
+POLISH PASS BaritoneScreen 960x540 widgets fit without overlap
+POLISH PASS EntitySelectionScreen 960x540 widgets fit without overlap
+POLISH PASS AccountScreen 960x600 widgets fit without overlap
+POLISH PASS ProxyScreen 960x600 widgets fit without overlap
+POLISH PASS BaritoneScreen 960x600 widgets fit without overlap
+POLISH PASS EntitySelectionScreen 960x600 widgets fit without overlap
+POLISH PASS AccountScreen 1280x540 widgets fit without overlap
+POLISH PASS ProxyScreen 1280x540 widgets fit without overlap
+POLISH PASS BaritoneScreen 1280x540 widgets fit without overlap
+POLISH PASS EntitySelectionScreen 1280x540 widgets fit without overlap
+POLISH PASS AccountScreen 1280x720 widgets fit without overlap
+POLISH PASS ProxyScreen 1280x720 widgets fit without overlap
+POLISH PASS BaritoneScreen 1280x720 widgets fit without overlap
+POLISH PASS EntitySelectionScreen 1280x720 widgets fit without overlap
+POLISH PASS AccountScreen 1280x800 widgets fit without overlap
+POLISH PASS ProxyScreen 1280x800 widgets fit without overlap
+POLISH PASS BaritoneScreen 1280x800 widgets fit without overlap
+POLISH PASS EntitySelectionScreen 1280x800 widgets fit without overlap
+POLISH PASS AccountScreen 1720x720 widgets fit without overlap
+POLISH PASS ProxyScreen 1720x720 widgets fit without overlap
+POLISH PASS BaritoneScreen 1720x720 widgets fit without overlap
+POLISH PASS proxy credentials are absent from plaintext vault bytes
+POLISH PASS EntitySelectionScreen 1720x720 widgets fit without overlap
+POLISH PASS AccountScreen 1920x1080 widgets fit without overlap
+POLISH PASS ProxyScreen 1920x1080 widgets fit without overlap
+POLISH PASS BaritoneScreen 1920x1080 widgets fit without overlap
+POLISH PASS EntitySelectionScreen 1920x1080 widgets fit without overlap
+POLISH PASS UI Settings 320x240 widgets fit without overlap
+POLISH PASS UI Settings 400x300 widgets fit without overlap
+POLISH PASS UI Settings 512x384 widgets fit without overlap
+POLISH PASS UI Settings 640x360 widgets fit without overlap
+POLISH PASS UI Settings 640x400 widgets fit without overlap
+POLISH PASS UI Settings 683x384 widgets fit without overlap
+POLISH PASS UI Settings 720x450 widgets fit without overlap
+POLISH PASS UI Settings 800x450 widgets fit without overlap
+POLISH PASS UI Settings 960x540 widgets fit without overlap
+POLISH PASS UI Settings 960x600 widgets fit without overlap
+POLISH PASS UI Settings 1280x540 widgets fit without overlap
+POLISH PASS UI Settings 1280x720 widgets fit without overlap
+POLISH PASS UI Settings 1280x800 widgets fit without overlap
+POLISH PASS UI Settings 1720x720 widgets fit without overlap
+POLISH PASS UI Settings 1920x1080 widgets fit without overlap
+POLISH PASS encrypted proxy credentials reload before authenticated tunnel test
+POLISH PASS authenticated SOCKS5 tunnels bytes through loopback proxy
+POLISH PASS SOCKS5 sends configured synthetic username/password
+POLISH PASS left click on a scaled module row toggles it
+POLISH PASS right click on scaled module row opens settings
+POLISH PASS entity picker None clears selections
+POLISH PASS entity picker filtered row selects one type
+POLISH PASS authenticated SOCKS5 rejects bad credentials without direct fallback
+POLISH PASS SOCKS5 sends configured synthetic username/password
+POLISH PASS size preset applies requested scale
+POLISH PASS real Minecraft Connection mixin routes TCP through SOCKS5
+POLISH PASS proxy vault hides saved profile data
+POLISH PASS saved proxy profile and active selection reload
+POLISH PASS unreadable active proxy vault fails closed
+POLISH PERF extraction elapsed_median_ms=1.4584 elapsed_p95_ms=5.4046 thread_cpu_p95_ms=15.625 samples=60; excludes GPU presentation
+POLISH PASS local UI extraction elapsed p95 stays within one 60 Hz frame budget
+POLISH PASS proxy editor validates an invalid port without closing
+POLISH PASS Proxy editor widgets fit without overlap
+POLISH PASS password field formats every character as a masked bullet
+POLISH PASS final workspace has only applicable navigation
+POLISH PASS Right Shift opens module workspace in an integrated world
+POLISH PASS in-game popup does not pause simulation
+POLISH PASS In-game popup category windows fit without overlap
+POLISH PASS In-game popup widgets fit without overlap
+POLISH PASS reduced-motion close returns to gameplay
+POLISH PASS font/resource reload invalidates fitted text metrics
+POLISH PASS fitted text respects width after font reload
+POLISH COMPLETE checks=661 failures=0

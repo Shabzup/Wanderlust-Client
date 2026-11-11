@@ -176,6 +176,8 @@ final class Explosives {
         return target - self * .15;
     }
 
+    static double crystalDamage(Minecraft mc,Vec3 blast,Player player) { return damage(mc,Kind.Crystal,blast,player); }
+
     private static double damage(Minecraft mc, Kind kind, Vec3 blast, Player player) {
         double distance = player.position().distanceTo(blast);
         if (distance >= kind.diameter) return 0;

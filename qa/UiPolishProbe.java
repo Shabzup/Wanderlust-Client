@@ -16,6 +16,7 @@ import org.lwjgl.glfw.GLFW;
 public final class UiPolishProbe implements ClientModInitializer {
     int tick,failures,checks,worldTick;boolean started,done,worldLoading;Screen panel,title,multi;long hold;
     CompletableFuture<Void> proxy;List<Double> extraction=new ArrayList<>();
+    CompletableFuture<Void> resourceReload;Map<?,?> fitCache;boolean cachePrimed;
     synchronized void check(boolean ok,String label){checks++;if(!ok)failures++;System.out.println("POLISH "+(ok?"PASS ":"FAIL ")+label);}
     static Object field(Object o,String name)throws Exception{Class c=o.getClass();while(c!=null){try{var f=c.getDeclaredField(name);f.setAccessible(true);return f.get(o);}catch(NoSuchFieldException e){c=c.getSuperclass();}}throw new NoSuchFieldException(name);}
     static void set(Object o,String name,Object value)throws Exception{Class c=o.getClass();while(c!=null){try{var f=c.getDeclaredField(name);f.setAccessible(true);f.set(o,value);return;}catch(NoSuchFieldException e){c=c.getSuperclass();}}throw new NoSuchFieldException(name);}
@@ -40,11 +41,24 @@ public final class UiPolishProbe implements ClientModInitializer {
         GLFW.glfwSetCursorPos(mc.getWindow().handle(),0,0);
         if(System.currentTimeMillis()<hold)return;
         if(worldLoading){
+            if(resourceReload!=null){
+                if(!resourceReload.isDone()||mc.gui.overlay()!=null)return;
+                resourceReload.join();
+                check(cachePrimed&&fitCache.isEmpty(),"font/resource reload invalidates fitted text metrics");
+                String fitted=(String)UpdateProbe.call("PanelStyle","fit",new Class[]{net.minecraft.client.gui.Font.class,String.class,int.class},mc.font,"\uD83C\uDF0D long label and more text",42);
+                Component label=(Component)UpdateProbe.call("PanelStyle","text",new Class[]{String.class},fitted);
+                check(!fitted.isEmpty()&&mc.font.width(label)<=42&&fitted.codePoints().noneMatch(c->c>=0xD800&&c<=0xDFFF),"fitted text respects width after font reload");
+                System.out.println("POLISH COMPLETE checks="+checks+" failures="+failures);done=true;mc.stop();return;
+            }
             if(mc.player==null||mc.gui.overlay()!=null)return;worldTick++;
             if(worldTick==20){mc.gui.setScreen(null);KeyMapping.click(com.mojang.blaze3d.platform.InputConstants.getKey("key.keyboard.right.shift"));}
             if(worldTick==22){panel=mc.gui.screen();check(panel!=null&&panel.getClass().getSimpleName().equals("ControlPanel"),"Right Shift opens module workspace in an integrated world");check(!panel.isPauseScreen(),"in-game popup does not pause simulation");set(panel,"opened",System.nanoTime()-1_000_000_000L);layout(panel,"In-game popup");}
             if(worldTick==35){shot(mc,"ingame-translucency");option("ui.motion",false);key(mc);}
-            if(worldTick==38){check(mc.gui.screen()==null,"reduced-motion close returns to gameplay");option("ui.motion",true);System.out.println("POLISH COMPLETE checks="+checks+" failures="+failures);done=true;mc.stop();}
+            if(worldTick==38){
+                check(mc.gui.screen()==null,"reduced-motion close returns to gameplay");option("ui.motion",true);
+                var cache=Class.forName("dev.shabzup.wanderlust.PanelStyle").getDeclaredField("FITS");cache.setAccessible(true);fitCache=(Map<?,?>)cache.get(null);cachePrimed=!fitCache.isEmpty();
+                resourceReload=mc.reloadResourcePacks();
+            }
             return;
         }
         tick++;
@@ -83,12 +97,18 @@ public final class UiPolishProbe implements ClientModInitializer {
             check(((Number)UpdateProbe.call("EntityTargets","count",new Class[0])).intValue()==1,"entity picker filtered row selects one type");
             entities.onClose();button(s,"‹  Back").onPress(null);button(s,"UI Settings").onPress(null);button(s,"85%").onPress(null);
             check((double)UpdateProbe.call("Settings","number",new Class[]{String.class},"ui.scale")==85,"size preset applies requested scale");button(s,"70%").onPress(null);button(s,"‹  Back").onPress(null);
+            var threads=java.lang.management.ManagementFactory.getThreadMXBean();
+            boolean cpuSupported=threads.isCurrentThreadCpuTimeSupported();
+            if(cpuSupported&&!threads.isThreadCpuTimeEnabled())threads.setThreadCpuTimeEnabled(true);
+            List<Double> cpu=new ArrayList<>();
             for(int sample=0;sample<70;sample++){
+                long cpuBegin=cpuSupported?threads.getCurrentThreadCpuTime():0;
                 long begin=System.nanoTime();s.extractRenderState(new net.minecraft.client.gui.GuiGraphicsExtractor(mc,new net.minecraft.client.renderer.state.gui.GuiRenderState(),-1,-1),-1,-1,0);
-                if(sample>=10)extraction.add((System.nanoTime()-begin)/1_000_000d);
+                long elapsed=System.nanoTime()-begin;
+                if(sample>=10){extraction.add(elapsed/1_000_000d);if(cpuSupported)cpu.add((threads.getCurrentThreadCpuTime()-cpuBegin)/1_000_000d);}
             }
-            extraction.sort(Double::compare);System.out.println("POLISH PERF extraction median_ms="+extraction.get(30)+" p95_ms="+extraction.get(57)+" samples=60; CPU only, excludes GPU presentation");
-            check(extraction.get(57)<16.7,"local UI CPU extraction p95 stays within one 60 Hz frame budget");
+            extraction.sort(Double::compare);cpu.sort(Double::compare);System.out.println("POLISH PERF extraction elapsed_median_ms="+extraction.get(30)+" elapsed_p95_ms="+extraction.get(57)+" thread_cpu_p95_ms="+(cpuSupported?cpu.get(57):"unavailable")+" samples=60; excludes GPU presentation");
+            check(extraction.get(57)<16.7,"local UI extraction elapsed p95 stays within one 60 Hz frame budget");
             hold=System.currentTimeMillis()+650;
         }
         if(tick==7){shot(mc,"workspace-1080p");button(panel,"UI Settings").onPress(null);hold=System.currentTimeMillis()+400;}

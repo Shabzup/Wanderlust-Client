@@ -46,6 +46,7 @@ public final class Wanderlust implements ClientModInitializer {
         for(Feature feature:Feature.values())try{String group=Settings.text("category."+feature.id);if(!group.isBlank())feature.group=Feature.Group.valueOf(group);}catch(IllegalArgumentException ignored){}
         Accounts.init();
         MenuAccess.init();
+        PanelStyle.init();
         Proxies.load();
         ExtraMisc.init();
         var category = KeyMapping.Category.register(Identifier.fromNamespaceAndPath("wanderlust", "modules"));
@@ -88,6 +89,7 @@ public final class Wanderlust implements ClientModInitializer {
             lastPlayer = mc.player;
         }
         if (mc.level == null || mc.player == null || mc.gameMode == null) return;
+        Combat.cleanup(mc);
         Movement.tick(mc);
         ExtraMovement.tick(mc);
         ExtraActions.tick(mc);

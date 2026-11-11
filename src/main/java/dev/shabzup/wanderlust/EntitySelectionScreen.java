@@ -29,11 +29,11 @@ final class EntitySelectionScreen extends ClientScreen {
         for(int i=scroll;i<Math.min(filtered.size(),scroll+rows);i++){
             var item=filtered.get(i);int y=top+119+(i-scroll)*24;boolean active=EntityTargets.contains(item.id());
             if(mx>=left+16&&mx<left+cardWidth-16&&my>=y&&my<y+24)g.fill(left+12,y,left+cardWidth-12,y+24,0x256E709E);
-            g.fill(left+19,y+7,left+28,y+16,active?PanelStyle.PURPLE_LIGHT:0xFF4C5670);if(!active)g.fill(left+20,y+8,left+27,y+15,0xFF151C2B);
+            g.fill(left+19,y+7,left+28,y+16,active?PanelStyle.accentLight():0xFF4C5670);if(!active)g.fill(left+20,y+8,left+27,y+15,0xFF151C2B);
             text(g,item.name(),left+37,y+7,cardWidth>450?(cardWidth-65)/2:cardWidth-61,active?PanelStyle.TEXT:PanelStyle.MUTED);
             if(cardWidth>450){String id=PanelStyle.fit(font,item.id(),(cardWidth-65)/2);var label=PanelStyle.text(id);text(g,id,left+cardWidth-18-font.width(label),y+7,(cardWidth-65)/2,PanelStyle.MUTED);}
         }
         text(g,filtered.size()+" results · "+(filtered.isEmpty()?0:scroll+1)+"–"+Math.min(filtered.size(),scroll+rows),left+16,top+cardHeight-28,cardWidth-120,PanelStyle.MUTED);
-        if(filtered.size()>rows){int h=rows*24,thumb=Math.max(10,h*rows/filtered.size()),yy=top+119+(h-thumb)*scroll/Math.max(1,filtered.size()-rows);g.fill(left+cardWidth-8,top+119,left+cardWidth-6,top+119+h,0x334B5874);g.fill(left+cardWidth-8,yy,left+cardWidth-6,yy+thumb,PanelStyle.PURPLE_LIGHT);}
+        if(filtered.size()>rows){int h=rows*24,thumb=Math.max(10,h*rows/filtered.size()),yy=top+119+(h-thumb)*scroll/Math.max(1,filtered.size()-rows);g.fill(left+cardWidth-8,top+119,left+cardWidth-6,top+119+h,0x334B5874);g.fill(left+cardWidth-8,yy,left+cardWidth-6,yy+thumb,PanelStyle.accentLight());}
     }
 }

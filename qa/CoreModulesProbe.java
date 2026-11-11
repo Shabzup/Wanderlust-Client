@@ -28,7 +28,7 @@ public class CoreModulesProbe implements ClientModInitializer{
   if(tick==5)server(mc,p->p.getInventory().setItem(12,new ItemStack(Items.TOTEM_OF_UNDYING)));
   if(tick==15)enable("AUTO_TOTEM",true);
   if(tick==30){check(read(mc,p->p.getOffhandItem().is(Items.TOTEM_OF_UNDYING)),"AutoTotem equips inventory totem on server");enable("AUTO_TOTEM",false);server(mc,p->{p.setItemSlot(EquipmentSlot.OFFHAND,ItemStack.EMPTY);p.getInventory().setItem(12,new ItemStack(Items.TOTEM_OF_UNDYING));});}
-  if(tick==45){check(read(mc,p->p.getOffhandItem().isEmpty()),"disabled AutoTotem leaves offhand unchanged");server(mc,p->{p.getInventory().setItem(0,new ItemStack(Items.COBBLESTONE));p.getInventory().setItem(9,new ItemStack(Items.COBBLESTONE,32));p.getInventory().setSelectedSlot(0);});enable("AUTO_REPLENISH",true);}
+  if(tick==45){check(read(mc,p->p.getOffhandItem().isEmpty()),"disabled AutoTotem leaves offhand unchanged");server(mc,p->{p.getInventory().setItem(0,new ItemStack(Items.COBBLESTONE,16));p.getInventory().setItem(9,new ItemStack(Items.COBBLESTONE,32));p.getInventory().setSelectedSlot(0);});enable("AUTO_REPLENISH",true);}
   if(tick==65)server(mc,p->p.getInventory().setItem(0,ItemStack.EMPTY));
   if(tick==85){check(read(mc,p->p.getInventory().getItem(0).is(Items.COBBLESTONE)&&p.getInventory().getItem(0).getCount()==32),"AutoReplenish replaces depleted hotbar stack on server");enable("AUTO_REPLENISH",false);server(mc,p->{p.getInventory().setItem(0,ItemStack.EMPTY);p.getInventory().setItem(1,new ItemStack(Items.BREAD,20));p.getFoodData().setFoodLevel(5);});}
   if(tick==95)enable("AUTO_EAT",true);

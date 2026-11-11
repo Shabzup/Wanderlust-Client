@@ -12,7 +12,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(KeyboardHandler.class)
 class GlobalMenuKeyMixin {
     @Inject(method="keyPress",at=@At("HEAD"),cancellable=true)
-    private void wanderlust$key(long window,int action,KeyEvent event,CallbackInfo ci){if(MenuAccess.key(window,action,event))ci.cancel();}
+    private void wanderlust$key(long window,int action,KeyEvent event,CallbackInfo ci){dev.shabzup.wanderlust.MenuMovement.observeKey(window,action,event.scancode());if(MenuAccess.key(window,action,event)||dev.shabzup.wanderlust.MenuMovement.consumesArrow(window,event.key()))ci.cancel();}
+}
+
+@Mixin(net.minecraft.client.player.KeyboardInput.class)
+class MenuMovementInputMixin {
+    @Inject(method="tick",at=@At("HEAD"))
+    private void wanderlust$movementInput(CallbackInfo ci){dev.shabzup.wanderlust.MenuMovement.readBindings();}
 }
 
 @Mixin(JoinMultiplayerScreen.class)

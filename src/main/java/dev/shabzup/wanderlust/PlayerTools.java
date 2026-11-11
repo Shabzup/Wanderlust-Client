@@ -21,7 +21,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.EntityHitResult;
 
 public final class PlayerTools {
-    private static final ItemStack[] previous = new ItemStack[9];
     private static final Map<Integer, Integer> fedAt = new HashMap<>();
     private static int foodSlot = -1, originalSlot, nextMeal, nextUtility, nextCast, nextRespawn;
     private static String foodModule;
@@ -39,7 +38,8 @@ public final class PlayerTools {
 
     static void reset(Minecraft mc) {
         finishFood(mc);
-        Arrays.fill(previous, null);
+        AutoReplenish.reset();
+        AutoMend.reset();
         fedAt.clear();
         nextMeal = nextUtility = nextCast = nextRespawn = 0;
     }
@@ -90,7 +90,7 @@ public final class PlayerTools {
             finishFood(mc);
         }
         if (screen != null) {
-            Arrays.fill(previous, null);
+            AutoReplenish.screenOpened();
             if (Wanderlust.on("auto-sign") && screen instanceof AbstractSignEditScreen) {
                 String[] lines = ((SignEditorAccessor) screen).wanderlust$messages();
                 for (int i = 0; i < 4; i++) lines[i] = Wanderlust.text("sign-line-" + (i + 1));
@@ -99,8 +99,8 @@ public final class PlayerTools {
             return true;
         }
         if (p.isSpectator() || mc.isPaused() || p.containerMenu != p.inventoryMenu || Wanderlust.on("freecam")) return true;
-        if (Wanderlust.on("auto-replenish")) replenish(mc, p);
-        else Arrays.fill(previous, null);
+        AutoReplenish.tick(mc, p);
+        if (!Wanderlust.on("auto-mend")) AutoMend.reset();
         if (p.isUsingItem()) return false; // Combat can still update its own bow draw.
         if (p.tickCount >= nextMeal && startFood(mc, p)) return true;
         if (p.tickCount >= nextUtility) {
@@ -146,32 +146,9 @@ public final class PlayerTools {
         return -1;
     }
 
-    private static void replenish(Minecraft mc, LocalPlayer p) {
-        int trigger = (int)Wanderlust.number("replenish-count");
-        for (int slot = 0; slot < 9; slot++) {
-            ItemStack now = p.getInventory().getItem(slot);
-            if (!now.isEmpty()) {
-                if (previous[slot] == null || !ItemStack.isSameItemSameComponents(previous[slot], now)) {
-                    previous[slot] = now.copyWithCount(1);
-                }
-                if (now.getCount() > trigger) continue;
-            }
-            ItemStack wanted = previous[slot];
-            if (wanted == null) continue;
-            for (int i = 9; i < 36; i++) {
-                ItemStack spare = p.getInventory().getItem(i);
-                if (!spare.is(wanted.getItem())) continue;
-                if (!ItemStack.isSameItemSameComponents(spare, wanted)
-                    && !(wanted.isDamageableItem() && ItemStack.matchesIgnoringComponents(
-                        wanted, spare.copyWithCount(1), c -> c == DataComponents.DAMAGE))) continue;
-                mc.gameMode.handleContainerInput(p.inventoryMenu.containerId, i, slot, ContainerInput.SWAP, p);
-                break;
-            }
-            previous[slot] = null;
-        }
-    }
-
     private static boolean mend(Minecraft mc, LocalPlayer p) {
+        if (Settings.choice("mend-mode").equals("Offhand queue")) return AutoMend.tick(mc, p);
+        AutoMend.reset();
         int bottles = hotbar(p, s -> s.is(Items.EXPERIENCE_BOTTLE));
         if (bottles < 0) return false;
         ItemStack repair = null;

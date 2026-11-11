@@ -1,0 +1,19 @@
+JAR SHA256 a44dfeaed28f32715d778938a285b682b6b45ecd1bea76a3d0230ac6dcb38c89
+Mods: WanderlustClient-1.0.0+26.2.jar, fabric-api-0.161.0+26.2.jar, qa-probe.jar
+QA PASS client target fixture added
+QA PASS BowSpam fired multiple arrows on the integrated server
+QA PASS BowAimbot aimed toward the player fixture
+QA PASS CrystalAura placed and broke an end crystal on the integrated server
+QA PASS AnchorAura fixture resets knockback from the preceding crystal scenario
+QA PASS AnchorAura placed, charged and detonated an Overworld anchor on the integrated server
+QA PASS movement fixture standing on platform
+QA PASS Freecam suppresses body controls
+QA PASS Freecam leaves body position and facing unchanged
+QA PASS Freecam moves and rotates the rendered camera
+QA PASS disabling Freecam restores original controls and camera
+QA PASS FreeLook diverts real mouse rotation from player to camera
+QA PASS disabling FreeLook restores player view
+QA PASS Flight gains altitude in survival
+QA PASS NoFall prevented damage from a survival fall of more than eight blocks
+QA PASS control fall with NoFall disabled deals damage on the same platform
+EXTENDED COMPLETE failures=0

@@ -4,7 +4,7 @@ This file tracks functional verification, not just whether a module appears in t
 
 ## Current repair batch
 
-Installed repair build: `C2A5F86B77FAF6184E725D8DAF1906041228915C5A23D29E5CEED0FDCFEA9A62` (SHA-256). The previous installed JAR is backed up under `.minecraft/backup/WanderlustClient`.
+Candidate SHA-256: `B04AE13B13852D00FBA1ABB2662755F710DCD0BB31D60A9FF3AF68AB34466419` (11 November 2026). This candidate is **not installed** and is **not a launch-ready release**. Installation awaits completion of the outstanding functional work; the personal game still has the earlier UI build. [Verification evidence](qa/evidence/CANDIDATE.md) distinguishes eight suites on the preceding build from two affected suites rerun on this build.
 
 - AutoEXP: removed the undocumented mandatory damaged-equipment gate; repair-only behavior is now an explicit option. XP use supports offhand bottles and restores the selected slot and view angle.
 - Xray: registered ore face culling and section visibility hooks; switched to the complete Minecraft 26.2 extraction/rebuild path; corrected vanilla and Indigo lighting; filtered unselected plant and fluid geometry; expanded the target-list edit field; refreshes geometry after editing targets.
@@ -12,13 +12,36 @@ Installed repair build: `C2A5F86B77FAF6184E725D8DAF1906041228915C5A23D29E5CEED0F
 - BowSpam: releases a module-owned bow draw when disabled.
 - Optional Baritone: stops its executor after Minecraft closes. Subsequent test processes with the installed optional mods exit with code 0 instead of hitting the shutdown watchdog.
 
-Current scope: **225 individual runtime tests passed**, with selected disable/cleanup checks; **29 modules have passed a specific behavioral scenario**, **5 have partial checks**, and **191 still need dedicated behavior scenarios**. This is not a claim that every setting, multiplayer environment or all 225 implementations is fully verified.
+Current scope: **225 individual runtime tests passed**, with selected disable/cleanup checks; **36 modules have passed a specific behavioral scenario**, **4 have partial checks**, and **185 still need dedicated behavior scenarios**. This is not a claim that every setting, multiplayer environment or all 225 implementations is fully verified.
+
+## 10 November independent implementation pass
+
+- AutoEXP now has repair start/stop thresholds, equipment selection, inventory bottle replenishment and use/ground pause options. Continuous use remains the default.
+- AutoArmor now ranks protection and enchantments, rejects configured curses, preserves Elytra and optionally removes nearly broken gear without dropping it.
+- AutoTotem supports Smart/Strict policies and has priority over Offhand. Danger estimates are not guarantees of survival.
+- KillAura adds field of view, wall range, named/baby filters, weapon restrictions, switch delay, optional custom timing and slot restoration even when an inventory is open.
+- HighJump changes the actual jump impulse with fixed-power or multiplier controls. SafeWalk checks support collision shapes after other movement transforms; configurable drop depth and inset support slabs and diagonal travel.
+- Dedicated probes passed 10 inventory-queue assertions, 10 combat/repair assertions and 10 movement assertions (including Step). These deepen coverage; they do not establish full Meteor parity.
+- The QA launcher now removes stale test-mod copies before each launch. The candidate runner records the JAR hash and exact mod set alongside assertion-only evidence.
+
+## 11 November menu/input pass
+
+GuiMove reads the current keyboard/mouse bindings immediately before vanilla constructs movement input. Settings restrict screens and independently allow jump, sneak, sprint and arrow rotation. Chat, edit screens, focused text fields and keybind capture suppress movement. Module-owned held input bypasses toggle-key press semantics and clears saved menu-restoration flags, preventing Toggle Sneak/Sprint flicker or stuck state. AutoWalk supports four directions; AutoWalk, Sneak/AutoSneak and FlySpeed clean up when disabled in a menu or reset across worlds.
+
+The new menu-control probe passed 27 assertions. It substitutes physical input only inside the QA JAR, then exercises the real input tick and player movement. It verifies remapped keyboard and mouse binding routing, not a physical hardware test. Sneak assertions also inspect the integrated server. FlySpeed is still partial because only its attribute application/restoration was checked.
+
+The combat fixture now resets player position and clears remaining crystals before the AnchorAura scenario. The prior chained fixture could fail after crystal knockback moved the player off its platform; the historical diagnostic is retained in `qa/evidence/combat-fixture-knockback.txt`.
+
+The first version of that probe mixed synthetic key states with native polling; its movement failure is not treated as a demonstrated production defect. The corrected fixture controls input at the sampling boundary.
+
+UI text measurement and fitting now use bounded caches invalidated after fonts/languages reload. Text fitting preserves Unicode code points, and the animated decoration reuses geometry buffers. The latest UI suite passed 661 checks, including an actual resource reload; measured extraction elapsed p95 was 5.4046 ms against the unchanged 16.7 ms limit. The earlier 18.875 ms failure remains documented. These timings do not include GPU presentation.
 
 ## Known gaps to repair in later batches
 
-- AutoArmor scores equipment by maximum durability rather than protection, enchantments or curse constraints.
+- AutoTotem crystal and fall danger calculations remain conservative estimates; enchantment/resistance and complex obstruction scenarios need dedicated damage tests.
+- AutoWalk Smart pathfinding, manual-input/Y-change stopping and unloaded-chunk checks from the reference are not implemented in this pass. Sneak currently implements vanilla held-key behavior, not the reference packet mode.
 - AutoCity currently mines a neighboring block without a full PvP target/block selection strategy.
-- Several server command integrations have configuration and dispatch code but no verified compatible server behavior.
+- AutoLogin, AutoSell, AutoEndorse, AutoFeed, AutoHeal, AutoRepair and DiscordPresence are deferred to the end at the user’s request; no compatible service/server verification is claimed.
 - Shared engines for ZKillAura, ZAutoTotem and AutoTrapPlus are aliases, not independently implemented versions.
 
 These are code-review findings, not failed gameplay tests. They remain incomplete until a suitable functional test passes.
@@ -30,11 +53,11 @@ Each module below needs a realistic setup, action/result checks, disable cleanup
 | Module | Group | Runtime test | Functional status | Source references (navigation only) |
 | --- | --- | --- | --- | --- |
 | ActiveModules (`active-modules`) | Visuals | PASS: 7 enabled ticks and disable | Pending scenario verification | ClientFeedback.java |
-| KillAura (`kill-aura`) | Combat | PASS: 7 enabled ticks and disable | PASS: Server damage to explicitly selected cow type | BaritoneBridge.java, Combat.java, ControlPanel.java, ExtraAutomation.java, ModuleOptions.java, Wanderlust.java |
+| KillAura (`kill-aura`) | Combat | PASS: 7 enabled ticks and disable | PASS: Entity picker, named-target filtering, weapon switch, server damage and open-inventory slot restoration | BaritoneBridge.java, Combat.java, ControlPanel.java, ExtraAutomation.java, ModuleOptions.java, Wanderlust.java |
 | CrystalAura (`crystal-aura`) | Combat | PASS: 7 enabled ticks and disable | PASS: Server placement and break; rejected-candidate recovery | BaritoneBridge.java, Explosives.java, ModuleOptions.java |
 | AnchorAura (`anchor-aura`) | Combat | PASS: 7 enabled ticks and disable | PASS: Server placement, charging and detonation | BaritoneBridge.java, Explosives.java, ModuleOptions.java |
 | BedAura (`bed-aura`) | Combat | PASS: 7 enabled ticks and disable | Pending scenario verification | BaritoneBridge.java, Explosives.java, ModuleOptions.java |
-| AutoTotem (`auto-totem`) | Combat | PASS: 7 enabled ticks and disable | PASS: Server offhand equip and disabled behavior | BaritoneBridge.java, Combat.java, ControlPanel.java, ModuleOptions.java, Wanderlust.java |
+| AutoTotem (`auto-totem`) | Combat | PASS: 7 enabled ticks and disable | PASS: Server offhand equip, disabled behavior and Strict priority over Offhand | BaritoneBridge.java, Combat.java, ControlPanel.java, ModuleOptions.java, Wanderlust.java |
 | Criticals (`criticals`) | Combat | PASS: 7 enabled ticks and disable | Pending scenario verification | BaritoneBridge.java, Combat.java, ModuleOptions.java |
 | BowAimbot (`bow-aimbot`) | Combat | PASS: 7 enabled ticks and disable | PASS: Aim at controlled player fixture | BaritoneBridge.java, Combat.java, ModuleOptions.java |
 | BowSpam (`bow-spam`) | Combat | PASS: 7 enabled ticks and disable | PASS: Multiple server-spawned arrows | BaritoneBridge.java, Combat.java, ModuleOptions.java |
@@ -46,7 +69,7 @@ Each module below needs a realistic setup, action/result checks, disable cleanup
 | Speed (`speed`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | BaritoneBridge.java, ModuleOptions.java, Movement.java |
 | NoFall (`no-fall`) | Movement | PASS: 7 enabled ticks and disable | PASS: Fall protection plus damaging disabled control | BaritoneBridge.java, ModuleOptions.java, Movement.java |
 | Jesus (`jesus`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | BaritoneBridge.java, ModuleOptions.java, Movement.java, LiquidSurfaceMixin.java |
-| Step (`step`) | Movement | PASS: 7 enabled ticks and disable | PARTIAL: Step attribute increased and restored; obstacle traversal still pending | BaritoneBridge.java, Movement.java, StepMixin.java |
+| Step (`step`) | Movement | PASS: 7 enabled ticks and disable | PASS: Full-block traversal without jumping, blocked disabled control and attribute restoration | BaritoneBridge.java, Movement.java, StepMixin.java |
 | Blink (`blink`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | BaritoneBridge.java, ModuleOptions.java, Movement.java |
 | Freecam (`freecam`) | Movement | PASS: 7 enabled ticks and disable | PASS: Body suppression, rendered camera movement and restore | BaritoneBridge.java, Combat.java, ModuleOptions.java, Movement.java, PlayerTools.java |
 | ESP (`esp`) | Visuals | PASS: 7 enabled ticks and disable | Pending scenario verification | ModuleOptions.java, Visuals.java |
@@ -58,8 +81,8 @@ Each module below needs a realistic setup, action/result checks, disable cleanup
 | AutoEat (`auto-eat`) | Player | PASS: 7 enabled ticks and disable | PASS: Server hunger increase and item consumption | PlayerTools.java |
 | AutoGap (`auto-gap`) | Player | PASS: 7 enabled ticks and disable | PASS: Server absorption and item consumption | PlayerTools.java |
 | AutoLog (`auto-log`) | Player | PASS: 7 enabled ticks and disable | Pending scenario verification | ModuleOptions.java, PlayerTools.java |
-| AutoMend (`auto-mend`) | Player | PASS: 7 enabled ticks and disable | PASS: Server Mending repair and XP consumption | BaritoneBridge.java, ModuleOptions.java, PlayerTools.java |
-| AutoReplenish (`auto-replenish`) | Player | PASS: 7 enabled ticks and disable | PASS: Server depleted stack replacement | ModuleOptions.java, PlayerTools.java |
+| AutoMend (`auto-mend`) | Player | PASS: 7 enabled ticks and disable | PASS: XP-bottle repair plus offhand queue selection, exclusions, occupied-hand protection, safe completion and auto-disable | AutoMend.java, BaritoneBridge.java, ModuleOptions.java, PlayerTools.java, qa/InventoryParityProbe.java |
+| AutoReplenish (`auto-replenish`) | Player | PASS: 7 enabled ticks and disable | PASS: Integrated-server low-stack merge, offhand refill, depleted-slot replacement and disable cleanup; slot 9 and item exclusions also verified; tool-matching scenarios still pending | AutoReplenish.java, ModuleOptions.java, PlayerTools.java, qa/ReplenishProbe.java |
 | FastClimb (`fast-climb`) | Player | PASS: 7 enabled ticks and disable | Pending scenario verification | BaritoneBridge.java, Movement.java |
 | AutoRespawn (`auto-respawn`) | Player | PASS: 7 enabled ticks and disable | Pending scenario verification | ModuleOptions.java, PlayerTools.java |
 | AutoSign (`auto-sign`) | World | PASS: 7 enabled ticks and disable | Pending scenario verification | BaritoneBridge.java, PlayerTools.java |
@@ -71,34 +94,34 @@ Each module below needs a realistic setup, action/result checks, disable cleanup
 | Anchor (`anchor`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | AntiVoid (`anti-void`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | AutoJump (`auto-jump`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
-| AutoWalk (`auto-walk`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
+| AutoWalk (`auto-walk`) | Movement | PASS: 7 enabled ticks and disable | PASS: Forward/backward movement, direction change and menu/world-reset key cleanup | ExtraMovement.java |
 | AutoWasp (`auto-wasp`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | ClickTp (`click-tp`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | EntityControl (`entity-control`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
-| GuiMove (`gui-move`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
-| HighJump (`high-jump`) | Movement | PASS: 7 enabled ticks and disable | PARTIAL: Configured motion transform; complete jump scenario pending | ExtraMovement.java |
+| GuiMove (`gui-move`) | Movement | PASS: 7 enabled ticks and disable | PASS: Remapped input drives inventory movement; typing/screen filters, action options, mouse mapping, rotation and disable cleanup | ExtraMovement.java |
+| HighJump (`high-jump`) | Movement | PASS: 7 enabled ticks and disable | PASS: Raised survival jump, vanilla disabled control and multiplier trajectory | Movement.java, ExtraMovement.java, JumpAndEdgeMixins.java |
 | LongJump (`long-jump`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | NoSlow (`no-slow`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | Parkour (`parkour`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | ReverseStep (`reverse-step`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
-| SafeWalk (`safe-walk`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
+| SafeWalk (`safe-walk`) | Movement | PASS: 7 enabled ticks and disable | PASS: Slab-edge clipping, diagonal Speed combination and falling disabled control | Movement.java, JumpAndEdgeMixins.java |
 | Slippy (`slippy`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
-| Sneak (`sneak`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
+| Sneak (`sneak`) | Movement | PASS: 7 enabled ticks and disable | PASS: Server sneak input and release after disabling inside inventory | ExtraMovement.java |
 | Spider (`spider`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | Sprint (`sprint`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | TridentBoost (`trident-boost`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | BoatControl (`boat-control`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
-| AutoSneak (`auto-sneak`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
+| AutoSneak (`auto-sneak`) | Movement | PASS: 7 enabled ticks and disable | PASS: Server sneak input and release after disabling inside inventory | ExtraMovement.java |
 | JumpFlight (`jump-flight`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | Jumps (`jumps`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
-| FlySpeed (`fly-speed`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
+| FlySpeed (`fly-speed`) | Movement | PASS: 7 enabled ticks and disable | PARTIAL: Configured flight attribute and menu-time restoration; flight trajectory still pending | ExtraMovement.java |
 | AntiAnvil (`anti-anvil`) | Combat | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraActions.java |
 | AntiBed (`anti-bed`) | Combat | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraActions.java |
 | ArrowDodge (`arrow-dodge`) | Combat | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraActions.java |
 | AutoAnvil (`auto-anvil`) | Combat | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraActions.java |
-| AutoArmor (`auto-armor`) | Combat | PASS: 7 enabled ticks and disable | PASS: Leather upgraded to netherite on server; enchantment-aware ranking not implemented | BaritoneBridge.java, ExtraActions.java |
+| AutoArmor (`auto-armor`) | Combat | PASS: 7 enabled ticks and disable | PASS: Protection-aware armor choice, binding-curse rejection and equipped Elytra preservation | AutoArmor.java, BaritoneBridge.java, ExtraActions.java |
 | AutoCity (`auto-city`) | Combat | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraActions.java |
-| AutoExp (`auto-exp`) | Combat | PASS: 7 enabled ticks and disable | PASS: Server bottle use, stop, repair-only mode, offhand | ExtraActions.java |
+| AutoExp (`auto-exp`) | Combat | PASS: 7 enabled ticks and disable | PASS: Server bottle use, inventory replenishment, Mending repair, repair-threshold stop and offhand | AutoExperience.java, ExtraActions.java |
 | AutoTrap (`auto-trap`) | Combat | PASS: 7 enabled ticks and disable | Pending scenario verification | ControlPanel.java, ExtraActions.java, Wanderlust.java |
 | AutoWeapon (`auto-weapon`) | Combat | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraActions.java |
 | AutoWeb (`auto-web`) | Combat | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraActions.java |
@@ -276,10 +299,22 @@ After the tests complete, the installed `baritone-meteor-26.2.jar` leaves `barit
 - Movement observations in `qa/evidence/extended-bow-cleanup.txt`: Freecam, FreeLook, Flight and NoFall scenarios passed. That historical combined run still contains the pre-fix CrystalAura failure; it is retained to document the regression rather than presented as a passing full suite.
 - `qa/evidence/repair-xray-on.png` and `repair-xray-off.png`: inspected actual scene output, including opaque stone restoration and readable gold/diamond textures.
 
+## Reproducing the candidate checks
+
+Build with `gradlew.bat build --offline --console=plain`, then run `python qa/verify_candidate.py`. The runner executes ten suites in isolated worlds and requires every completion marker. The UI suite includes local loopback SOCKS5/HTTP proxy fixtures; a sandbox that denies loopback sockets cannot run that portion. Test credentials are synthetic.
+
+Use a suite name to narrow a rerun, for example `python qa/verify_candidate.py movement-parity`. `--extras` explicitly copies the optional installed mods and writes separate `-extras` evidence. No optional mods persist into a subsequent clean launch. The personal Minecraft mods directory and worlds are not modified by these tests.
+
+Current assertions are retained in `qa/evidence/candidate-*.txt`. Fresh inspected Xray scene output is in `qa/evidence/candidate-xray-on.png` and `candidate-xray-off.png`: selected gold/diamond textures remain visible, while disabling restores the opaque stone wall and water. Each final run records the tested JAR hash and loaded mod filenames. Runtime scans, settings registration and UI geometry checks are distinguished from gameplay assertions; do not count them as 225 finished module implementations.
+
 ## Next functional batches
 
 1. Render markers, storage/name labels and loaded-data limits.
+
 2. Survival mining/placement automation, including rejected actions and inventory depletion.
+
 3. Water/lava, boats, mounts, Elytra and movement cleanup under real input.
+
 4. Crafting/container/fishing workflows and combat settings combinations.
+
 5. Server-command, local relay and external-service integrations in compatible controlled environments.

@@ -1,0 +1,14 @@
+JAR SHA256 a44dfeaed28f32715d778938a285b682b6b45ecd1bea76a3d0230ac6dcb38c89
+Mods: WanderlustClient-1.0.0+26.2.jar, fabric-api-0.161.0+26.2.jar, qa-probe.jar
+WORLD PASS AutoDirtPath converts grass on server
+WORLD PASS AutoFarmLand tills ground on server
+WORLD PASS AutoLogStrip strips an oak log on server
+WORLD PASS AutoArmor upgrades leather to netherite on server
+WORLD PASS Offhand equips configured inventory shield on server
+WORLD PASS AutoShearer shears a sheep on server
+WORLD PASS AutoBreed feeds sheep into server breeding state
+WORLD PASS Step raises client step attribute
+WORLD PASS disabling Step restores client step attribute
+WORLD PASS AirPlace places floating cobblestone on server from a missed ray hit
+WORLD PASS Placer repeatedly places held blocks on server
+WORLD COMPLETE failures=0

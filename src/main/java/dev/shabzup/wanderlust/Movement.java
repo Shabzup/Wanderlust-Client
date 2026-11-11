@@ -98,6 +98,41 @@ public final class Movement {
     }
 
     public static boolean scouting() { return scoutBody != null; }
+    /** Adjust the actual jump impulse; ordinary walking and other entities are unaffected. */
+    public static float jumpPower(Entity entity, float vanilla) {
+        var mc = Minecraft.getInstance();
+        if (entity != mc.player || !entity.level().isClientSide() || scouting()
+            || !Wanderlust.on("high-jump") || mc.isPaused()) return vanilla;
+        return Settings.choice("high-jump.mode").equals("Multiplier")
+            ? vanilla * (float) Settings.number("high-jump.multiplier")
+            : (float) Settings.number("high-jump.power");
+    }
+
+    /** Clip horizontal travel against actual support shapes, including slabs and stairs. */
+    public static Vec3 safeWalk(Entity entity, Vec3 travel) {
+        var mc = Minecraft.getInstance();
+        var p = mc.player;
+        if (entity != p || p == null || !entity.level().isClientSide() || !Wanderlust.on("safe-walk")
+            || !p.onGround() || travel.y > 0 || p.isPassenger() || p.isSpectator()
+            || p.getAbilities().flying || p.isFallFlying() || scouting()) return travel;
+        var box = p.getBoundingBox();
+        double inset = Settings.number("safe-walk.margin");
+        var feet = new net.minecraft.world.phys.AABB(box.minX + inset, box.minY - Settings.number("safe-walk.drop"),
+            box.minZ + inset, box.maxX - inset, box.minY, box.maxZ - inset);
+        double x = travel.x, z = travel.z;
+        // Bound work even when another mod supplies an unusually large movement vector.
+        if (Math.abs(x) > 8 || Math.abs(z) > 8) return new Vec3(0, travel.y, 0);
+        while (x != 0 && p.level().noCollision(p, feet.move(x, 0, 0))) x = approachZero(x);
+        while (z != 0 && p.level().noCollision(p, feet.move(0, 0, z))) z = approachZero(z);
+        while (x != 0 && z != 0 && p.level().noCollision(p, feet.move(x, 0, z))) {
+            x = approachZero(x); z = approachZero(z);
+        }
+        return new Vec3(x, travel.y, z);
+    }
+
+    private static double approachZero(double value) {
+        return Math.copySign(Math.max(0, Math.abs(value) - .05), value);
+    }
     public static boolean looking() { return looking; }
     public static float yaw() { return cameraYaw; }
     public static float pitch() { return cameraPitch; }

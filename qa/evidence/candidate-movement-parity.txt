@@ -1,0 +1,13 @@
+JAR SHA256 b04ae13b13852d00fba1abb2662755f710dcd0bb31d60a9ff3af68ab34466419
+Mods: WanderlustClient-1.0.0+26.2.jar, fabric-api-0.161.0+26.2.jar, qa-probe.jar
+MOVEMENT PASS jump fixture grounded
+MOVEMENT PASS HighJump follows raised arc and lands in survival
+MOVEMENT PASS disabled HighJump restores vanilla trajectory
+MOVEMENT PASS HighJump multiplier changes the actual jump impulse
+MOVEMENT PASS SafeWalk fixture standing on bottom slab
+MOVEMENT PASS SafeWalk reaches slab edge without falling
+MOVEMENT PASS SafeWalk clips diagonal Speed movement at slab corner
+MOVEMENT PASS disabled SafeWalk allows walking off the same slab
+MOVEMENT PASS disabled Step stops at a full-block obstacle
+MOVEMENT PASS Step walks over a full block without jumping
+MOVEMENT COMPLETE failures=0

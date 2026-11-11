@@ -12,6 +12,11 @@ memory = '--memory-write' in sys.argv or '--memory-read' in sys.argv
 game = root / ('persistence' if memory else 'isolated' if '--clean' in sys.argv else 'instance')
 mods = game / 'mods'
 mods.mkdir(parents=True, exist_ok=True)
+# Do not inherit optional mods from an earlier --extras run (or Wanderlust in a baseline run).
+if not mods.resolve().is_relative_to(root.resolve()):
+    raise RuntimeError('QA mod directory must stay inside build/qa')
+for previous in mods.glob('*.jar'):
+    previous.unlink()
 libs = []
 for lib in profile['libraries']:
     if 'rules' in lib and not any(r.get('os',{}).get('name','windows') == 'windows' and r['action']=='allow' for r in lib['rules']): continue
@@ -41,7 +46,11 @@ if not baseline:
             shutil.copyfile(mod,mods/mod.name)
 sp.run(['javac','-proc:none','-classpath',testcp,'-d',str(classes),*[str(p) for p in source.glob('*Probe.java')]],check=True)
 with zipfile.ZipFile(mods/'qa-probe.jar','w') as z:
-    z.writestr('fabric.mod.json',json.dumps(dict(schemaVersion=1,id='qa_probe',version='1.0',name='Isolated QA probe',environment='client',entrypoints=dict(client=['qa.UiPolishProbe' if '--polish' in sys.argv else 'qa.WorldModulesProbe' if '--world-modules' in sys.argv else 'qa.ExtendedProbe' if '--extended' in sys.argv else 'qa.CoreModulesProbe' if '--core' in sys.argv else 'qa.AllModulesProbe' if '--all-modules' in sys.argv else 'qa.RepairProbe' if '--repair' in sys.argv else 'qa.MemoryProbe' if memory else 'qa.WorkspaceProbe' if '--workspace' in sys.argv else 'qa.UiUpgradeProbe' if '--upgrade' in sys.argv else 'qa.UiProbe' if '--ui' in sys.argv else 'qa.Probe']))))
+    metadata=dict(schemaVersion=1,id='qa_probe',version='1.0',name='Isolated QA probe',environment='client',entrypoints=dict(client=['qa.MenuMovementProbe' if '--menu-movement' in sys.argv else 'qa.MovementParityProbe' if '--movement-parity' in sys.argv else 'qa.ReleaseModulesProbe' if '--release-modules' in sys.argv else 'qa.InventoryParityProbe' if '--inventory-parity' in sys.argv else 'qa.ReplenishProbe' if '--replenish' in sys.argv else 'qa.UiPolishProbe' if '--polish' in sys.argv else 'qa.WorldModulesProbe' if '--world-modules' in sys.argv else 'qa.ExtendedProbe' if '--extended' in sys.argv else 'qa.CoreModulesProbe' if '--core' in sys.argv else 'qa.AllModulesProbe' if '--all-modules' in sys.argv else 'qa.RepairProbe' if '--repair' in sys.argv else 'qa.MemoryProbe' if memory else 'qa.WorkspaceProbe' if '--workspace' in sys.argv else 'qa.UiUpgradeProbe' if '--upgrade' in sys.argv else 'qa.UiProbe' if '--ui' in sys.argv else 'qa.Probe']))
+    if '--menu-movement' in sys.argv:
+        metadata['mixins']=['qa-input.mixins.json']
+        z.writestr('qa-input.mixins.json',json.dumps(dict(required=True,package='qa.mixin',compatibilityLevel='JAVA_25',client=['MenuInputMixinProbe'],injectors=dict(defaultRequire=1))))
+    z.writestr('fabric.mod.json',json.dumps(metadata))
     for p in classes.rglob('*.class'): z.write(p,p.relative_to(classes).as_posix())
 (game/'options.txt').write_text('pauseOnLostFocus:false\nrenderDistance:3\nsimulationDistance:5\nmaxFps:30\nenableVsync:false\nguiScale:2\nshowAutosaveIndicator:false\n')
 args = ['-Dqa.combatonly='+str('--combatonly' in sys.argv).lower(),'-Dqa.visualonly='+str('--visualonly' in sys.argv).lower(),'-Dwanderlust.qa.phase='+('write' if '--memory-write' in sys.argv else 'read'),'-Xms256m','-Xmx1300m','-XX:ActiveProcessorCount=4','--sun-misc-unsafe-memory-access=allow','--enable-native-access=ALL-UNNAMED', '-cp',classpath,profile['mainClass'],'--username','WanderlustTest','--uuid','00000000000040008000000000002602','--accessToken','0','--version','26.2','--gameDir',str(game),'--assetsDir',str(mc/'assets'),'--assetIndex',profile['assets'],'--width','1920' if '--polish' in sys.argv else '1440' if '--upgrade' in sys.argv or '--workspace' in sys.argv or '--repair' in sys.argv or '--all-modules' in sys.argv or memory else '720','--height','1080' if '--polish' in sys.argv else '900' if '--upgrade' in sys.argv or '--workspace' in sys.argv or '--repair' in sys.argv or '--all-modules' in sys.argv or memory else '480','--versionType','release']
@@ -52,8 +61,20 @@ with (root/'launch.log').open('w',encoding='utf-8') as f:
     try: rc=p.wait(timeout=240)
     except sp.TimeoutExpired: p.kill(); p.wait(); raise
 if '--polish' in sys.argv:
-    results=(root/'launch.log').read_text(encoding='utf-8')
+    results=(root/'launch.log').read_text(encoding='utf-8',errors='replace')
     if 'POLISH COMPLETE' not in results or 'POLISH FAIL' in results:
+        rc=rc or 1
+if '--replenish' in sys.argv:
+    results=(root/'launch.log').read_text(encoding='utf-8',errors='replace')
+    if 'REPLENISH COMPLETE failures=0' not in results or 'REPLENISH FAIL' in results:
+        rc=rc or 1
+if '--inventory-parity' in sys.argv:
+    results=(root/'launch.log').read_text(encoding='utf-8',errors='replace')
+    if 'INVENTORY COMPLETE failures=0' not in results or 'CORE FAIL' in results:
+        rc=rc or 1
+checks={'--menu-movement':'MENU MOVEMENT COMPLETE failures=0','--movement-parity':'MOVEMENT COMPLETE failures=0','--core':'CORE COMPLETE failures=0','--world-modules':'WORLD COMPLETE failures=0','--repair':'REPAIR COMPLETE failures=0','--all-modules':'ALL COMPLETE tested=225 failures=0','--release-modules':'RELEASE MODULES COMPLETE failures=0'}
+for flag,marker in checks.items():
+    if flag in sys.argv and marker not in (root/'launch.log').read_text(encoding='utf-8',errors='replace'):
         rc=rc or 1
 print('Exit',rc)
 sys.exit(rc)

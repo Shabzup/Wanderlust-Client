@@ -11,15 +11,34 @@ final class ModuleOptions {
         Settings.toggle("ui", "ui.auto-fit", "Fit lists to available space", true);
         Settings.toggle("ui", "ui.motion", "Smooth animations", true);
         Settings.toggle("ui", "ui.depth", "Decorative 3D motion", true);
+        Settings.choice("ui", "ui.accent", "Accent colour", "Violet", "Violet", "Ocean", "Mint", "Rose", "Amber");
+        Settings.toggle("ui", "ui.category-colours", "Colour each category", true);
         Settings.string("xray", "xray.blocks", "Block IDs (comma separated)", "minecraft:coal_ore,minecraft:deepslate_coal_ore,minecraft:iron_ore,minecraft:deepslate_iron_ore,minecraft:copper_ore,minecraft:deepslate_copper_ore,minecraft:gold_ore,minecraft:deepslate_gold_ore,minecraft:redstone_ore,minecraft:deepslate_redstone_ore,minecraft:lapis_ore,minecraft:deepslate_lapis_ore,minecraft:emerald_ore,minecraft:deepslate_emerald_ore,minecraft:diamond_ore,minecraft:deepslate_diamond_ore,minecraft:nether_gold_ore,minecraft:nether_quartz_ore,minecraft:ancient_debris");
         Settings.numeric("kill-aura", "aura-delay", "Attack delay (ticks)", 3, 1, 20, 1);
         Settings.toggle("kill-aura", "aura-through-walls", "Allow targets through walls", false);
-        Settings.choice("kill-aura", "aura-priority", "Target priority", "Closest", "Closest", "Lowest health");
+        Settings.choice("kill-aura", "aura-priority", "Target priority", "Closest", "Closest", "Lowest health", "Closest angle");
+        Settings.numeric("kill-aura","aura-fov","Field of view (degrees)",360,10,360,5);
+        Settings.numeric("kill-aura","aura-wall-range","Through-wall range",3,0,6,.25);
+        Settings.toggle("kill-aura","aura-ignore-named","Ignore named mobs",false);
+        Settings.toggle("kill-aura","aura-ignore-babies","Ignore baby mobs",true);
+        Settings.toggle("kill-aura","aura-only-click","Require attack key held",false);
+        Settings.toggle("kill-aura","aura-only-look","Require crosshair target",false);
+        Settings.toggle("kill-aura","aura-custom-delay","Use fixed delay instead of cooldown",false);
+        Settings.choice("kill-aura","aura-weapon","Required held weapon","Any","Any","Weapons","Sword","Axe");
+        Settings.toggle("kill-aura","aura-auto-switch","Select required hotbar weapon",false);
+        Settings.toggle("kill-aura","aura-swap-back","Restore previous hotbar slot",true);
+        Settings.numeric("kill-aura","aura-switch-delay","Wait after weapon switch (ticks)",1,0,10,1);
+        Settings.toggle("kill-aura","aura-rotate","Aim at attacked target",true);
 
         for (String id : new String[]{"crystal-aura", "anchor-aura", "bed-aura"}) {
             Settings.numeric(id, id + "-range", "Target range (blocks)", 12, 4, 32, 1);
         }
         Settings.numeric("auto-totem", "totem-health", "Equip below health (HP)", 20, 1, 20, 1);
+        Settings.choice("auto-totem","totem-mode","Totem mode","Smart","Smart","Strict");
+        Settings.numeric("auto-totem","totem-delay","Ticks between totem moves",0,0,20,1);
+        Settings.toggle("auto-totem","totem-elytra","Protect while gliding",true);
+        Settings.toggle("auto-totem","totem-fall","Protect against estimated lethal fall",true);
+        Settings.toggle("auto-totem","totem-crystals","Protect against estimated crystal damage",true);
         Settings.toggle("criticals", "criticals-players-only", "Only critical player targets", false);
         for (String id : new String[]{"bow-aimbot", "bow-spam"}) {
             String key = id.equals("bow-aimbot") ? "bow" : "bowspam";
@@ -60,9 +79,20 @@ final class ModuleOptions {
         }
 
         Settings.toggle("auto-mend", "mend-armor", "Repair armor", true);
+        Settings.choice("auto-mend", "mend-mode", "Repair mode", "XP bottles", "XP bottles", "Offhand queue");
+        Settings.toggle("auto-mend", "mend-force", "Replace occupied offhand", false);
+        Settings.toggle("auto-mend", "mend-auto-disable", "Disable when queue finishes", true);
+        Settings.string("auto-mend", "mend-excluded", "Excluded item IDs (comma separated)", "");
+        Settings.numeric("auto-mend", "mend-queue-delay", "Ticks between item swaps", 2, 1, 40, 1);
         Settings.toggle("auto-mend", "mend-tools", "Repair held tools", false);
         Settings.numeric("auto-mend", "mend-durability", "Repair below durability (%)", 95, 5, 99, 5);
-        Settings.numeric("auto-replenish", "replenish-count", "Replace at stack count", 0, 0, 64, 1);
+        Settings.numeric("auto-replenish", "replenish-count", "Minimum stack count", 8, 1, 63, 1);
+        Settings.numeric("auto-replenish", "replenish-delay", "Ticks between moves", 1, 0, 40, 1);
+        Settings.toggle("auto-replenish", "replenish-offhand", "Refill offhand", true);
+        Settings.toggle("auto-replenish", "replenish-unstackable", "Replace used tools and items", true);
+        Settings.toggle("auto-replenish", "replenish-same-enchants", "Match enchantments", true);
+        Settings.toggle("auto-replenish", "replenish-hotbar", "Search other hotbar slots", false);
+        Settings.string("auto-replenish", "replenish-excluded", "Excluded item IDs (comma separated)", "");
         Settings.toggle("auto-log", "log-absorption", "Include absorption health", true);
         Settings.numeric("auto-respawn", "respawn-delay", "Respawn delay (ticks)", 1, 1, 100, 1);
 

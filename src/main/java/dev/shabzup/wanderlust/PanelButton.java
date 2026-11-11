@@ -29,8 +29,8 @@ final class PanelButton extends Button {
         if (opacity < .015f) return;
         int x = getX(), y = getY(), w = getWidth(), h = getHeight();
         boolean chosen = selected.getAsBoolean();
-        PanelStyle.control(g,x,y,w,h,hover>.1f,chosen,opacity);
-        if(hover>.01f)g.fill(x+1,y+h-2,x+1+Math.round((w-2)*hover),y+h-1,PanelStyle.alpha(PanelStyle.PURPLE_LIGHT,opacity*.55f));
+        PanelStyle.control(g,x,y,w,h,hover,chosen,opacity);
+        if(hover>.01f)g.fill(x+1,y+h-2,x+1+Math.round((w-2)*hover),y+h-1,PanelStyle.alpha(PanelStyle.accentLight(),opacity*.55f));
         var message = PanelStyle.text(PanelStyle.fit(Minecraft.getInstance().font,getMessage().getString(),w-12));
         int tx = x + (w - Minecraft.getInstance().font.width(message)) / 2;
         g.text(Minecraft.getInstance().font, message, tx, y + (h - 9) / 2,
