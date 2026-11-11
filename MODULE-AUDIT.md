@@ -4,7 +4,7 @@ This file tracks functional verification, not just whether a module appears in t
 
 ## Current repair batch
 
-Candidate SHA-256: `277EE373844DE061241E32008ED85593D3FE375F7B104DB988EB42F56BAB69A7` (10 November 2026). This candidate is **not installed** and is **not a launch-ready release**. Installation awaits completion of the outstanding functional work; the personal game still has the earlier UI build.
+Candidate SHA-256: `B04AE13B13852D00FBA1ABB2662755F710DCD0BB31D60A9FF3AF68AB34466419` (11 November 2026). This candidate is **not installed** and is **not a launch-ready release**. Installation awaits completion of the outstanding functional work; the personal game still has the earlier UI build. [Verification evidence](qa/evidence/CANDIDATE.md) distinguishes eight suites on the preceding build from two affected suites rerun on this build.
 
 - AutoEXP: removed the undocumented mandatory damaged-equipment gate; repair-only behavior is now an explicit option. XP use supports offhand bottles and restores the selected slot and view angle.
 - Xray: registered ore face culling and section visibility hooks; switched to the complete Minecraft 26.2 extraction/rebuild path; corrected vanilla and Indigo lighting; filtered unselected plant and fluid geometry; expanded the target-list edit field; refreshes geometry after editing targets.
@@ -12,7 +12,7 @@ Candidate SHA-256: `277EE373844DE061241E32008ED85593D3FE375F7B104DB988EB42F56BAB
 - BowSpam: releases a module-owned bow draw when disabled.
 - Optional Baritone: stops its executor after Minecraft closes. Subsequent test processes with the installed optional mods exit with code 0 instead of hitting the shutdown watchdog.
 
-Current scope: **225 individual runtime tests passed**, with selected disable/cleanup checks; **32 modules have passed a specific behavioral scenario**, **3 have partial checks**, and **190 still need dedicated behavior scenarios**. This is not a claim that every setting, multiplayer environment or all 225 implementations is fully verified.
+Current scope: **225 individual runtime tests passed**, with selected disable/cleanup checks; **36 modules have passed a specific behavioral scenario**, **4 have partial checks**, and **185 still need dedicated behavior scenarios**. This is not a claim that every setting, multiplayer environment or all 225 implementations is fully verified.
 
 ## 10 November independent implementation pass
 
@@ -24,11 +24,24 @@ Current scope: **225 individual runtime tests passed**, with selected disable/cl
 - Dedicated probes passed 10 inventory-queue assertions, 10 combat/repair assertions and 10 movement assertions (including Step). These deepen coverage; they do not establish full Meteor parity.
 - The QA launcher now removes stale test-mod copies before each launch. The candidate runner records the JAR hash and exact mod set alongside assertion-only evidence.
 
+## 11 November menu/input pass
+
+GuiMove reads the current keyboard/mouse bindings immediately before vanilla constructs movement input. Settings restrict screens and independently allow jump, sneak, sprint and arrow rotation. Chat, edit screens, focused text fields and keybind capture suppress movement. Module-owned held input bypasses toggle-key press semantics and clears saved menu-restoration flags, preventing Toggle Sneak/Sprint flicker or stuck state. AutoWalk supports four directions; AutoWalk, Sneak/AutoSneak and FlySpeed clean up when disabled in a menu or reset across worlds.
+
+The new menu-control probe passed 27 assertions. It substitutes physical input only inside the QA JAR, then exercises the real input tick and player movement. It verifies remapped keyboard and mouse binding routing, not a physical hardware test. Sneak assertions also inspect the integrated server. FlySpeed is still partial because only its attribute application/restoration was checked.
+
+The combat fixture now resets player position and clears remaining crystals before the AnchorAura scenario. The prior chained fixture could fail after crystal knockback moved the player off its platform; the historical diagnostic is retained in `qa/evidence/combat-fixture-knockback.txt`.
+
+The first version of that probe mixed synthetic key states with native polling; its movement failure is not treated as a demonstrated production defect. The corrected fixture controls input at the sampling boundary.
+
+UI text measurement and fitting now use bounded caches invalidated after fonts/languages reload. Text fitting preserves Unicode code points, and the animated decoration reuses geometry buffers. The latest UI suite passed 661 checks, including an actual resource reload; measured extraction elapsed p95 was 5.4046 ms against the unchanged 16.7 ms limit. The earlier 18.875 ms failure remains documented. These timings do not include GPU presentation.
+
 ## Known gaps to repair in later batches
 
 - AutoTotem crystal and fall danger calculations remain conservative estimates; enchantment/resistance and complex obstruction scenarios need dedicated damage tests.
+- AutoWalk Smart pathfinding, manual-input/Y-change stopping and unloaded-chunk checks from the reference are not implemented in this pass. Sneak currently implements vanilla held-key behavior, not the reference packet mode.
 - AutoCity currently mines a neighboring block without a full PvP target/block selection strategy.
-- AutoLogin, AutoSell, AutoEndorse, AutoFeed, AutoHeal, AutoRepair and DiscordPresence are deferred to the end at the user’s request; no compatible service/server verification is claimed.
+- AutoLogin, AutoSell, AutoEndorse, AutoFeed, AutoHeal, AutoRepair and DiscordPresence are deferred to the end at the userâ€™s request; no compatible service/server verification is claimed.
 - Shared engines for ZKillAura, ZAutoTotem and AutoTrapPlus are aliases, not independently implemented versions.
 
 These are code-review findings, not failed gameplay tests. They remain incomplete until a suitable functional test passes.
@@ -81,11 +94,11 @@ Each module below needs a realistic setup, action/result checks, disable cleanup
 | Anchor (`anchor`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | AntiVoid (`anti-void`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | AutoJump (`auto-jump`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
-| AutoWalk (`auto-walk`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
+| AutoWalk (`auto-walk`) | Movement | PASS: 7 enabled ticks and disable | PASS: Forward/backward movement, direction change and menu/world-reset key cleanup | ExtraMovement.java |
 | AutoWasp (`auto-wasp`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | ClickTp (`click-tp`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | EntityControl (`entity-control`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
-| GuiMove (`gui-move`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
+| GuiMove (`gui-move`) | Movement | PASS: 7 enabled ticks and disable | PASS: Remapped input drives inventory movement; typing/screen filters, action options, mouse mapping, rotation and disable cleanup | ExtraMovement.java |
 | HighJump (`high-jump`) | Movement | PASS: 7 enabled ticks and disable | PASS: Raised survival jump, vanilla disabled control and multiplier trajectory | Movement.java, ExtraMovement.java, JumpAndEdgeMixins.java |
 | LongJump (`long-jump`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | NoSlow (`no-slow`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
@@ -93,15 +106,15 @@ Each module below needs a realistic setup, action/result checks, disable cleanup
 | ReverseStep (`reverse-step`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | SafeWalk (`safe-walk`) | Movement | PASS: 7 enabled ticks and disable | PASS: Slab-edge clipping, diagonal Speed combination and falling disabled control | Movement.java, JumpAndEdgeMixins.java |
 | Slippy (`slippy`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
-| Sneak (`sneak`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
+| Sneak (`sneak`) | Movement | PASS: 7 enabled ticks and disable | PASS: Server sneak input and release after disabling inside inventory | ExtraMovement.java |
 | Spider (`spider`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | Sprint (`sprint`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | TridentBoost (`trident-boost`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | BoatControl (`boat-control`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
-| AutoSneak (`auto-sneak`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
+| AutoSneak (`auto-sneak`) | Movement | PASS: 7 enabled ticks and disable | PASS: Server sneak input and release after disabling inside inventory | ExtraMovement.java |
 | JumpFlight (`jump-flight`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
 | Jumps (`jumps`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
-| FlySpeed (`fly-speed`) | Movement | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraMovement.java |
+| FlySpeed (`fly-speed`) | Movement | PASS: 7 enabled ticks and disable | PARTIAL: Configured flight attribute and menu-time restoration; flight trajectory still pending | ExtraMovement.java |
 | AntiAnvil (`anti-anvil`) | Combat | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraActions.java |
 | AntiBed (`anti-bed`) | Combat | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraActions.java |
 | ArrowDodge (`arrow-dodge`) | Combat | PASS: 7 enabled ticks and disable | Pending scenario verification | ExtraActions.java |
@@ -288,7 +301,7 @@ After the tests complete, the installed `baritone-meteor-26.2.jar` leaves `barit
 
 ## Reproducing the candidate checks
 
-Build with `gradlew.bat build --offline --console=plain`, then run `python qa/verify_candidate.py`. The runner executes nine suites in isolated worlds and requires every completion marker. The UI suite includes local loopback SOCKS5/HTTP proxy fixtures; a sandbox that denies loopback sockets cannot run that portion. Test credentials are synthetic.
+Build with `gradlew.bat build --offline --console=plain`, then run `python qa/verify_candidate.py`. The runner executes ten suites in isolated worlds and requires every completion marker. The UI suite includes local loopback SOCKS5/HTTP proxy fixtures; a sandbox that denies loopback sockets cannot run that portion. Test credentials are synthetic.
 
 Use a suite name to narrow a rerun, for example `python qa/verify_candidate.py movement-parity`. `--extras` explicitly copies the optional installed mods and writes separate `-extras` evidence. No optional mods persist into a subsequent clean launch. The personal Minecraft mods directory and worlds are not modified by these tests.
 
@@ -297,7 +310,11 @@ Current assertions are retained in `qa/evidence/candidate-*.txt`. Fresh inspecte
 ## Next functional batches
 
 1. Render markers, storage/name labels and loaded-data limits.
+
 2. Survival mining/placement automation, including rejected actions and inventory depletion.
+
 3. Water/lava, boats, mounts, Elytra and movement cleanup under real input.
+
 4. Crafting/container/fishing workflows and combat settings combinations.
+
 5. Server-command, local relay and external-service integrations in compatible controlled environments.

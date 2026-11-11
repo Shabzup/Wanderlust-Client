@@ -1,0 +1,4 @@
+Historical pre-optimization benchmark. Elapsed extraction timing was previously labelled CPU-only; the revised benchmark reports elapsed and thread CPU separately.
+JAR SHA256 a44dfeaed28f32715d778938a285b682b6b45ecd1bea76a3d0230ac6dcb38c89
+POLISH PERF extraction median_ms=5.3148 p95_ms=18.875 samples=60; CPU only, excludes GPU presentation
+POLISH FAIL local UI CPU extraction p95 stays within one 60 Hz frame budget

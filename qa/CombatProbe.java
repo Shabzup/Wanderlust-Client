@@ -28,6 +28,10 @@ final class CombatProbe {
     static void observeCrystals(){
         net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.register((player,world,hand,hit)->{
             if(!world.isClientSide())System.out.println("SERVER USE "+player.getItemInHand(hand)+" pos "+player.position()+" hit "+hit.getBlockPos()+" block "+world.getBlockState(hit.getBlockPos())+" occupied "+world.getEntities(null,new AABB(hit.getBlockPos().above()).expandTowards(0,1,0)).size());
+            if(!world.isClientSide()&&world.getBlockState(hit.getBlockPos()).is(Blocks.RESPAWN_ANCHOR)){
+                sawAnchor=true;
+                if(world.getBlockState(hit.getBlockPos()).getValue(RespawnAnchorBlock.CHARGE)>0){sawCharge=true;chargedAt=hit.getBlockPos().immutable();}
+            }
             return net.minecraft.world.InteractionResult.PASS;
         });
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents.ENTITY_LOAD.register((entity,level)->{
@@ -121,9 +125,22 @@ final class CombatProbe {
             System.out.println("CRYSTAL OBSERVED placed="+sawCrystal+" broken="+brokeCrystal);
             probe.check(sawCrystal && brokeCrystal, "CrystalAura placed and broke an end crystal on the integrated server");
             probe.enable("CRYSTAL_AURA",false);
+            // The crystal scenario can knock the player beyond this platform; isolate the next module fixture.
+            server.submit(()->{
+                var p=server.getPlayerList().getPlayer(id);
+                for(var crystal:p.level().getEntitiesOfClass(EndCrystal.class,testBox))crystal.discard();
+                p.teleportTo(.5,110,.5);p.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
+                p.getAbilities().flying=true;p.onUpdateAbilities();
+            }).join();
+        }
+        if(t==125){
+            probe.check(mc.player.position().distanceTo(new net.minecraft.world.phys.Vec3(.5,110,.5))<.25,
+                "AnchorAura fixture resets knockback from the preceding crystal scenario");
             probe.enable("ANCHOR_AURA",true);
         }
         if (t == 180) {
+            var decision=Class.forName("dev.shabzup.wanderlust.Explosives").getDeclaredField("lastDecision");decision.setAccessible(true);
+            System.out.println("ANCHOR OBSERVED placed="+sawAnchor+" charged="+sawCharge+" detonated="+detonated+" player="+mc.player.position()+" target="+mc.level.getEntity(targetId)+" decision="+decision.get(null));
             probe.check(sawAnchor && sawCharge && detonated,
                 "AnchorAura placed, charged and detonated an Overworld anchor on the integrated server");
             probe.enable("ANCHOR_AURA",false);

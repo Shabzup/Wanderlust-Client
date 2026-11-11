@@ -1,19 +1,30 @@
 package dev.shabzup.wanderlust;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.screens.ChatScreen;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.vehicle.boat.AbstractBoat;
 import net.minecraft.world.phys.*;
-import org.lwjgl.glfw.GLFW;
 
 final class ExtraMovement {
-    private static boolean walking, sneaking, clicked;
+    private static boolean sneaking, clicked;
+    private static KeyMapping walkKey;
+    private static LocalPlayer flyOwner;
     private static Float oldFlySpeed;
-    static void reset(){walking=sneaking=clicked=false;oldFlySpeed=null;}
+    static void reset(){
+        if(walkKey!=null)MenuMovement.hold(walkKey,false);
+        if(sneaking)MenuMovement.hold(Minecraft.getInstance().options.keyShift,false);
+        restoreFly();MenuMovement.reset();walkKey=null;sneaking=clicked=false;
+    }
+    private static void restoreFly(){
+        if(flyOwner!=null&&oldFlySpeed!=null)flyOwner.getAbilities().setFlyingSpeed(oldFlySpeed);
+        flyOwner=null;oldFlySpeed=null;
+    }
     static void options() {
+        MenuMovement.options();
+        Settings.choice("auto-walk","auto-walk.direction","Walking direction","Forward","Forward","Backward","Left","Right");
         for(String id:new String[]{"air-jump","high-jump","long-jump","spider","jump-flight","jumps","wind-charge-jump"})
             Settings.numeric(id,id+".power","Jump / ascent power",id.equals("high-jump")?1:.42,.1,3,.05);
         Settings.numeric("anti-void","anti-void.height","Distance above world bottom",8,1,40,1);
@@ -32,14 +43,21 @@ final class ExtraMovement {
     static void tick(Minecraft mc) {
         var p=mc.player; if(p==null)return;
         boolean menu=mc.gui.screen()!=null;
-        if(on("gui-move")&&menu&&!(mc.gui.screen() instanceof ChatScreen)&&!(mc.gui.screen().getFocused() instanceof EditBox)) {
-            int[] codes={GLFW.GLFW_KEY_W,GLFW.GLFW_KEY_S,GLFW.GLFW_KEY_A,GLFW.GLFW_KEY_D,GLFW.GLFW_KEY_SPACE};
-            var keys=new net.minecraft.client.KeyMapping[]{mc.options.keyUp,mc.options.keyDown,mc.options.keyLeft,mc.options.keyRight,mc.options.keyJump};
-            for(int i=0;i<keys.length;i++)keys[i].setDown(GLFW.glfwGetKey(mc.getWindow().handle(),codes[i])==GLFW.GLFW_PRESS);
-        }
-        if(menu)return;
-        boolean walk=on("auto-walk");if(walk)mc.options.keyUp.setDown(true);else if(walking)mc.options.keyUp.setDown(false);walking=walk;
-        boolean sneak=on("sneak")||on("auto-sneak");if(sneak)mc.options.keyShift.setDown(true);else if(sneaking)mc.options.keyShift.setDown(false);sneaking=sneak;
+        boolean active=p.isAlive()&&!p.isSpectator()&&!Movement.scouting()&&!mc.isPaused();
+        KeyMapping desired=active&&!menu&&on("auto-walk")?switch(Settings.choice("auto-walk.direction")){
+            case "Backward"->mc.options.keyDown;case "Left"->mc.options.keyLeft;case "Right"->mc.options.keyRight;default->mc.options.keyUp;}:null;
+        if(walkKey!=null&&walkKey!=desired)MenuMovement.hold(walkKey,!menu&&MenuMovement.physical(mc,walkKey));
+        walkKey=desired;if(walkKey!=null)MenuMovement.hold(walkKey,true);
+        boolean sneak=active&&!menu&&(on("sneak")||on("auto-sneak"));
+        if(sneak)MenuMovement.hold(mc.options.keyShift,true);
+        else if(sneaking)MenuMovement.hold(mc.options.keyShift,!menu&&MenuMovement.physical(mc,mc.options.keyShift));
+        sneaking=sneak;
+        if(active&&!menu&&on("fly-speed")){
+            if(flyOwner!=p){restoreFly();flyOwner=p;oldFlySpeed=p.getAbilities().getFlyingSpeed();}
+            p.getAbilities().setFlyingSpeed((float)Settings.number("fly-speed.speed"));
+        }else restoreFly();
+        MenuMovement.cleanup(mc);
+        if(menu||!active)return;
         if(on("sprint")&&p.getFoodData().getFoodLevel()>6&&!p.isUsingItem())p.setSprinting(true);
         if(on("auto-jump")&&p.onGround()&&moving(mc))p.jumpFromGround();
         if(on("air-jump")&&mc.options.keyJump.isDown()&&p.tickCount%5==0)p.setDeltaMovement(p.getDeltaMovement().with(net.minecraft.core.Direction.Axis.Y,Settings.number("air-jump.power")));
@@ -47,8 +65,6 @@ final class ExtraMovement {
         if(on("click-tp")&&mc.options.keyUse.isDown()&&!clicked&&mc.hitResult instanceof BlockHitResult hit){
             Vec3 point=Vec3.atBottomCenterOf(hit.getBlockPos().relative(hit.getDirection()));p.setPos(point);p.connection.send(new net.minecraft.network.protocol.game.ServerboundMovePlayerPacket.Pos(point,false,p.horizontalCollision));
         } clicked=mc.options.keyUse.isDown();
-        if(on("fly-speed")){if(oldFlySpeed==null)oldFlySpeed=p.getAbilities().getFlyingSpeed();p.getAbilities().setFlyingSpeed((float)Settings.number("fly-speed.speed"));}
-        else if(oldFlySpeed!=null){p.getAbilities().setFlyingSpeed(oldFlySpeed);oldFlySpeed=null;}
     }
     static Vec3 motion(Entity entity,Vec3 velocity) {
         var mc=Minecraft.getInstance();var p=mc.player;if(p==null)return velocity;

@@ -1,0 +1,30 @@
+JAR SHA256 a44dfeaed28f32715d778938a285b682b6b45ecd1bea76a3d0230ac6dcb38c89
+Mods: WanderlustClient-1.0.0+26.2.jar, fabric-api-0.161.0+26.2.jar, qa-probe.jar
+MENU MOVEMENT PASS AutoWalk advances without physical input
+MENU MOVEMENT PASS AutoWalk switches direction and releases previous key
+MENU MOVEMENT PASS AutoWalk releases held keys when disabled in inventory
+MENU MOVEMENT PASS Sneak reaches server input state
+MENU MOVEMENT PASS Sneak releases key and server state inside inventory
+MENU MOVEMENT PASS AutoSneak reaches server input state
+MENU MOVEMENT PASS AutoSneak releases key and server state inside inventory
+MENU MOVEMENT PASS FlySpeed applies configured flight attribute
+MENU MOVEMENT PASS FlySpeed restores original attribute while inventory is open
+MENU MOVEMENT PASS GuiMove moves player in inventory using remapped forward binding
+MENU MOVEMENT PASS GuiMove releases sampled key when input ends
+MENU MOVEMENT PASS GuiMove screen restriction excludes ordinary inventory
+MENU MOVEMENT PASS GuiMove suspends all managed inputs in chat
+MENU MOVEMENT PASS GuiMove suspends input for a focused text field
+MENU MOVEMENT PASS GuiMove independently restricts jump sneak and sprint
+MENU MOVEMENT PASS GuiMove optional actions follow sampled bindings
+MENU MOVEMENT PASS GuiMove supports a mouse-bound movement action
+MENU MOVEMENT PASS GuiMove arrow rotation applies configured rate and pitch limit
+MENU MOVEMENT PASS rotation arrows are reserved from menu navigation
+MENU MOVEMENT PASS disabling GuiMove releases managed inputs in the menu
+MENU MOVEMENT PASS AutoWalk resumes from menu transition
+MENU MOVEMENT PASS world-change reset clears module-owned keys
+MENU MOVEMENT PASS Sneak remains held with Minecraft Toggle Sneak enabled
+MENU MOVEMENT PASS Toggle Sneak mode does not prevent module cleanup
+MENU MOVEMENT PASS GuiMove holds sneak and sprint without flipping toggle-key states
+MENU MOVEMENT PASS GuiMove releases toggle-key states on disable
+MENU MOVEMENT PASS closing inventory does not resurrect disabled toggle-key state
+MENU MOVEMENT COMPLETE failures=0

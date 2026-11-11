@@ -5,6 +5,7 @@ These suites are regression coverage, not proof of complete module parity.
 from pathlib import Path
 import hashlib
 import re
+import shutil
 import subprocess
 import sys
 
@@ -14,13 +15,14 @@ candidate_hash=hashlib.sha256(artifact.read_bytes()).hexdigest()
 cases=[
     ("inventory-parity",["--inventory-parity"],"INVENTORY COMPLETE failures=0"),
     ("release-modules",["--release-modules"],"RELEASE MODULES COMPLETE failures=0"),
+    ("menu-movement",["--menu-movement"],"MENU MOVEMENT COMPLETE failures=0"),
     ("movement-parity",["--movement-parity"],"MOVEMENT COMPLETE failures=0"),
     ("core",["--core"],"CORE COMPLETE failures=0"),
     ("world",["--world-modules"],"WORLD COMPLETE failures=0"),
     ("combat-motion",["--extended"],"EXTENDED COMPLETE failures=0"),
     ("repair",["--repair"],"REPAIR COMPLETE failures=0"),
     ("all-modules",["--all-modules"],"ALL COMPLETE tested=225 failures=0"),
-    ("ui",["--polish"],"POLISH COMPLETE checks=659 failures=0"),
+    ("ui",["--polish"],"POLISH COMPLETE checks=661 failures=0"),
 ]
 selected=sys.argv[1:]
 extras='--extras' in selected
@@ -39,8 +41,10 @@ for name,flags,marker in cases:
     print(f"CANDIDATE START {name}",flush=True)
     process=subprocess.run([sys.executable,str(root/'qa/launch.py'),'--clean',*(['--extras'] if extras else []),*flags],cwd=root)
     log=(root/'build/qa/launch.log').read_text(encoding='utf-8',errors='replace')
+    logs=root/'build/qa/suite-logs';logs.mkdir(exist_ok=True)
+    shutil.copyfile(root/'build/qa/launch.log',logs/f'{name}{"-extras" if extras else ""}.log')
     evidence=[line.split('[STDOUT]: ',1)[-1] for line in log.splitlines()
-              if re.search(r'\b(?:QA|MOVEMENT|CORE|WORLD|REPAIR|POLISH|ALL|INVENTORY|RELEASE MODULES|EXTENDED|COMBAT|CHECK) (?:PASS|FAIL|RESULT|COMPLETE|PERF)',line)]
+              if re.search(r'\b(?:MENU MOVEMENT|QA|MOVEMENT|CORE|WORLD|REPAIR|POLISH|ALL|INVENTORY|RELEASE MODULES|EXTENDED|COMBAT|CHECK) (?:PASS|FAIL|RESULT|COMPLETE|PERF)',line)]
     destination=root/'qa/evidence'/f'candidate-{name}{"-extras" if extras else ""}.txt'
     mod_names=sorted(p.name for p in (root/'build/qa/isolated/mods').glob('*.jar'))
     destination.write_text(f'JAR SHA256 {candidate_hash}\nMods: {", ".join(mod_names)}\n'+'\n'.join(evidence)+'\n',encoding='utf-8')

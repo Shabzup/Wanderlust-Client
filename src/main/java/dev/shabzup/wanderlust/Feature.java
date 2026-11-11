@@ -53,7 +53,7 @@ enum Feature {
     AUTO_WASP(Movement, "AutoWasp", "Follow the nearest player while gliding."),
     CLICK_TP(Movement, "ClickTp", "Attempt to move to the block you right-click."),
     ENTITY_CONTROL(Movement, "EntityControl", "Steer the mount you are riding."),
-    GUI_MOVE(Movement, "GuiMove", "Move with WASD in menus when no text field is focused."),
+    GUI_MOVE(Movement, "GuiMove", "Use your movement keybindings in allowed menus; pauses for text entry."),
     HIGH_JUMP(Movement, "HighJump", "Increase jump height."),
     LONG_JUMP(Movement, "LongJump", "Boost forward while jumping."),
     NO_SLOW(Movement, "NoSlow", "Compensate for movement slowdown while using items."),

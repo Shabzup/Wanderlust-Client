@@ -1,0 +1,5 @@
+Historical fixture failure observed in isolated log 2026-11-11-6.log.gz on candidate c28992bae57782e5dae14376d842d883ed516b0941aa3ccf517eac5040bce21c.
+At 00:05:41 the final logged end-crystal use had player position (-7.088152869675529, 108.51963953079206, 2.9560084454763222), outside the original platform.
+At 00:05:42 CrystalAura placement/break checks passed and AnchorAura was enabled without resetting the player.
+At 00:05:46 the AnchorAura placement/charge/detonation assertion failed.
+The corrected probe resets position and clears leftover crystals between scenarios; it separately asserts fixture readiness before enabling AnchorAura.

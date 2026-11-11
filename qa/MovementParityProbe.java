@@ -13,6 +13,7 @@ import net.minecraft.world.phys.Vec3;
 
 public final class MovementParityProbe extends CoreModulesProbe {
     double peak, boostedPeak;
+    int settleWait;
     void value(String key,String value)throws Exception{UpdateProbe.call("Settings","put",new Class[]{String.class,String.class},key,value);}
     void platform(Minecraft mc,boolean slab){
         server(mc,p->{
@@ -35,6 +36,10 @@ public final class MovementParityProbe extends CoreModulesProbe {
         }
         if(mc.player==null||mc.gui.overlay()!=null||mc.gui.screen()!=null)return;tick++;
         var p=mc.player;
+        if(tick==30&&(!p.onGround()||Math.abs(p.getY()-151)>.02)){
+            if(++settleWait<=200){tick--;return;}
+            check(false,"jump fixture failed to settle within 200 ticks");mc.stop();return;
+        }
         if(tick==5)platform(mc,false);
         if(tick==30){check(p.onGround(),"jump fixture grounded");enable("HIGH_JUMP",true);peak=p.getY();mc.options.keyJump.setDown(true);}
         if(tick==32)mc.options.keyJump.setDown(false);

@@ -1,4 +1,4 @@
-JAR SHA256 277ee373844de061241e32008ed85593d3fe375f7b104db988eb42f56bab69a7
+JAR SHA256 b04ae13b13852d00fba1abb2662755f710dcd0bb31d60a9ff3af68ab34466419
 Mods: WanderlustClient-1.0.0+26.2.jar, fabric-api-0.161.0+26.2.jar, qa-probe.jar
 POLISH PASS title screen replaces Wanderlust with styled UI Settings
 POLISH PASS account and proxy entry points are absent from title screen
@@ -569,6 +569,7 @@ POLISH PASS EntitySelectionScreen 400x300 widgets fit without overlap
 POLISH PASS AccountScreen 512x384 widgets fit without overlap
 POLISH PASS ProxyScreen 512x384 widgets fit without overlap
 POLISH PASS BaritoneScreen 512x384 widgets fit without overlap
+POLISH PASS unauthenticated SOCKS5 tunnels bytes through loopback proxy
 POLISH PASS EntitySelectionScreen 512x384 widgets fit without overlap
 POLISH PASS AccountScreen 640x360 widgets fit without overlap
 POLISH PASS ProxyScreen 640x360 widgets fit without overlap
@@ -613,6 +614,7 @@ POLISH PASS EntitySelectionScreen 1280x800 widgets fit without overlap
 POLISH PASS AccountScreen 1720x720 widgets fit without overlap
 POLISH PASS ProxyScreen 1720x720 widgets fit without overlap
 POLISH PASS BaritoneScreen 1720x720 widgets fit without overlap
+POLISH PASS proxy credentials are absent from plaintext vault bytes
 POLISH PASS EntitySelectionScreen 1720x720 widgets fit without overlap
 POLISH PASS AccountScreen 1920x1080 widgets fit without overlap
 POLISH PASS ProxyScreen 1920x1080 widgets fit without overlap
@@ -633,24 +635,22 @@ POLISH PASS UI Settings 1280x720 widgets fit without overlap
 POLISH PASS UI Settings 1280x800 widgets fit without overlap
 POLISH PASS UI Settings 1720x720 widgets fit without overlap
 POLISH PASS UI Settings 1920x1080 widgets fit without overlap
-POLISH PASS unauthenticated SOCKS5 tunnels bytes through loopback proxy
+POLISH PASS encrypted proxy credentials reload before authenticated tunnel test
+POLISH PASS authenticated SOCKS5 tunnels bytes through loopback proxy
+POLISH PASS SOCKS5 sends configured synthetic username/password
 POLISH PASS left click on a scaled module row toggles it
 POLISH PASS right click on scaled module row opens settings
 POLISH PASS entity picker None clears selections
 POLISH PASS entity picker filtered row selects one type
-POLISH PASS proxy credentials are absent from plaintext vault bytes
-POLISH PASS size preset applies requested scale
-POLISH PASS encrypted proxy credentials reload before authenticated tunnel test
-POLISH PASS authenticated SOCKS5 tunnels bytes through loopback proxy
-POLISH PASS SOCKS5 sends configured synthetic username/password
 POLISH PASS authenticated SOCKS5 rejects bad credentials without direct fallback
 POLISH PASS SOCKS5 sends configured synthetic username/password
-POLISH PERF extraction median_ms=0.859 p95_ms=1.1785 samples=60; CPU only, excludes GPU presentation
-POLISH PASS local UI CPU extraction p95 stays within one 60 Hz frame budget
+POLISH PASS size preset applies requested scale
 POLISH PASS real Minecraft Connection mixin routes TCP through SOCKS5
 POLISH PASS proxy vault hides saved profile data
 POLISH PASS saved proxy profile and active selection reload
 POLISH PASS unreadable active proxy vault fails closed
+POLISH PERF extraction elapsed_median_ms=1.4584 elapsed_p95_ms=5.4046 thread_cpu_p95_ms=15.625 samples=60; excludes GPU presentation
+POLISH PASS local UI extraction elapsed p95 stays within one 60 Hz frame budget
 POLISH PASS proxy editor validates an invalid port without closing
 POLISH PASS Proxy editor widgets fit without overlap
 POLISH PASS password field formats every character as a masked bullet
@@ -660,4 +660,6 @@ POLISH PASS in-game popup does not pause simulation
 POLISH PASS In-game popup category windows fit without overlap
 POLISH PASS In-game popup widgets fit without overlap
 POLISH PASS reduced-motion close returns to gameplay
-POLISH COMPLETE checks=659 failures=0
+POLISH PASS font/resource reload invalidates fitted text metrics
+POLISH PASS fitted text respects width after font reload
+POLISH COMPLETE checks=661 failures=0

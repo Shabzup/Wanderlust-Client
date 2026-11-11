@@ -648,7 +648,7 @@ final class ControlPanel extends Screen {
         drawFittedLabel(g,group.toString(),x+8,y+9,w-61,alpha,PanelStyle.TEXT);
         int count = features(group).size();
         String countText = Integer.toString(count);
-        g.text(font, PanelStyle.text(countText), x + w - font.width(PanelStyle.text(countText)) - 33, y + 9,
+        g.text(font, PanelStyle.text(countText), x + w - PanelStyle.width(font,countText) - 33, y + 9,
             PanelStyle.alpha(tint, alpha), true);
         boolean foldHover=inside(mouseX,mouseY-slide,x+w-27,y+3,23,21);
         drawSmallControl(g,x+w-27,y+3,23,21,isCollapsed(group)?"+":"−",foldHover,alpha);
@@ -665,16 +665,17 @@ final class ControlPanel extends Screen {
             float over=Settings.toggle("ui.motion")?PanelStyle.approach(rowHover.getOrDefault(feature,0f),hover?1:0,frameSeconds,18):(hover?1:0);
             rowHover.put(feature,over);
             if(over>.01f)g.fill(x+1,rowY,x+w-1,rowY+rowHeight,PanelStyle.alpha(tint,rowAlpha*over*.16f));
-            if (Settings.on(feature.id)) {
+            boolean enabled=Settings.on(feature.id);
+            if (enabled) {
                 g.fill(x + 1, rowY, x + w - 1, rowY + rowHeight, PanelStyle.alpha(tint, rowAlpha*.13f));
                 g.fill(x + 1, rowY + 3, x + 3, rowY + rowHeight - 3, PanelStyle.alpha(tint, rowAlpha));
             }
             int checkY=rowY+(rowHeight-9)/2;
-            g.fill(x+7,checkY,x+16,checkY+9,PanelStyle.alpha(Settings.on(feature.id)?tint:0xFFAAB5C9,rowAlpha));
-            if(!Settings.on(feature.id))g.fill(x+8,checkY+1,x+15,checkY+8,PanelStyle.alpha(0xFF1B2130,rowAlpha));
+            g.fill(x+7,checkY,x+16,checkY+9,PanelStyle.alpha(enabled?tint:0xFFAAB5C9,rowAlpha));
+            if(!enabled)g.fill(x+8,checkY+1,x+15,checkY+8,PanelStyle.alpha(0xFF1B2130,rowAlpha));
             drawSmallControl(g,x+w-24,rowY+2,19,rowHeight-4,"…",hover&&mouseX>=x+w-25,rowAlpha);
             drawFittedLabel(g, feature.label, x + 22, rowY + (rowHeight - 9) / 2, w - 49, rowAlpha,
-                Settings.on(feature.id) ? PanelStyle.TEXT : 0xFFE0E4EF);
+                enabled ? PanelStyle.TEXT : 0xFFE0E4EF);
         }
         if (count > maxRows) {
             String page = (start + 1) + "–" + end + " / " + count;
@@ -692,7 +693,7 @@ final class ControlPanel extends Screen {
 
     private void drawSmallControl(GuiGraphicsExtractor g,int x,int y,int w,int h,String text,boolean hover,float alpha){
         if(!text.equals("…")||hover)PanelStyle.control(g,x,y,w,h,hover,false,alpha);
-        label(g,text,x+(w-font.width(PanelStyle.text(text)))/2,y+(h-9)/2,PanelStyle.TEXT,alpha);
+        label(g,text,x+(w-PanelStyle.width(font,text))/2,y+(h-9)/2,PanelStyle.TEXT,alpha);
     }
 
     private void drawHoverTip(GuiGraphicsExtractor g,int mouseX,int mouseY,long now){
@@ -743,7 +744,7 @@ final class ControlPanel extends Screen {
         drawFittedLabel(g,footer,dialogX+18,dialogY+dialogH-22,dialogW-(detailOptions.size()>optionVisible?110:36),alpha*.85f,PanelStyle.MUTED);
         if (detailOptions.size() > optionVisible) {
             String page = (detailScroll + 1) + "–" + Math.min(detailOptions.size(), detailScroll + optionVisible) + " / " + detailOptions.size();
-            label(g, page, dialogX + dialogW - font.width(PanelStyle.text(page)) - 18, dialogY + dialogH - 22, PanelStyle.MUTED, alpha);
+            label(g, page, dialogX + dialogW - PanelStyle.width(font,page) - 18, dialogY + dialogH - 22, PanelStyle.MUTED, alpha);
         }
     }
 
@@ -783,12 +784,7 @@ final class ControlPanel extends Screen {
 
     private void drawFittedLabel(GuiGraphicsExtractor g, String value, int x, int y, int available, float alpha, int color) {
         if(available<=0)return;
-        String shown = value;
-        if(font.width(PanelStyle.text(shown))>available){
-            int end=shown.length();
-            while(end>0&&font.width(PanelStyle.text(shown.substring(0,end)+"…"))>available)end--;
-            shown=end==0?"":shown.substring(0,end)+"…";
-        }
+        String shown = PanelStyle.fit(font,value,available);
         label(g, shown, x, y, color, alpha);
     }
 

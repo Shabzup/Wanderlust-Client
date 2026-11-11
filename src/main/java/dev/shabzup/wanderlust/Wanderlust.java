@@ -46,6 +46,7 @@ public final class Wanderlust implements ClientModInitializer {
         for(Feature feature:Feature.values())try{String group=Settings.text("category."+feature.id);if(!group.isBlank())feature.group=Feature.Group.valueOf(group);}catch(IllegalArgumentException ignored){}
         Accounts.init();
         MenuAccess.init();
+        PanelStyle.init();
         Proxies.load();
         ExtraMisc.init();
         var category = KeyMapping.Category.register(Identifier.fromNamespaceAndPath("wanderlust", "modules"));
